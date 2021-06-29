@@ -1,0 +1,35 @@
+import 'package:facto/util/globals.dart';
+import 'package:facto/util/images.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
+class SecondaryTopBar extends StatelessWidget {
+  final Widget centerWidget;
+  SecondaryTopBar(this.centerWidget);
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      elevation: 20,
+      child:  Container(
+          width: Globals.width * 5 / 6,
+          height: Globals.height * 1 / 15,
+          child: Stack(
+            children: [
+              Center(
+                child: this.centerWidget,
+              ),
+              Positioned(
+                top: 10,
+                right: Globals.width / 55,
+                child: Row(
+                  children: [
+                   Text('Feed: Image'),
+                    Switch(activeColor: Color(0xFFCB1B30),value: true,)
+                  ],
+                ),
+              ),
+            ],
+          )),
+    );
+  }
+}
