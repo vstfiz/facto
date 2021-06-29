@@ -5,6 +5,7 @@ import 'package:facto/view/create_ads/create_ads.dart';
 import 'package:facto/view/create_feed/create_feed.dart';
 import 'package:facto/view/home/home_screen.dart';
 import 'package:facto/view/manage_claims/manage_claims.dart';
+import 'package:facto/view/manage_users/manage_users.dart';
 import 'package:facto/view/prod_feeds/prod_feeds.dart';
 import 'package:facto/widgets/side_bar_tab.dart';
 import 'package:flutter/cupertino.dart';
@@ -95,6 +96,17 @@ class Globals {
             Navigator.of(context)
                 .pushReplacement(new MaterialPageRoute(builder: (context) {
               return ProdFeeds();
+            }));
+          }
+        }
+        break;
+      case 10:
+        {
+          if (selectedIndex != 10) {
+            selectedIndex = 10;
+            Navigator.of(context)
+                .pushReplacement(new MaterialPageRoute(builder: (context) {
+              return ManageUsers();
             }));
           }
         }

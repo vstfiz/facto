@@ -4,6 +4,7 @@ import 'package:facto/view/configurations/configurations.dart';
 import 'package:facto/view/create_ads/create_ads.dart';
 import 'package:facto/view/create_feed/create_feed.dart';
 import 'package:facto/view/manage_claims/manage_claims.dart';
+import 'package:facto/view/manage_users/manage_users.dart';
 import 'package:facto/view/prod_feeds/prod_feeds.dart';
 import 'package:facto/view/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
