@@ -1,5 +1,6 @@
 library globals;
 
+import 'package:facto/view/configurations/configurations.dart';
 import 'package:facto/view/create_ads/create_ads.dart';
 import 'package:facto/view/create_feed/create_feed.dart';
 import 'package:facto/view/home/home_screen.dart';
@@ -98,6 +99,18 @@ class Globals {
           }
         }
         break;
+      case 11:
+        {
+          if (selectedIndex != 11) {
+            selectedIndex = 11;
+            Navigator.of(context)
+                .pushReplacement(new MaterialPageRoute(builder: (context) {
+              return Config();
+            }));
+          }
+        }
+        break;
+
 
     }
   }

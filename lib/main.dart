@@ -1,5 +1,6 @@
 import 'package:facto/util/globals.dart';
 import 'package:facto/util/images.dart';
+import 'package:facto/view/configurations/configurations.dart';
 import 'package:facto/view/create_ads/create_ads.dart';
 import 'package:facto/view/create_feed/create_feed.dart';
 import 'package:facto/view/manage_claims/manage_claims.dart';
