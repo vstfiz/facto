@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:facto/util/images.dart';
+import 'package:facto/view/auth/log_in.dart';
 import 'package:facto/view/create_feed/create_feed.dart';
 import 'package:facto/view/home/home_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -21,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen>{
   navigate(){
     Timer time = new Timer(new Duration(milliseconds: 1500),(){
       Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context){
-        return HomeScreen();
+        return LogIn();
       }));
     });
   }

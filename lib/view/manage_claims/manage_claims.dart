@@ -1,3 +1,4 @@
+import 'package:facto/model/claims.dart';
 import 'package:facto/util/globals.dart';
 import 'package:facto/widgets/secondary_top_bar.dart';
 import 'package:facto/widgets/side_bar.dart';
@@ -5,12 +6,94 @@ import 'package:facto/widgets/top_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'claim.dart';
+
 class ManageClaims extends StatefulWidget {
   _ManageClaimsState createState() => _ManageClaimsState();
 }
 
 class _ManageClaimsState extends State<ManageClaims> {
   var selectedPage = 1;
+  bool allSelected = false;
+  var claims = [
+    new Claims(
+        'Mr. Facto',
+        '12/02/2020',
+        'lorem ipsum fvgrer gfvergregerg sdfgregferg',
+        'Pending',
+        'Admin Admin 1',
+        false),
+    new Claims(
+        'Mr. Facto',
+        '12/02/2020',
+        'lorem ipsum fvgrer gfvergregerg sdfgregferg',
+        'Pending',
+        'Admin Admin 1',
+        false),
+    new Claims(
+        'Mr. Facto',
+        '12/02/2020',
+        'lorem ipsum fvgrer gfvergregerg sdfgregferg',
+        'Pending',
+        'Admin Admin 1',
+        false),
+    new Claims(
+        'Mr. Facto',
+        '12/02/2020',
+        'lorem ipsum fvgrer gfvergregerg sdfgregferg',
+        'Pending',
+        'Admin Admin 1',
+        false),
+    new Claims(
+        'Mr. Facto',
+        '12/02/2020',
+        'lorem ipsum fvgrer gfvergregerg sdfgregferg',
+        'Pending',
+        'Admin Admin 1',
+        false),
+    new Claims(
+        'Mr. Facto',
+        '12/02/2020',
+        'lorem ipsum fvgrer gfvergregerg sdfgregferg',
+        'Pending',
+        'Admin Admin 1',
+        false),
+    new Claims(
+        'Mr. Facto',
+        '12/02/2020',
+        'lorem ipsum fvgrer gfvergregerg sdfgregferg',
+        'Pending',
+        'Admin Admin 1',
+        false),
+    new Claims(
+        'Mr. Facto',
+        '12/02/2020',
+        'lorem ipsum fvgrer gfvergregerg sdfgregferg',
+        'Pending',
+        'Admin Admin 1',
+        false),
+    new Claims(
+        'Mr. Facto',
+        '12/02/2020',
+        'lorem ipsum fvgrer gfvergregerg sdfgregferg',
+        'Pending',
+        'Admin Admin 1',
+        false),
+    new Claims(
+        'Mr. Facto',
+        '12/02/2020',
+        'lorem ipsum fvgrer gfvergregerg sdfgregferg',
+        'Pending',
+        'Admin Admin 1',
+        false),
+    new Claims(
+        'Mr. Facto',
+        '12/02/2020',
+        'lorem ipsum fvgrer gfvergregerg sdfgregferg',
+        'Pending',
+        'Admin Admin 1',
+        false),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +109,7 @@ class _ManageClaimsState extends State<ManageClaims> {
             top: Globals.height * 2 / 33,
             right: 0.0,
           ),
+
           Positioned(left: 0.0, top: Globals.height * 2 / 33, child: SideBar()),
           Positioned(
               top: 150,
@@ -37,289 +121,139 @@ class _ManageClaimsState extends State<ManageClaims> {
                   elevation: 12,
                   child: SingleChildScrollView(
                     child: DataTable(
-                      columns: const <DataColumn>[
-                        DataColumn(
-                          label: Text(
-                            'Requested By',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.grey),
+                        columns: const <DataColumn>[
+                          DataColumn(
+                            label: Text(
+                              'Requested By',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.grey),
+                            ),
                           ),
-                        ),
-                        DataColumn(
-                          label: Text(
-                            'Date',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.grey),
+                          DataColumn(
+                            label: Text(
+                              'Date',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.grey),
+                            ),
                           ),
-                        ),
-                        DataColumn(
-                          label: Text(
-                            'News',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.grey),
+                          DataColumn(
+                            label: Text(
+                              'News',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.grey),
+                            ),
                           ),
-                        ),
-                        DataColumn(
-                          label: Text(
-                            'Status',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.grey),
+                          DataColumn(
+                            label: Text(
+                              'Status',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.grey),
+                            ),
                           ),
-                        ),
-                        DataColumn(
-                          label: Text(
-                            'Fact Check',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.grey),
+                          DataColumn(
+                            label: Text(
+                              'Fact Check',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.grey),
+                            ),
                           ),
-                        ),
-                      ],
-                      rows: <DataRow>[
-                        DataRow(
-                          cells: <DataCell>[
-                            DataCell(Row(
-                              children: [
-                                Checkbox(value: false, onChanged: null),
-                                Text('Mr. Facto Facto')
-                              ],
-                            )),
-                            DataCell(Text('13/12/20')),
-                            DataCell(Text(
-                                'Lorem ipsum dolor sit amet, consectetur consectetur consec...')),
-                            DataCell(Text('Pending')),
-                            DataCell(
-                              Text('Admin Admin 1'),
-                            ),
-                          ],
-                        ),
-                        DataRow(
-                          cells: <DataCell>[
-                            DataCell(Row(
-                              children: [
-                                Checkbox(value: false, onChanged: null),
-                                Text('Mr. Facto Facto')
-                              ],
-                            )),
-                            DataCell(Text('13/12/20')),
-                            DataCell(Text(
-                                'Lorem ipsum dolor sit amet, consectetur consectetur consec...')),
-                            DataCell(Text('Pending')),
-                            DataCell(
-                              Text('Admin Admin 1'),
-                            ),
-                          ],
-                        ),
-                        DataRow(
-                          cells: <DataCell>[
-                            DataCell(Row(
-                              children: [
-                                Checkbox(value: false, onChanged: null),
-                                Text('Mr. Facto Facto')
-                              ],
-                            )),
-                            DataCell(Text('13/12/20')),
-                            DataCell(Text(
-                                'Lorem ipsum dolor sit amet, consectetur consectetur consec...')),
-                            DataCell(Text('Pending')),
-                            DataCell(
-                              Text('Admin Admin 1'),
-                            ),
-                          ],
-                        ),
-                        DataRow(
-                          cells: <DataCell>[
-                            DataCell(Row(
-                              children: [
-                                Checkbox(value: false, onChanged: null),
-                                Text('Mr. Facto Facto')
-                              ],
-                            )),
-                            DataCell(Text('13/12/20')),
-                            DataCell(Text(
-                                'Lorem ipsum dolor sit amet, consectetur consectetur consec...')),
-                            DataCell(Text('Pending')),
-                            DataCell(
-                              Text('Admin Admin 1'),
-                            ),
-                          ],
-                        ),
-                        DataRow(
-                          cells: <DataCell>[
-                            DataCell(Row(
-                              children: [
-                                Checkbox(value: false, onChanged: null),
-                                Text('Mr. Facto Facto')
-                              ],
-                            )),
-                            DataCell(Text('13/12/20')),
-                            DataCell(Text(
-                                'Lorem ipsum dolor sit amet, consectetur consectetur consec...')),
-                            DataCell(Text('Pending')),
-                            DataCell(
-                              Text('Admin Admin 1'),
-                            ),
-                          ],
-                        ),
-                        DataRow(
-                          cells: <DataCell>[
-                            DataCell(Row(
-                              children: [
-                                Checkbox(value: false, onChanged: null),
-                                Text('Mr. Facto Facto')
-                              ],
-                            )),
-                            DataCell(Text('13/12/20')),
-                            DataCell(Text(
-                                'Lorem ipsum dolor sit amet, consectetur consectetur consec...')),
-                            DataCell(Text('Pending')),
-                            DataCell(
-                              Text('Admin Admin 1'),
-                            ),
-                          ],
-                        ),
-                        DataRow(
-                          cells: <DataCell>[
-                            DataCell(Row(
-                              children: [
-                                Checkbox(value: false, onChanged: null),
-                                Text('Mr. Facto Facto')
-                              ],
-                            )),
-                            DataCell(Text('13/12/20')),
-                            DataCell(Text(
-                                'Lorem ipsum dolor sit amet, consectetur consectetur consec...')),
-                            DataCell(Text('Pending')),
-                            DataCell(
-                              Text('Admin Admin 1'),
-                            ),
-                          ],
-                        ),
-                        DataRow(
-                          cells: <DataCell>[
-                            DataCell(Row(
-                              children: [
-                                Checkbox(value: false, onChanged: null),
-                                Text('Mr. Facto Facto')
-                              ],
-                            )),
-                            DataCell(Text('13/12/20')),
-                            DataCell(Text(
-                                'Lorem ipsum dolor sit amet, consectetur consectetur consec...')),
-                            DataCell(Text('Pending')),
-                            DataCell(
-                              Text('Admin Admin 1'),
-                            ),
-                          ],
-                        ),
-                        DataRow(
-                          cells: <DataCell>[
-                            DataCell(Row(
-                              children: [
-                                Checkbox(value: false, onChanged: null),
-                                Text('Mr. Facto Facto')
-                              ],
-                            )),
-                            DataCell(Text('13/12/20')),
-                            DataCell(Text(
-                                'Lorem ipsum dolor sit amet, consectetur consectetur consec...')),
-                            DataCell(Text('Pending')),
-                            DataCell(
-                              Text('Admin Admin 1'),
-                            ),
-                          ],
-                        ),
-                        DataRow(
-                          cells: <DataCell>[
-                            DataCell(Row(
-                              children: [
-                                Checkbox(value: false, onChanged: null),
-                                Text('Mr. Facto Facto')
-                              ],
-                            )),
-                            DataCell(Text('13/12/20')),
-                            DataCell(Text(
-                                'Lorem ipsum dolor sit amet, consectetur consectetur consec...')),
-                            DataCell(Text('Pending')),
-                            DataCell(
-                              Text('Admin Admin 1'),
-                            ),
-                          ],
-                        ),
-                        DataRow(
-                          cells: <DataCell>[
-                            DataCell(Row(
-                              children: [
-                                Checkbox(value: false, onChanged: null),
-                                Text('Mr. Facto Facto')
-                              ],
-                            )),
-                            DataCell(Text('13/12/20')),
-                            DataCell(Text(
-                                'Lorem ipsum dolor sit amet, consectetur consectetur consec...')),
-                            DataCell(Text('Pending')),
-                            DataCell(
-                              Text('Admin Admin 1'),
-                            ),
-                          ],
-                        ),
-                        DataRow(
-                          cells: <DataCell>[
-                            DataCell(Row(
-                              children: [
-                                Checkbox(value: false, onChanged: null),
-                                Text('Mr. Facto Facto')
-                              ],
-                            )),
-                            DataCell(Text('13/12/20')),
-                            DataCell(Text(
-                                'Lorem ipsum dolor sit amet, consectetur consectetur consec...')),
-                            DataCell(Text('Pending')),
-                            DataCell(
-                              Text('Admin Admin 1'),
-                            ),
-                          ],
-                        ),
-                        DataRow(
-                          cells: <DataCell>[
-                            DataCell(Row(
-                              children: [
-                                Checkbox(value: false, onChanged: null),
-                                Text('Mr. Facto Facto')
-                              ],
-                            )),
-                            DataCell(Text('13/12/20')),
-                            DataCell(Text(
-                                'Lorem ipsum dolor sit amet, consectetur consectetur consec...')),
-                            DataCell(Text('Pending')),
-                            DataCell(
-                              Text('Admin Admin 1'),
-                            ),
-                          ],
-                        ),
-                        DataRow(
-                          cells: <DataCell>[
-                            DataCell(Row(
-                              children: [
-                                Checkbox(value: false, onChanged: null),
-                                Text('Mr. Facto Facto')
-                              ],
-                            )),
-                            DataCell(Text('13/12/20')),
-                            DataCell(Text(
-                                'Lorem ipsum dolor sit amet, consectetur consectetur consec...')),
-                            DataCell(Text('Pending')),
-                            DataCell(
-                              Text('Admin Admin 1'),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                        ],
+                        rows: List.generate(claims.length, (index) {
+                          return DataRow(
+                            cells: <DataCell>[
+                              DataCell(GestureDetector(
+                                child: Row(
+                                  children: [
+                                    Checkbox(
+                                      value: claims[index].isSelected,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          claims[index].isSelected = value;
+                                        });
+                                      },
+                                      checkColor: Color(0xFF00A424),
+                                      fillColor: MaterialStateProperty
+                                          .resolveWith<Color>((states) {
+                                        if (states
+                                            .contains(MaterialState.selected)) {
+                                          return Colors.white;
+                                        }
+                                        return null;
+                                      }),
+                                    ),
+                                    Text(claims[index].requestedBy)
+                                  ],
+                                ),
+                                onTap: () {},
+                              )),
+                              DataCell(GestureDetector(
+                                child: Text(claims[index].date),
+                                onTap: () {
+                                  Navigator.of(context).pushReplacement(
+                                      new MaterialPageRoute(builder: (context) {
+                                    return Claim(
+                                        'dwf',
+                                        'fewef',
+                                        'fewefew',
+                                        'fewfwe',
+                                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Consequat, ipsum cras lorem molestie. Viverra suspendisse urna, lacus in in. Quis sapien non enim morbi cras. Pellentesque ultricies ultricies commodo ornare adipiscing eget platea enim faucibus. Massa vitae faucibus ornare adipiscing aenean egestas euismod gravida. ',
+                                        'fewfwefewfewfc');
+                                  }));
+                                },
+                              )),
+                              DataCell(GestureDetector(
+                                child: Text(claims[index].news),
+                                onTap: () {
+                                  Navigator.of(context).pushReplacement(
+                                      new MaterialPageRoute(builder: (context) {
+                                    return Claim(
+                                        'dwf',
+                                        'fewef',
+                                        'fewefew',
+                                        'fewfwe',
+                                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Consequat, ipsum cras lorem molestie. Viverra suspendisse urna, lacus in in. Quis sapien non enim morbi cras. Pellentesque ultricies ultricies commodo ornare adipiscing eget platea enim faucibus. Massa vitae faucibus ornare adipiscing aenean egestas euismod gravida. ',
+                                        'fewfwefewfewfc');
+                                  }));
+                                },
+                              )),
+                              DataCell(GestureDetector(
+                                child: Text(claims[index].status),
+                                onTap: () {
+                                  Navigator.of(context).pushReplacement(
+                                      new MaterialPageRoute(builder: (context) {
+                                    return Claim(
+                                        'dwf',
+                                        'fewef',
+                                        'fewefew',
+                                        'fewfwe',
+                                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Consequat, ipsum cras lorem molestie. Viverra suspendisse urna, lacus in in. Quis sapien non enim morbi cras. Pellentesque ultricies ultricies commodo ornare adipiscing eget platea enim faucibus. Massa vitae faucibus ornare adipiscing aenean egestas euismod gravida. ',
+                                        'fewfwefewfewfc');
+                                  }));
+                                },
+                              )),
+                              DataCell(GestureDetector(
+                                child: Text(claims[index].factCheck),
+                                onTap: () {
+                                  Navigator.of(context).pushReplacement(
+                                      new MaterialPageRoute(builder: (context) {
+                                    return Claim(
+                                        'dwf',
+                                        'fewef',
+                                        'fewefew',
+                                        'fewfwe',
+                                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Consequat, ipsum cras lorem molestie. Viverra suspendisse urna, lacus in in. Quis sapien non enim morbi cras. Pellentesque ultricies ultricies commodo ornare adipiscing eget platea enim faucibus. Massa vitae faucibus ornare adipiscing aenean egestas euismod gravida. ',
+                                        'fewfwefewfewfc');
+                                  }));
+                                },
+                              )),
+                            ],
+                          );
+                        })),
                   ),
                 ),
               )),
@@ -329,9 +263,23 @@ class _ManageClaimsState extends State<ManageClaims> {
               child: Row(
                 children: [
                   Checkbox(
-                    value: false,
-                    onChanged: null,
-                    checkColor: Color(0xFFEF233C),
+                    value: allSelected,
+                    onChanged: (value) {
+                      setState(() {
+                        allSelected = value;
+                        claims.forEach((element) {
+                          element.isSelected = value;
+                        });
+                      });
+                    },
+                    checkColor: Color(0xFF00A424),
+                    fillColor:
+                        MaterialStateProperty.resolveWith<Color>((states) {
+                      if (states.contains(MaterialState.selected)) {
+                        return Colors.white;
+                      }
+                      return null;
+                    }),
                   ),
                   Text('Select All')
                 ],

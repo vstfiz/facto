@@ -11,6 +11,22 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  DateTime selectedDate = DateTime.now();
+  String feedType = 'Image';
+
+  _selectDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate, // Refer step 1
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2025),
+    );
+    if (picked != null && picked != selectedDate)
+      setState(() {
+        selectedDate = picked;
+      });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,6 +40,20 @@ class _HomeScreenState extends State<HomeScreen> {
             child: SecondaryTopBar(new Text('DashBoard')),
             top: Globals.height * 2 / 33,
             right: 0.0,
+          ),
+          Positioned(
+            top: 10 + Globals.height * 2 / 33,
+            right: Globals.width / 55,
+            child: Row(
+              children: [
+                Text('Feed: ${feedType}'),
+                Switch(activeColor: Colors.blueGrey,value: feedType=='Image'?true:false,onChanged: (value){
+                  setState(() {
+                    feedType = value==true?'Image':'Video';
+                  });
+                },)
+              ],
+            ),
           ),
           Positioned(left: 0.0, top: Globals.height * 2 / 33, child: SideBar()),
           Positioned(
@@ -163,6 +193,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         child: Center(
                           child: TextButton(
+                            onPressed: () {
+                              _selectDate(context);
+                            },
                             child: Row(
                               children: [
                                 SizedBox(

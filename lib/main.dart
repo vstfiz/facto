@@ -1,8 +1,11 @@
 import 'package:facto/util/globals.dart';
 import 'package:facto/util/images.dart';
+import 'package:facto/view/auth/log_in.dart';
 import 'package:facto/view/configurations/configurations.dart';
 import 'package:facto/view/create_ads/create_ads.dart';
 import 'package:facto/view/create_feed/create_feed.dart';
+import 'package:facto/view/home/home_screen.dart';
+import 'package:facto/view/manage_claims/claim.dart';
 import 'package:facto/view/manage_claims/manage_claims.dart';
 import 'package:facto/view/manage_users/manage_users.dart';
 import 'package:facto/view/prod_feeds/prod_feeds.dart';
@@ -31,10 +34,9 @@ class _MyAppState extends State<MyApp> {
         return MaterialApp(
           title: 'Facto Admin',
           theme: ThemeData(
-            primarySwatch: Colors.blue,
+            primarySwatch: Colors.blueGrey,
           ),
-          home: SplashScreen(),
-        );
+          home: HomeScreen());
       });
     });
 

@@ -18,16 +18,6 @@ class SecondaryTopBar extends StatelessWidget {
               Center(
                 child: this.centerWidget,
               ),
-              Positioned(
-                top: 10,
-                right: Globals.width / 55,
-                child: Row(
-                  children: [
-                   Text('Feed: Image'),
-                    Switch(activeColor: Color(0xFFCB1B30),value: true,)
-                  ],
-                ),
-              ),
             ],
           )),
     );
