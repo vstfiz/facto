@@ -15,6 +15,7 @@ class ManageClaims extends StatefulWidget {
 class _ManageClaimsState extends State<ManageClaims> {
   var selectedPage = 1;
   bool allSelected = false;
+  String feedType = 'Image';
   var claims = [
     new Claims(
         'Mr. Facto',
@@ -109,7 +110,20 @@ class _ManageClaimsState extends State<ManageClaims> {
             top: Globals.height * 2 / 33,
             right: 0.0,
           ),
-
+          Positioned(
+            top: 10 + Globals.height * 2 / 33,
+            right: Globals.width / 55,
+            child: Row(
+              children: [
+                Text('Feed: ${feedType}'),
+                Switch(activeColor: Colors.blueGrey,value: feedType=='Image'?true:false,onChanged: (value){
+                  setState(() {
+                    feedType = value==true?'Image':'Video';
+                  });
+                },)
+              ],
+            ),
+          ),
           Positioned(left: 0.0, top: Globals.height * 2 / 33, child: SideBar()),
           Positioned(
               top: 150,
@@ -285,221 +299,102 @@ class _ManageClaimsState extends State<ManageClaims> {
                 ],
               )),
           Positioned(
-              top: 675,
-              left: Globals.width / 2,
-              child: Row(
-                children: [
-                  Container(
-                    height: 30,
-                    width: 30,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: Colors.grey[350]),
-                    child: TextButton(
-                      onPressed: () {
-                        selectedPage > 1
-                            ? setState(() {
-                                selectedPage -= 1;
-                                // ignore: unnecessary_statements
-                              })
-                            : null;
-                      },
-                      child: Icon(
-                        Icons.arrow_back_ios_outlined,
-                        color: Colors.grey[600],
-                        size: 18,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Container(
-                    height: 30,
-                    width: 30,
-                    decoration: BoxDecoration(
+            top: 675,
+            left: (Globals.width ~/ 2) -
+                ((claims.length ~/ 10) >= 10
+                    ? 415 / 2
+                    : ((2 + claims.length ~/ 10) * 30 +
+                            (1 + claims.length ~/ 10) * 5) /
+                        2),
+            child: Row(
+              children: [
+                Container(
+                  height: 30,
+                  width: 30,
+                  decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
-                      color: selectedPage == 1
-                          ? Color(0xFFEF233C)
-                          : Colors.grey[350],
-                    ),
-                    child: TextButton(
-                      onPressed: () {
-                        setState(() {
-                          selectedPage = 1;
-                        });
-                      },
-                      child: Text(
-                        '1',
-                        style: TextStyle(
-                            color: selectedPage == 1
-                                ? Colors.white
-                                : Colors.grey[600]),
-                      ),
+                      color: Colors.grey[350]),
+                  child: TextButton(
+                    onPressed: () {
+                      selectedPage > 1
+                          ? setState(() {
+                              selectedPage -= 1;
+                              // ignore: unnecessary_statements
+                            })
+                          : null;
+                    },
+                    child: Icon(
+                      Icons.arrow_back_ios_outlined,
+                      color: Colors.grey[600],
+                      size: 18,
                     ),
                   ),
-                  SizedBox(
-                    width: 5,
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                Container(
+                  child: Stack(
+                    children: List.generate(1 + (claims.length ~/ 10), (index) {
+                      return Row(
+                        children: [
+                          Container(
+                            height: 30,
+                            width: 30,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              color: selectedPage == 1
+                                  ? Color(0xFFEF233C)
+                                  : Colors.grey[350],
+                            ),
+                            child: TextButton(
+                              onPressed: () {
+                                setState(() {
+                                  selectedPage = 1;
+                                });
+                              },
+                              child: Text(
+                                '1',
+                                style: TextStyle(
+                                    color: selectedPage == 1
+                                        ? Colors.white
+                                        : Colors.grey[600]),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                        ],
+                      );
+                    }),
                   ),
-                  Container(
-                    height: 30,
-                    width: 30,
-                    decoration: BoxDecoration(
+                ),
+                Container(
+                  height: 30,
+                  width: 30,
+                  decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
-                      color: selectedPage == 2
-                          ? Color(0xFFEF233C)
-                          : Colors.grey[350],
-                    ),
-                    child: TextButton(
-                      onPressed: () {
-                        setState(() {
-                          selectedPage = 2;
-                        });
-                      },
-                      child: Text(
-                        '2',
-                        style: TextStyle(
-                            color: selectedPage == 2
-                                ? Colors.white
-                                : Colors.grey[600]),
-                      ),
+                      color: Colors.grey[350]),
+                  child: TextButton(
+                    onPressed: () {
+                      selectedPage < 6
+                          ? setState(() {
+                              selectedPage += 1;
+                              // ignore: unnecessary_statements
+                            })
+                          : null;
+                    },
+                    child: Icon(
+                      Icons.arrow_forward_ios_outlined,
+                      color: Colors.grey[600],
+                      size: 18,
                     ),
                   ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Container(
-                    height: 30,
-                    width: 30,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: selectedPage == 3
-                          ? Color(0xFFEF233C)
-                          : Colors.grey[350],
-                    ),
-                    child: TextButton(
-                      onPressed: () {
-                        setState(() {
-                          selectedPage = 3;
-                        });
-                      },
-                      child: Text(
-                        '3',
-                        style: TextStyle(
-                            color: selectedPage == 3
-                                ? Colors.white
-                                : Colors.grey[600]),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Container(
-                    height: 30,
-                    width: 30,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: selectedPage == 4
-                          ? Color(0xFFEF233C)
-                          : Colors.grey[350],
-                    ),
-                    child: TextButton(
-                      onPressed: () {
-                        setState(() {
-                          selectedPage = 4;
-                        });
-                      },
-                      child: Text(
-                        '4',
-                        style: TextStyle(
-                            color: selectedPage == 4
-                                ? Colors.white
-                                : Colors.grey[600]),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Container(
-                    height: 30,
-                    width: 30,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: selectedPage == 5
-                          ? Color(0xFFEF233C)
-                          : Colors.grey[350],
-                    ),
-                    child: TextButton(
-                      onPressed: () {
-                        setState(() {
-                          selectedPage = 5;
-                        });
-                      },
-                      child: Text(
-                        '5',
-                        style: TextStyle(
-                            color: selectedPage == 5
-                                ? Colors.white
-                                : Colors.grey[600]),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Container(
-                    height: 30,
-                    width: 30,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: selectedPage == 6
-                          ? Color(0xFFEF233C)
-                          : Colors.grey[350],
-                    ),
-                    child: TextButton(
-                      onPressed: () {
-                        setState(() {
-                          selectedPage = 6;
-                        });
-                      },
-                      child: Text(
-                        '6',
-                        style: TextStyle(
-                            color: selectedPage == 6
-                                ? Colors.white
-                                : Colors.grey[600]),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Container(
-                    height: 30,
-                    width: 30,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: Colors.grey[350]),
-                    child: TextButton(
-                      onPressed: () {
-                        selectedPage < 6
-                            ? setState(() {
-                                selectedPage += 1;
-                                // ignore: unnecessary_statements
-                              })
-                            : null;
-                      },
-                      child: Icon(
-                        Icons.arrow_forward_ios_outlined,
-                        color: Colors.grey[600],
-                        size: 18,
-                      ),
-                    ),
-                  ),
-                ],
-              )),
+                ),
+              ],
+            ),
+          ),
           Positioned(
               top: 720,
               left: 1200,
