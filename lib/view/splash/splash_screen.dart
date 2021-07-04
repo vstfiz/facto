@@ -1,11 +1,14 @@
 import 'dart:async';
 
+import 'package:facto/service/auth/auth.dart';
+import 'package:facto/util/globals.dart';
 import 'package:facto/util/images.dart';
 import 'package:facto/view/auth/log_in.dart';
 import 'package:facto/view/create_feed/create_feed.dart';
 import 'package:facto/view/home/home_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:facto/database/firebase_db.dart' as fdb;
 
 class SplashScreen extends StatefulWidget{
   @override
@@ -19,11 +22,19 @@ class _SplashScreenState extends State<SplashScreen>{
     navigate();
   }
 
-  navigate(){
-    Timer time = new Timer(new Duration(milliseconds: 1500),(){
-      Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context){
-        return LogIn();
-      }));
+  navigate() {
+    Timer time = new Timer(new Duration(milliseconds: 1500),() async {
+      if (Globals.user.email != null && Globals.user.email != "") {
+        await fdb.FirebaseDB.getUserDetails(user.uid, context).whenComplete(() => Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context) {
+          return HomeScreen(true);
+        })));
+
+        print(Globals.user.email);
+      } else {
+        Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context) {
+          return LogIn();
+        }));
+      }
     });
   }
   @override
@@ -33,7 +44,7 @@ class _SplashScreenState extends State<SplashScreen>{
         child: Container(
           width: 200,
           height: 200,
-          child: Image.asset(Images.logo),
+          child: Image.network(Images.logo),
         ),
       ),
     );

@@ -29,7 +29,7 @@ class _ManageUsersState extends State<ManageUsers>{
             top: 150,
             left: 400,
             child: Text(
-              'Hi, Vivek',
+              'Hi, ${Globals.user.name}',
               style: TextStyle(
                   fontFamily: 'Livvic', color: Color(0xFFA90015), fontSize: 20),
             ),
@@ -115,7 +115,7 @@ class _ManageUsersState extends State<ManageUsers>{
                       rows: <DataRow>[
                         DataRow(
                           cells: <DataCell>[
-                            DataCell(Text('Vivek')),
+                            DataCell(Text(Globals.user.name)),
                             DataCell(Text(
                                 'Admin')),
                             DataCell(Text('10')),
@@ -127,7 +127,7 @@ class _ManageUsersState extends State<ManageUsers>{
                         ),
                         DataRow(
                           cells: <DataCell>[
-                            DataCell(Text('Vivek')),
+                            DataCell(Text(Globals.user.name)),
                             DataCell(Text(
                                 'Editor')),
                             DataCell(Text('10')),
@@ -139,7 +139,7 @@ class _ManageUsersState extends State<ManageUsers>{
                         ),
                         DataRow(
                           cells: <DataCell>[
-                            DataCell(Text('Vivek')),
+                            DataCell(Text(Globals.user.name)),
                             DataCell(Text(
                                 'Author')),
                             DataCell(Text('100')),
@@ -151,7 +151,7 @@ class _ManageUsersState extends State<ManageUsers>{
                         ),
                         DataRow(
                           cells: <DataCell>[
-                            DataCell(Text('Vivek')),
+                            DataCell(Text(Globals.user.name)),
                             DataCell(Text(
                                 'Partner')),
                             DataCell(Text('50')),
@@ -163,7 +163,7 @@ class _ManageUsersState extends State<ManageUsers>{
                         ),
                         DataRow(
                           cells: <DataCell>[
-                            DataCell(Text('Vivek')),
+                            DataCell(Text(Globals.user.name)),
                             DataCell(Text(
                                 'Admin')),
                             DataCell(Text('10')),

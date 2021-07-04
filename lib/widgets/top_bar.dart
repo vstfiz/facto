@@ -1,5 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:facto/service/auth/auth.dart';
 import 'package:facto/util/globals.dart';
 import 'package:facto/util/images.dart';
+import 'package:facto/view/auth/log_in.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -23,26 +26,37 @@ class _TopBarState extends State<TopBar> {
         // Any child
         child: Card(
           elevation: 12,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8)
-          ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           color: Colors.white,
           child: Stack(
             children: [
-              Positioned(top:10,left:10,child: CircleAvatar(
-                radius: 40,
-                child: Text('Profile Picture'),
-              )),
               Positioned(
-                top: 40,
+                top: 10,
+                left: 10,
+                child: Container(
+                  height: 80,
+                  width: 80,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(40),
+                    image: DecorationImage(
+                      image: AssetImage(Globals.user.dp
+                      ),fit: BoxFit.fill,
+                    )
+                  ),
+                ),
+              ),
+              Positioned(
+                  top: 40,
                   right: 30,
-                  child: Center(child: Text(
-                    'Vivek Sharma',
-                    style: TextStyle(fontFamily: 'Livvic',fontSize: 20),
-                    overflow: TextOverflow.fade,
-                  ),)),
+                  child: Center(
+                    child: Text(
+                      Globals.user.name,
+                      style: TextStyle(fontFamily: 'Livvic', fontSize: 20),
+                      overflow: TextOverflow.fade,
+                    ),
+                  )),
               Positioned(
-                top: 90,
+                  top: 90,
                   child: SizedBox(
                     width: 300,
                     child: Divider(
@@ -51,27 +65,35 @@ class _TopBarState extends State<TopBar> {
                     ),
                   )),
               Positioned(
-                top: 110,
+                  top: 110,
                   right: 10,
                   child: SizedBox(
-                width: 115,
-                height: 40,
-                child: Center(
-                  child: Card(
-                      elevation: 8,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: Center(
-                        child: TextButton(
-                            onPressed: null,
-                            child: Text(
-                              'Log Out',
-                              style: TextStyle(color: Color(0xFFFF4669)),
-                            )),
-                      )),
-                ),
-              ))
+                    width: 115,
+                    height: 40,
+                    child: Center(
+                      child: Card(
+                          elevation: 8,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: Center(
+                            child: TextButton(
+                                onPressed: () {
+                                  floatingDropdown.remove();
+                                  auth.signOut();
+
+                                  Navigator.of(context).pushReplacement(
+                                      new MaterialPageRoute(builder: (context) {
+                                    return LogIn();
+                                  }));
+                                },
+                                child: Text(
+                                  'Log Out',
+                                  style: TextStyle(color: Color(0xFFFF4669)),
+                                )),
+                          )),
+                    ),
+                  ))
             ],
           ),
         ),
@@ -107,7 +129,7 @@ class _TopBarState extends State<TopBar> {
                       iconSize: 30,
                     ),
                     Text(
-                      'Vivek',
+                      Globals.user.name,
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 25,

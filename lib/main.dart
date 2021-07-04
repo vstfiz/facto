@@ -1,3 +1,4 @@
+import 'package:facto/service/auth/auth.dart';
 import 'package:facto/util/globals.dart';
 import 'package:facto/util/images.dart';
 import 'package:facto/view/auth/log_in.dart';
@@ -19,7 +20,7 @@ void main() {
 class MyApp extends StatefulWidget {
   // This widget is the root of your application.
   @override
-  _MyAppState createState()=> _MyAppState();
+  _MyAppState createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
@@ -27,18 +28,29 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
       return OrientationBuilder(builder: (context, orientation) {
-
-          Globals.height = constraints.maxHeight;
-          Globals.width = constraints.maxWidth;
+        Globals.height = constraints.maxHeight;
+        Globals.width = constraints.maxWidth;
 
         return MaterialApp(
-          title: 'Facto Admin',
-          theme: ThemeData(
-            primarySwatch: Colors.blueGrey,
-          ),
-          home: ManageClaims());
+            title: 'Facto Admin',
+            theme: ThemeData(
+              primarySwatch: Colors.blueGrey,
+            ),
+            home: StreamBuilder(
+              stream: auth.authStateChanges(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  user = snapshot.data;
+                  print(user.toString());
+                  Globals.user.email = user.email;
+                  Globals.user.dp = user.photoURL;
+                  Globals.user.uid = user.uid;
+                  Globals.user.name = user.displayName;
+                }
+                return SplashScreen();
+              },
+            ));
       });
     });
-
   }
 }

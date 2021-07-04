@@ -30,7 +30,7 @@ class _CreateFeedState extends State<CreateFeed> {
             top: 150,
             left: 400,
             child: Text(
-              'Hi, Vivek',
+              'Hi, ${Globals.user.name}',
               style: TextStyle(
                   fontFamily: 'Livvic', color: Color(0xFFA90015), fontSize: 20),
             ),

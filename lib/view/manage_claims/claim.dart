@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:facto/util/globals.dart';
 import 'package:facto/view/manage_claims/manage_claims.dart';
 import 'package:facto/view/manage_users/manage_users.dart';
@@ -7,27 +8,64 @@ import 'package:facto/widgets/top_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:facto/database/firebase_db.dart' as fdb;
 
 class Claim extends StatefulWidget {
-  final String claim;
-  final String name;
-  final String url1;
-  final String url2;
-  final String description;
-  final String status;
+  final String claimId;
 
-  Claim(this.claim, this.name, this.url1, this.url2, this.description,
-      this.status);
+  Claim(this.claimId);
+
 
   _ClaimState createState() => _ClaimState();
 }
 
 class _ClaimState extends State<Claim> {
+  bool isLoading = true;
+  var claim = [];
+  @override
+  void initState() {
+    super.initState();
+    _getData();
+  }
+
+  _getData()async{
+    claim = await fdb.FirebaseDB.getClaimFromId(this.widget.claimId).whenComplete((){
+      setState(() {
+        isLoading = false;
+      });
+    });
+    print(claim.length);
+  }
+  Widget _loadingScreen(String value) {
+    return AlertDialog(
+        shape:
+        RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+        backgroundColor: Colors.white,
+        content: Container(
+            height: 60,
+            child: Center(
+              child: Row(
+                children: <Widget>[
+                  CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.blueGrey),
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Text(
+                    value,
+                    style: TextStyle(
+                        fontFamily: "Livvic", fontSize: 23, letterSpacing: 1),
+                  )
+                ],
+              ),
+            )));
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFE5E5E5),
-      body: Stack(
+      body: isLoading?_loadingScreen('Getting Data from Servers.....'):Stack(
         children: [
           Positioned(
             child: TopBar(),
@@ -46,7 +84,7 @@ class _ClaimState extends State<Claim> {
                 icon: Icon(Icons.arrow_back),
                 onPressed: () {
                   Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context){
-                    return ManageClaims();
+                    return ManageClaims(true);
                   }));
                 },
               )),
@@ -61,7 +99,7 @@ class _ClaimState extends State<Claim> {
                 child: Stack(
                   children: [
                     Positioned(right:10,child: Container(child: Row(children: [
-                      Text(this.widget.status),
+                      Text(claim[5]),
                       SizedBox(width: 10,),
                       IconButton(icon: Icon(Icons.arrow_drop_down),
                           onPressed: null)
@@ -81,7 +119,7 @@ class _ClaimState extends State<Claim> {
                             width: 500,
                             height: 30,
                             child: Text(
-                              this.widget.name,
+                              claim[0],
                               style:
                               TextStyle(fontFamily: 'Livvic', fontSize: 20),
                             ),
@@ -104,7 +142,7 @@ class _ClaimState extends State<Claim> {
                             width: 500,
                             height: 30,
                             child: Text(
-                              this.widget.claim,
+                              claim[1],
                               style:
                               TextStyle(fontFamily: 'Livvic', fontSize: 20),
                             ),
@@ -127,7 +165,7 @@ class _ClaimState extends State<Claim> {
                             width: 400,
                             height: 30,
                             child: Text(
-                              this.widget.url1,
+                              claim[2],
                               style:
                               TextStyle(fontFamily: 'Livvic', fontSize: 20),
                             ),
@@ -150,7 +188,7 @@ class _ClaimState extends State<Claim> {
                             width: 400,
                             height: 30,
                             child: Text(
-                              this.widget.url2,
+                              claim[3],
                               style:
                               TextStyle(fontFamily: 'Livvic', fontSize: 20),
                             ),
@@ -171,18 +209,19 @@ class _ClaimState extends State<Claim> {
                           ),
                           SizedBox(
                             width: 400,
-                            height: 30,
-                            child: Text(
-                              this.widget.description,
+                            height: 80,
+                            child: AutoSizeText(
+                              claim[4],
                               style:
-                              TextStyle(fontFamily: 'Livvic', fontSize: 20),
+                              TextStyle(fontFamily: 'Livvic', fontSize: 20),minFontSize: 15,overflow: TextOverflow.ellipsis,
                             ),
                           )
                         ],
                       ),
                     ),
+                    SizedBox(height: 20,),
                     Positioned(
-                      top: 300,
+                      top: 350,
                       left: 40,
                       child: Row(
                         children: [

@@ -1,5 +1,6 @@
 library globals;
 
+import 'package:facto/model/user.dart';
 import 'package:facto/view/configurations/configurations.dart';
 import 'package:facto/view/create_ads/create_ads.dart';
 import 'package:facto/view/create_feed/create_feed.dart';
@@ -16,6 +17,8 @@ class Globals {
   static double width = 0.0;
 
   static int selectedIndex = 0;
+  static User user = new User("", "", "", "");
+  static User mainUser = new User("", "", "", "");
 
   static var tabs = [
     new SideBarTab('Home', 0),
@@ -40,7 +43,7 @@ class Globals {
             selectedIndex = 0;
             Navigator.of(context)
                 .pushReplacement(new MaterialPageRoute(builder: (context) {
-              return HomeScreen();
+              return HomeScreen(true);
             }));
           }
         }
@@ -51,7 +54,7 @@ class Globals {
             selectedIndex = 1;
             Navigator.of(context)
                 .pushReplacement(new MaterialPageRoute(builder: (context) {
-              return ManageClaims();
+              return ManageClaims(true);
             }));
           }
         }
@@ -62,7 +65,7 @@ class Globals {
             selectedIndex = 2;
             Navigator.of(context)
                 .pushReplacement(new MaterialPageRoute(builder: (context) {
-              return HomeScreen();
+              return HomeScreen(true);
             }));
           }
         }
