@@ -1,15 +1,10 @@
-import 'package:facto/model/user.dart';
-import 'package:facto/service/auth/auth.dart';
 import 'package:facto/util/images.dart';
 import 'package:facto/view/auth/log_in.dart';
-import 'package:facto/view/home/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:facto/util/globals.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:oktoast/oktoast.dart';
-import 'package:facto/database/firebase_db.dart' as fdb;
+
 
 class ForgotPassword extends StatefulWidget {
   _ForgotPasswordState createState() => _ForgotPasswordState();
@@ -75,7 +70,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                                 }));
                                     },
                                     child: Text(
-                                      'BAck To login',
+                                      'Back To login',
                                       style: TextStyle(color: Colors.blueAccent),
                                     ),
                                   )),
@@ -112,16 +107,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                             setState(() {
                                               opacity = 1.0;
                                             });
-                                            // auth.User userD = await se(
-                                            //     _usernameController.text,
-                                            //     _passwordController.text);
-                                            // await fdb.FirebaseDB.getUserDetails(
-                                            //     userD.uid, context)
-                                            //     .whenComplete((){
-                                            //   Navigator.pop(context);
-                                            //
-                                            // }
-                                            // );
                                           } catch (e) {
                                             print(
                                                 'Failed with error code: ${e.code}');

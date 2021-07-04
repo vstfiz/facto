@@ -1,28 +1,26 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:facto/util/globals.dart';
-import 'package:facto/view/manage_claims/manage_claims.dart';
-import 'package:facto/view/manage_users/manage_users.dart';
+import 'package:facto/view/manage_rss/manage_rss.dart';
 import 'package:facto/widgets/secondary_top_bar.dart';
 import 'package:facto/widgets/side_bar.dart';
 import 'package:facto/widgets/top_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:facto/database/firebase_db.dart' as fdb;
 
-class Claim extends StatefulWidget {
-  final String claimId;
+class RSS extends StatefulWidget{
+  final String rssId;
 
-  Claim(this.claimId);
+  RSS(this.rssId);
 
-
-  _ClaimState createState() => _ClaimState();
+  @override
+  _RSSState createState()=> _RSSState();
 }
 
-class _ClaimState extends State<Claim> {
+class _RSSState extends State<RSS>{
   bool isLoading = true;
   TextEditingController _commentController = new TextEditingController();
-  var claim = [];
+  var rss = [];
   String status;
   @override
   void initState() {
@@ -62,13 +60,13 @@ class _ClaimState extends State<Claim> {
   }
 
   _getData()async{
-    claim = await fdb.FirebaseDB.getClaimFromId(this.widget.claimId).whenComplete((){
+    rss = await fdb.FirebaseDB.getRSSFromId(this.widget.rssId).whenComplete((){
       setState(() {
         isLoading = false;
       });
     });
-    status = claim[5];
-    print(claim.length);
+    status = rss[3];
+    print(rss.length);
   }
   Widget _loadingScreen(String value) {
     return AlertDialog(
@@ -106,7 +104,7 @@ class _ClaimState extends State<Claim> {
             top: 0.0,
           ),
           Positioned(
-            child: SecondaryTopBar(new Text('Manage Claims')),
+            child: SecondaryTopBar(new Text('RSS Posts')),
             top: Globals.height * 2 / 33,
             right: 0.0,
           ),
@@ -118,7 +116,7 @@ class _ClaimState extends State<Claim> {
                 icon: Icon(Icons.arrow_back),
                 onPressed: () {
                   Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context){
-                    return ManageClaims(true);
+                    return ManageRSS();
                   }));
                 },
               )),
@@ -160,7 +158,7 @@ class _ClaimState extends State<Claim> {
                       left: 40,
                       child: Row(
                         children: [
-                          Text('Name',
+                          Text('Source',
                               style: TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.bold)),
                           SizedBox(
@@ -170,7 +168,7 @@ class _ClaimState extends State<Claim> {
                             width: 500,
                             height: 30,
                             child: Text(
-                              claim[0],
+                              rss[0],
                               style:
                               TextStyle(fontFamily: 'Livvic', fontSize: 20),
                             ),
@@ -183,7 +181,7 @@ class _ClaimState extends State<Claim> {
                       left: 40,
                       child: Row(
                         children: [
-                          Text('Claim ',
+                          Text('Url  ',
                               style: TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.bold)),
                           SizedBox(
@@ -193,7 +191,7 @@ class _ClaimState extends State<Claim> {
                             width: 500,
                             height: 30,
                             child: Text(
-                              claim[1],
+                              rss[1],
                               style:
                               TextStyle(fontFamily: 'Livvic', fontSize: 20),
                             ),
@@ -206,52 +204,6 @@ class _ClaimState extends State<Claim> {
                       left: 40,
                       child: Row(
                         children: [
-                          Text('Url1    ',
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold)),
-                          SizedBox(
-                            width: 50,
-                          ),
-                          SizedBox(
-                            width: 400,
-                            height: 30,
-                            child: Text(
-                              claim[2],
-                              style:
-                              TextStyle(fontFamily: 'Livvic', fontSize: 20),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    Positioned(
-                      top: 200,
-                      left: 40,
-                      child: Row(
-                        children: [
-                          Text('Url2  ',
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold)),
-                          SizedBox(
-                            width: 50,
-                          ),
-                          SizedBox(
-                            width: 400,
-                            height: 30,
-                            child: Text(
-                              claim[3],
-                              style:
-                              TextStyle(fontFamily: 'Livvic', fontSize: 20),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    Positioned(
-                      top: 250,
-                      left: 40,
-                      child: Row(
-                        children: [
                           Text('Description',
                               style: TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.bold)),
@@ -261,10 +213,10 @@ class _ClaimState extends State<Claim> {
                           SizedBox(
                             width: 400,
                             height: 80,
-                            child: AutoSizeText(
-                              claim[4],
+                            child: Text(
+                              rss[2],
                               style:
-                              TextStyle(fontFamily: 'Livvic', fontSize: 20),minFontSize: 15,overflow: TextOverflow.ellipsis,
+                              TextStyle(fontFamily: 'Livvic', fontSize: 20,),softWrap: true,
                             ),
                           )
                         ],
@@ -272,7 +224,7 @@ class _ClaimState extends State<Claim> {
                     ),
                     SizedBox(height: 20,),
                     Positioned(
-                      top: 350,
+                      top: 260,
                       left: 40,
                       child: Row(
                         children: [
@@ -314,7 +266,7 @@ class _ClaimState extends State<Claim> {
                           child: TextButton(
                             onPressed: () async{
                               _loadingDialog('Uploading Data...');
-                              await fdb.FirebaseDB.updateClaim(_commentController.text,status,this.widget.claimId);
+                              await fdb.FirebaseDB.updateRSS(_commentController.text,status,this.widget.rssId);
                               Navigator.pop(context);
                             },
                             child: Text(

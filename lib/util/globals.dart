@@ -2,10 +2,12 @@ library globals;
 
 import 'package:facto/model/user.dart';
 import 'package:facto/view/configurations/configurations.dart';
+import 'package:facto/view/create_ads/ad_data.dart';
 import 'package:facto/view/create_ads/create_ads.dart';
 import 'package:facto/view/create_feed/create_feed.dart';
 import 'package:facto/view/home/home_screen.dart';
 import 'package:facto/view/manage_claims/manage_claims.dart';
+import 'package:facto/view/manage_rss/manage_rss.dart';
 import 'package:facto/view/manage_users/manage_users.dart';
 import 'package:facto/view/prod_feeds/prod_feeds.dart';
 import 'package:facto/widgets/side_bar_tab.dart';
@@ -19,6 +21,7 @@ class Globals {
   static int selectedIndex = 0;
   static User user = new User("", "", "", "");
   static User mainUser = new User("", "", "", "");
+  static bool isDeleted = false;
 
   static var tabs = [
     new SideBarTab('Home', 0),
@@ -65,7 +68,7 @@ class Globals {
             selectedIndex = 2;
             Navigator.of(context)
                 .pushReplacement(new MaterialPageRoute(builder: (context) {
-              return HomeScreen(true);
+              return ManageRSS();
             }));
           }
         }
@@ -76,7 +79,7 @@ class Globals {
             selectedIndex = 3;
             Navigator.of(context)
                 .pushReplacement(new MaterialPageRoute(builder: (context) {
-              return CreateAds();
+              return AdData();
             }));
           }
         }

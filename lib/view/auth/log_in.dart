@@ -19,6 +19,47 @@ class _LogInState extends State<LogIn> {
   TextEditingController _usernameController = new TextEditingController();
   TextEditingController _passwordController = new TextEditingController();
 
+  static Future<void> _lockDialog(String value, BuildContext context) {
+    return showDialog<void>(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) => AlertDialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0)),
+              backgroundColor: Colors.white,
+              content: Container(
+                  height: 60,
+                  child: Center(
+                    child: Row(
+                      children: <Widget>[
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Text(
+                          value,
+                          style: TextStyle(
+                              fontFamily: "Livvic",
+                              fontSize: 18,
+                              color: Colors.red,
+                              letterSpacing: 1),
+                        )
+                      ],
+                    ),
+                  )),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pushReplacement(
+                        new MaterialPageRoute(builder: (context) {
+                      return LogIn();
+                    }));
+                  },
+                  child: Text('Dismiss'),
+                ),
+              ],
+            ));
+  }
+
   Future<void> _loadingDialog(String value) {
     return showDialog<void>(
         barrierDismissible: false,
@@ -33,7 +74,8 @@ class _LogInState extends State<LogIn> {
                   child: Row(
                     children: <Widget>[
                       CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(Colors.blueGrey),
+                        valueColor:
+                            AlwaysStoppedAnimation<Color>(Colors.blueGrey),
                       ),
                       SizedBox(
                         width: 20,
@@ -111,13 +153,11 @@ class _LogInState extends State<LogIn> {
                               top: 120,
                               left: 40,
                               child: TextButton(
-                                onPressed: (){
-                                  Navigator.of(context)
-                                      .pushReplacement(
-                                      new MaterialPageRoute(
-                                          builder: (context) {
-                                            return ForgotPassword();
-                                          }));
+                                onPressed: () {
+                                  Navigator.of(context).pushReplacement(
+                                      new MaterialPageRoute(builder: (context) {
+                                    return ForgotPassword();
+                                  }));
                                 },
                                 child: Text(
                                   'Forgot Password ?',
@@ -144,19 +184,28 @@ class _LogInState extends State<LogIn> {
                                         auth.User userD = await signInWithEmail(
                                             _usernameController.text,
                                             _passwordController.text);
-                                        await fdb.FirebaseDB.getUserDetails(
-                                                userD.uid, context)
-                                            .whenComplete((){
-                                              Navigator.pop(context);
-                                          Navigator.of(context)
-                                              .pushReplacement(
-                                              new MaterialPageRoute(
-                                                  builder: (context) {
-                                                    return HomeScreen(true);
-                                                  }));
+                                        bool status =
+                                            await fdb.FirebaseDB.getUserDetails(
+                                                userD.uid, context);
+                                        print(status.toString() + "vrvfs     "+ Globals.isDeleted.toString());
+                                        if(Globals.isDeleted){
+                                          _lockDialog(
+                                              'Sorry, your user account seems to have been deleted for violations. Please contact the panel admin for new account creation',
+                                              context);
                                         }
-                                                );
+                                        else{
+                                          if (status) {
+                                            await signOutWithGoogle();
+                                            _lockDialog(
+                                                'Sorry, your user account seems to have been locked for violations. Please contact the panel admin for resolution',
+                                                context);
+                                          } else {
+                                            Navigator.pop(context);
+                                            Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context){return HomeScreen(true);}));
+                                          }
+                                        }
                                       } catch (e) {
+                                        Navigator.pop(context);
                                         print(
                                             'Failed with error code: ${e.code}');
                                         setState(() {
