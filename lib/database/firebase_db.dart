@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:facto/model/ads.dart';
+import 'package:facto/model/category.dart';
 import 'package:facto/model/claims.dart';
 import 'package:facto/model/rss.dart';
 import 'package:facto/util/globals.dart';
@@ -226,7 +227,113 @@ class FirebaseDB {
       'comment': comment,
     });
   }
-
+  static Future<List<Claims>> getPartnerRequests(bool feedType,
+      BuildContext context) async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    var ref = firestore.collection('claims');
+    QuerySnapshot querySnapshot =
+    await ref.where('isPartnerRequest', isEqualTo: true).where(
+        'feedType', isEqualTo: feedType).get();
+    var value = new List.filled(0, Claims(
+        '',
+        '',
+        '',
+        '',
+        '',
+        false,
+        ''), growable: true);
+    List<DocumentSnapshot> ds = querySnapshot.docs;
+    ds.forEach((element) {
+      value.add(new Claims(
+          element['requestedBy'],
+          element['time'],
+          element['news'],
+          element['status'],
+          element['factCheckBy'],
+          false,
+          element['claimId']));
+    });
+    return value;
+  }
+  static Future<List<Claims>> getFilteredPartnerRequests(bool feedType, String status,
+      BuildContext context) async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    var ref = firestore.collection('claims');
+    QuerySnapshot querySnapshot =
+    await ref.where('isPartnerRequest', isEqualTo: true).where(
+        'feedType', isEqualTo: feedType)
+        .where('status', isEqualTo: status)
+        .get();
+    var value = new List.filled(0, Claims(
+        '',
+        '',
+        '',
+        '',
+        '',
+        false,
+        ''), growable: true);
+    List<DocumentSnapshot> ds = querySnapshot.docs;
+    ds.forEach((element) {
+      value.add(new Claims(
+          element['requestedBy'],
+          element['time'],
+          element['news'],
+          element['status'],
+          element['factCheckBy'],
+          false,
+          element['claimId']));
+    });
+    return value;
+  }
+  static Future<void> approvePartnerRequest(String claimId) async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    var ref = firestore.collection('claims');
+    QuerySnapshot querySnapshot =
+    await ref.where('claimId', isEqualTo: claimId).get();
+    String di = querySnapshot.docs.single.id;
+    await ref.doc(di).update({
+      'status': 'True',
+    });
+  }
+  static Future<void> rejectPartnerRequest(String claimId) async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    var ref = firestore.collection('claims');
+    QuerySnapshot querySnapshot =
+    await ref.where('claimId', isEqualTo: claimId).get();
+    String di = querySnapshot.docs.single.id;
+    await ref.doc(di).update({
+      'status': 'Rejected',
+    });
+  }
+  static Future<List<dynamic>> getPartnerRequestFromId(String claimId) async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    var ref = firestore.collection('claims');
+    QuerySnapshot querySnapshot =
+    await ref.where('claimId', isEqualTo: claimId).get();
+    List<DocumentSnapshot> ds = querySnapshot.docs;
+    DocumentSnapshot di = ds.single;
+    var value = [
+      di['requestedBy'],
+      di['news'],
+      di['url1'],
+      di['url2'],
+      di['description'],
+      di['status']
+    ];
+    return value;
+  }
+  static Future<void> updatePartnerRequest(String comment, String status,
+      String claimId) async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    var ref = firestore.collection('claims');
+    QuerySnapshot querySnapshot =
+    await ref.where('claimId', isEqualTo: claimId).get();
+    String di = querySnapshot.docs.single.id;
+    await ref.doc(di).update({
+      'status': status,
+      'comment': comment,
+    });
+  }
   static Future<List<RSSs>> getRSS(BuildContext context) async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     var ref = firestore.collection('rss');
@@ -412,6 +519,30 @@ class FirebaseDB {
           element['name'], element['uid'], element['status'], element['role'],
           element['factCheckImage'] + element['factCheckVideo'],
           element['feedsImage'] + element['feedsVideo']));
+    });
+    return value;
+  }
+
+  static Future<void> addCategory(String category,BuildContext context) async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    var ref = firestore.collection('category');
+    await ref.add({
+      'name' : category,
+      'isLocked' : false,
+      'url' : 'vgrfgvber',
+    });
+  }
+
+  static Future<List<Category>> getCategory(BuildContext context) async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    var ref = firestore.collection('category');
+    QuerySnapshot querySnapshot =
+    await ref.orderBy('name',descending: false).get();
+    var value = new List.filled(0, Category('',false,''), growable: true);
+    List<DocumentSnapshot> ds = querySnapshot.docs;
+    ds.forEach((element) {
+      value.add(new Category(
+          element['name'],element['isLocked'],element['url']));
     });
     return value;
   }

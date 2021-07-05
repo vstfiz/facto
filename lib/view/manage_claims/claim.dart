@@ -252,9 +252,9 @@ class _ClaimState extends State<Claim> {
                       left: 40,
                       child: Row(
                         children: [
-                          Text('Description',
+                          AutoSizeText('Description',
                               style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold)),
+                                  fontSize: 20, fontWeight: FontWeight.bold),softWrap: true,),
                           SizedBox(
                             width: 15,
                           ),

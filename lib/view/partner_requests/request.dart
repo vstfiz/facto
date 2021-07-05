@@ -1,6 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:facto/util/globals.dart';
-import 'package:facto/view/manage_rss/manage_rss.dart';
+import 'package:facto/view/partner_requests/partner_requests.dart';
 import 'package:facto/widgets/secondary_top_bar.dart';
 import 'package:facto/widgets/side_bar.dart';
 import 'package:facto/widgets/top_bar.dart';
@@ -8,19 +8,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:facto/database/firebase_db.dart' as fdb;
 
-class RSS extends StatefulWidget{
-  final String rssId;
+class Request extends StatefulWidget{
+  final String claimId;
 
-  RSS(this.rssId);
-
+  Request(this.claimId);
+  
   @override
-  _RSSState createState()=> _RSSState();
+  _RequestState createState()=> _RequestState();
 }
 
-class _RSSState extends State<RSS>{
+class _RequestState extends State<Request>{
   bool isLoading = true;
   TextEditingController _commentController = new TextEditingController();
-  var rss = [];
+  var claim = [];
   String status;
   @override
   void initState() {
@@ -60,13 +60,13 @@ class _RSSState extends State<RSS>{
   }
 
   _getData()async{
-    rss = await fdb.FirebaseDB.getRSSFromId(this.widget.rssId).whenComplete((){
+    claim = await fdb.FirebaseDB.getPartnerRequestFromId(this.widget.claimId).whenComplete((){
       setState(() {
         isLoading = false;
       });
     });
-    status = rss[3];
-    print(rss.length);
+    status = claim[5];
+    print(claim.length);
   }
   Widget _loadingScreen(String value) {
     return AlertDialog(
@@ -104,7 +104,7 @@ class _RSSState extends State<RSS>{
             top: 0.0,
           ),
           Positioned(
-            child: SecondaryTopBar(new Text('RSS Posts')),
+            child: SecondaryTopBar(new Text('Manage Claims')),
             top: Globals.height * 2 / 33,
             right: 0.0,
           ),
@@ -116,7 +116,7 @@ class _RSSState extends State<RSS>{
                 icon: Icon(Icons.arrow_back),
                 onPressed: () {
                   Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context){
-                    return ManageRSS();
+                    return PartnerRequests(true);
                   }));
                 },
               )),
@@ -158,7 +158,7 @@ class _RSSState extends State<RSS>{
                       left: 40,
                       child: Row(
                         children: [
-                          Text('Source',
+                          Text('Name',
                               style: TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.bold)),
                           SizedBox(
@@ -168,7 +168,7 @@ class _RSSState extends State<RSS>{
                             width: 500,
                             height: 30,
                             child: Text(
-                              rss[0],
+                              claim[0],
                               style:
                               TextStyle(fontFamily: 'Livvic', fontSize: 20),
                             ),
@@ -181,7 +181,7 @@ class _RSSState extends State<RSS>{
                       left: 40,
                       child: Row(
                         children: [
-                          Text('Url  ',
+                          Text('Claim ',
                               style: TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.bold)),
                           SizedBox(
@@ -191,7 +191,7 @@ class _RSSState extends State<RSS>{
                             width: 500,
                             height: 30,
                             child: Text(
-                              rss[1],
+                              claim[1],
                               style:
                               TextStyle(fontFamily: 'Livvic', fontSize: 20),
                             ),
@@ -204,19 +204,65 @@ class _RSSState extends State<RSS>{
                       left: 40,
                       child: Row(
                         children: [
-                          AutoSizeText('Description',
+                          Text('Url1    ',
                               style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),softWrap: true,),
+                                  fontSize: 20, fontWeight: FontWeight.bold)),
+                          SizedBox(
+                            width: 50,
+                          ),
+                          SizedBox(
+                            width: 400,
+                            height: 30,
+                            child: Text(
+                              claim[2],
+                              style:
+                              TextStyle(fontFamily: 'Livvic', fontSize: 20),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Positioned(
+                      top: 200,
+                      left: 40,
+                      child: Row(
+                        children: [
+                          Text('Url2  ',
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold)),
+                          SizedBox(
+                            width: 50,
+                          ),
+                          SizedBox(
+                            width: 400,
+                            height: 30,
+                            child: Text(
+                              claim[3],
+                              style:
+                              TextStyle(fontFamily: 'Livvic', fontSize: 20),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Positioned(
+                      top: 250,
+                      left: 40,
+                      child: Row(
+                        children: [
+                          Text('Description',
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold)),
                           SizedBox(
                             width: 15,
                           ),
                           SizedBox(
                             width: 400,
                             height: 80,
-                            child: Text(
-                              rss[2],
+                            child: AutoSizeText(
+                              claim[4],
                               style:
-                              TextStyle(fontFamily: 'Livvic', fontSize: 20,),softWrap: true,
+                              TextStyle(fontFamily: 'Livvic', fontSize: 20),softWrap: true,
                             ),
                           )
                         ],
@@ -224,7 +270,7 @@ class _RSSState extends State<RSS>{
                     ),
                     SizedBox(height: 20,),
                     Positioned(
-                      top: 260,
+                      top: 350,
                       left: 40,
                       child: Row(
                         children: [
@@ -266,7 +312,7 @@ class _RSSState extends State<RSS>{
                           child: TextButton(
                             onPressed: () async{
                               _loadingDialog('Uploading Data...');
-                              await fdb.FirebaseDB.updateRSS(_commentController.text,status,this.widget.rssId);
+                              await fdb.FirebaseDB.updatePartnerRequest(_commentController.text,status,this.widget.claimId);
                               Navigator.pop(context);
                             },
                             child: Text(

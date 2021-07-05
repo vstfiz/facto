@@ -69,26 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ))));
   }
 
-  _selectDate(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(), // Refer step 1
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2025),
-    );
-    if (picked != null && picked != selectedDate)
-      {
-        selectedDate = picked;
-        String time = picked.toString().substring(0,10).replaceAll('-', '');
-        _loadingDialog('Getting Data from Servers.....');
-        var timeFeed = await (fdb.FirebaseDB.getFeedForHomeWithDate(time, context));
-        setState(() {
-          feed = timeFeed;
-        });
-        Navigator.pop(context);
-      }
 
-  }
 
   Widget _loadingScreen(String value) {
     return AlertDialog(
@@ -114,6 +95,27 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             )));
+  }
+
+  _selectDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(), // Refer step 1
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2025),
+    );
+    if (picked != null && picked != selectedDate)
+    {
+      selectedDate = picked;
+      String time = picked.toString().substring(0,10).replaceAll('-', '');
+      _loadingDialog('Getting Data from Servers.....');
+      var timeFeed = await (fdb.FirebaseDB.getFeedForHomeWithDate(time, context));
+      setState(() {
+        feed = timeFeed;
+      });
+      Navigator.pop(context);
+    }
+
   }
 
   @override
