@@ -164,8 +164,6 @@ class _ManageUsersState extends State<ManageUsers> {
                               'Admin',
                               'Reviewer',
                               'Partner',
-                              'Author',
-                              'Editor'
                             ].map<DropdownMenuItem<String>>((String value) {
                               return DropdownMenuItem<String>(
                                 value: value,
@@ -322,6 +320,9 @@ class _ManageUsersState extends State<ManageUsers> {
   OverlayEntry floatingDropdown;
   bool isDropdownOpened = false;
 
+  OverlayEntry floatingDropdown1;
+  bool isDropdownOpened1 = false;
+
   OverlayEntry _createFloatingDropdown(BuildContext context,String status,String uid) {
     return OverlayEntry(builder: (context) {
       return Positioned(
@@ -377,6 +378,120 @@ class _ManageUsersState extends State<ManageUsers> {
                   },
                   child: Text(
                     status,
+                    style: TextStyle(color: Colors.black, fontSize: 15),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    });
+  }
+
+  OverlayEntry _createFloatingDropdown1(BuildContext context) {
+    return OverlayEntry(builder: (context) {
+      return Positioned(
+        // You can change the position here
+        right: 850,
+        width: 150,
+        top: 330,
+        height: 210,
+        // Any child
+        child: Card(
+          elevation: 12,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          color: Colors.white,
+          child: Column(
+            children: [
+              Container(
+                width: 150,
+                margin: EdgeInsets.symmetric(vertical: 10),
+                child: TextButton(
+                  onPressed: () async {
+                    _loadingDialog('Getting Data from Servers....');
+                    var adUsers = await fdb.FirebaseDB.getFilteredUsers('Admin');
+                    setState(() {
+                      users = adUsers;
+                    });
+                      floatingDropdown1.remove();
+                      setState(() {
+                        isDropdownOpened1 = !isDropdownOpened1;
+                    });
+                      Navigator.pop(context);
+                    // Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context){return ManageUsers();}));
+                  },
+                  child: Text(
+                    'Admin',
+                    style: TextStyle(color: Colors.black, fontSize: 15),
+                  ),
+                ),
+              ),
+              Container(
+                width: 150,
+                margin: EdgeInsets.symmetric(vertical: 10),
+                child: TextButton(
+                  onPressed: () async {
+                    _loadingDialog('Getting Data from Servers....');
+                    var adUsers = await fdb.FirebaseDB.getFilteredUsers('Reviewer');
+                    setState(() {
+                      users = adUsers;
+                    });
+                    floatingDropdown1.remove();
+                    setState(() {
+                      isDropdownOpened1 = !isDropdownOpened1;
+                    });
+                    Navigator.pop(context);
+                    // Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context){return ManageUsers();}));
+                  },
+                  child: Text(
+                    'Reviewer',
+                    style: TextStyle(color: Colors.black, fontSize: 15),
+                  ),
+                ),
+              ),
+              Container(
+                width: 150,
+                margin: EdgeInsets.symmetric(vertical: 10),
+                child: TextButton(
+                  onPressed: () async {
+                    _loadingDialog('Getting Data from Servers....');
+                    var adUsers = await fdb.FirebaseDB.getFilteredUsers('Partner');
+                    setState(() {
+                      users = adUsers;
+                    });
+                    floatingDropdown1.remove();
+                    setState(() {
+                      isDropdownOpened1 = !isDropdownOpened1;
+                    });
+                    Navigator.pop(context);
+                    // Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context){return ManageUsers();}));
+                  },
+                  child: Text(
+                    'Partner',
+                    style: TextStyle(color: Colors.black, fontSize: 15),
+                  ),
+                ),
+              ),
+              Container(
+                width: 150,
+                margin: EdgeInsets.symmetric(vertical: 10),
+                child: TextButton(
+                  onPressed: () async {
+                    _loadingDialog('Getting Data from Servers....');
+                    var adUsers = await fdb.FirebaseDB.getUsers(context);
+                    setState(() {
+                      users = adUsers;
+                    });
+                    floatingDropdown1.remove();
+                    setState(() {
+                      isDropdownOpened1 = !isDropdownOpened1;
+                    });
+                    Navigator.pop(context);
+                    // Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context){return ManageUsers();}));
+                  },
+                  child: Text(
+                    'All',
                     style: TextStyle(color: Colors.black, fontSize: 15),
                   ),
                 ),
@@ -463,12 +578,36 @@ class _ManageUsersState extends State<ManageUsers> {
                           ),
                         ),
                         DataColumn(
-                          label: Text(
-                            'Role Assigned',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.grey),
-                          ),
+                          label: Row(
+                            children: [
+                              Text(
+                                'Role Assigned',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.grey),
+                              ),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              IconButton(icon: Icon(Icons.filter_alt),color: Colors.grey, onPressed: (){
+                                setState(() {
+                                  if (isDropdownOpened1) {
+                                    floatingDropdown1.remove();
+                                  } else {
+                                    // findDropdownData();
+                                    floatingDropdown1 =
+                                        _createFloatingDropdown1(context);
+                                    Overlay.of(context)
+                                        .insert(floatingDropdown1);
+                                  }
+
+                                  isDropdownOpened1 =
+                                  !isDropdownOpened1;
+                                });
+
+                              })
+                            ],
+                          )
                         ),
                         DataColumn(
                           label: Text(
@@ -516,7 +655,6 @@ class _ManageUsersState extends State<ManageUsers> {
                                     Overlay.of(context)
                                         .insert(floatingDropdown);
                                   }
-
                                   isDropdownOpened =
                                   !isDropdownOpened;
                                 });

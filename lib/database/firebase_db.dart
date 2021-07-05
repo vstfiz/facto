@@ -399,4 +399,20 @@ class FirebaseDB {
     });
     return value;
   }
+
+  static Future<List<u.User>> getFilteredUsers(String val) async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    var ref = firestore.collection('users');
+    QuerySnapshot querySnapshot =
+    await ref.where('role',isEqualTo: val).get();
+    var value = new List.filled(0, u.User('', '', '', ''), growable: true);
+    List<DocumentSnapshot> ds = querySnapshot.docs;
+    ds.forEach((element) {
+      value.add(new u.User.forManage(
+          element['name'], element['uid'], element['status'], element['role'],
+          element['factCheckImage'] + element['factCheckVideo'],
+          element['feedsImage'] + element['feedsVideo']));
+    });
+    return value;
+  }
 }

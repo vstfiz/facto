@@ -1,6 +1,7 @@
 library globals;
 
 import 'package:facto/model/user.dart';
+import 'package:facto/view/analytics/analytics.dart';
 import 'package:facto/view/configurations/configurations.dart';
 import 'package:facto/view/create_ads/ad_data.dart';
 import 'package:facto/view/create_ads/create_ads.dart';
@@ -102,6 +103,17 @@ class Globals {
             Navigator.of(context)
                 .pushReplacement(new MaterialPageRoute(builder: (context) {
               return ProdFeeds();
+            }));
+          }
+        }
+        break;
+      case 9:
+        {
+          if (selectedIndex != 9) {
+            selectedIndex = 9;
+            Navigator.of(context)
+                .pushReplacement(new MaterialPageRoute(builder: (context) {
+              return Analytics();
             }));
           }
         }
