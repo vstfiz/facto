@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:facto/model/claims.dart';
 import 'package:facto/util/globals.dart';
 import 'package:facto/view/partner_requests/partner_requests.dart';
 import 'package:facto/widgets/secondary_top_bar.dart';
@@ -20,8 +21,9 @@ class Request extends StatefulWidget{
 class _RequestState extends State<Request>{
   bool isLoading = true;
   TextEditingController _commentController = new TextEditingController();
-  var claim = [];
+  Claims claim;
   String status;
+  String tags;
   @override
   void initState() {
     super.initState();
@@ -65,8 +67,12 @@ class _RequestState extends State<Request>{
         isLoading = false;
       });
     });
-    status = claim[5];
-    print(claim.length);
+    status = claim.status;
+    tags = '';
+    await claim.tags.forEach((element) {
+      tags = tags + element + ", ";
+    });
+
   }
   Widget _loadingScreen(String value) {
     return AlertDialog(
@@ -104,7 +110,7 @@ class _RequestState extends State<Request>{
             top: 0.0,
           ),
           Positioned(
-            child: SecondaryTopBar(new Text('Manage Claims')),
+            child: SecondaryTopBar(new Text('Manage Requests')),
             top: Globals.height * 2 / 33,
             right: 0.0,
           ),
@@ -122,43 +128,20 @@ class _RequestState extends State<Request>{
               )),
           Positioned(left: 0.0, top: Globals.height * 2 / 33, child: SideBar()),
           Positioned(
-              top: 200,
+              top: 150,
               left: 400,
               child: Container(
-                height: 450,
-                width: 800,
+                height: 600,
+                width: 900,
                 color: Colors.white,
                 child: Stack(
                   children: [
-                    Positioned(right:10,child: Container(child:
-                    DropdownButton<String>(
-                      value: status,
-                      icon: const Icon(Icons.arrow_drop_down_sharp),
-                      iconSize: 24,
-                      elevation: 16,
-                      style: const TextStyle(color: Colors.black),
-                      onChanged: (String newValue) {
-                        setState(() {
-                          status = newValue;
-                        });
-                        print(status);
-                      },
-                      items: <String>['Rejected', 'True', 'Pending']
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                    )
-                    )
-                    ),
                     Positioned(
                       top: 50,
                       left: 40,
                       child: Row(
                         children: [
-                          Text('Name',
+                          Text('Claim',
                               style: TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.bold)),
                           SizedBox(
@@ -168,7 +151,7 @@ class _RequestState extends State<Request>{
                             width: 500,
                             height: 30,
                             child: Text(
-                              claim[0],
+                              claim.news,
                               style:
                               TextStyle(fontFamily: 'Livvic', fontSize: 20),
                             ),
@@ -181,7 +164,7 @@ class _RequestState extends State<Request>{
                       left: 40,
                       child: Row(
                         children: [
-                          Text('Claim ',
+                          Text('Truth ',
                               style: TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.bold)),
                           SizedBox(
@@ -191,7 +174,7 @@ class _RequestState extends State<Request>{
                             width: 500,
                             height: 30,
                             child: Text(
-                              claim[1],
+                              claim.truth,
                               style:
                               TextStyle(fontFamily: 'Livvic', fontSize: 20),
                             ),
@@ -204,7 +187,7 @@ class _RequestState extends State<Request>{
                       left: 40,
                       child: Row(
                         children: [
-                          Text('Url1    ',
+                          Text('Url    ',
                               style: TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.bold)),
                           SizedBox(
@@ -214,7 +197,7 @@ class _RequestState extends State<Request>{
                             width: 400,
                             height: 30,
                             child: Text(
-                              claim[2],
+                              claim.url1,
                               style:
                               TextStyle(fontFamily: 'Livvic', fontSize: 20),
                             ),
@@ -227,7 +210,7 @@ class _RequestState extends State<Request>{
                       left: 40,
                       child: Row(
                         children: [
-                          Text('Url2  ',
+                          Text('Date  ',
                               style: TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.bold)),
                           SizedBox(
@@ -235,9 +218,9 @@ class _RequestState extends State<Request>{
                           ),
                           SizedBox(
                             width: 400,
-                            height: 30,
+
                             child: Text(
-                              claim[3],
+                              claim.date,
                               style:
                               TextStyle(fontFamily: 'Livvic', fontSize: 20),
                             ),
@@ -250,17 +233,17 @@ class _RequestState extends State<Request>{
                       left: 40,
                       child: Row(
                         children: [
-                          Text('Description',
+                          Text('Tags',
                               style: TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.bold)),
                           SizedBox(
-                            width: 15,
+                            width: 50,
                           ),
                           SizedBox(
                             width: 400,
-                            height: 80,
+
                             child: AutoSizeText(
-                              claim[4],
+                              tags,
                               style:
                               TextStyle(fontFamily: 'Livvic', fontSize: 20),softWrap: true,
                             ),
@@ -268,60 +251,147 @@ class _RequestState extends State<Request>{
                         ],
                       ),
                     ),
-                    SizedBox(height: 20,),
+                    Positioned(
+                      top: 300,
+                      left: 40,
+                      child: Row(
+                        children: [
+                          Text('Language',
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold)),
+                          SizedBox(
+                            width: 40,
+                          ),
+                          SizedBox(
+                            width: 400,
+
+                            child: Text(
+                              claim.language,
+                              style:
+                              TextStyle(fontFamily: 'Livvic', fontSize: 20),softWrap: true,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
                     Positioned(
                       top: 350,
                       left: 40,
                       child: Row(
                         children: [
-                          Text('Comment', style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold)),
+                          Text('Geo',
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold)),
                           SizedBox(
                             width: 50,
                           ),
                           SizedBox(
                             width: 400,
-                            height: 30,
+
+                            child: AutoSizeText(
+                              claim.geo,
+                              style:
+                              TextStyle(fontFamily: 'Livvic', fontSize: 20),softWrap: true,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Positioned(
+                      top: 400,
+                      left: 40,
+                      child: Row(
+                        children: [
+                          Text('Category',
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold)),
+                          SizedBox(
+                            width: 40,
+                          ),
+                          SizedBox(
+                            width: 400,
+                            child: Text(
+                              claim.category,
+                              style:
+                              TextStyle(fontFamily: 'Livvic', fontSize: 20),softWrap: true,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Positioned(
+                      top: 450,
+                      left: 40,
+                      child: Row(
+                        children: [
+                          Text('If Rejected then why',
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold)),
+                          SizedBox(
+                            width: 40,
+                          ),
+                          SizedBox(
+                            width: 400,
                             child: TextField(
                               controller: _commentController,
-                              keyboardType: TextInputType.multiline,
-                              maxLines: 5,
-                              style: TextStyle(fontFamily: 'Livvic'),
                               decoration: InputDecoration(
-                                  border: UnderlineInputBorder(),
-                                  contentPadding: EdgeInsets.only(bottom: 10.0)
+                                border: UnderlineInputBorder(),
+                                contentPadding: EdgeInsets.only(bottom: 10)
                               ),
                             ),
                           )
                         ],
                       ),
                     ),
-                    Positioned(top: 200,
-                        left: 600,
-                        child: IconButton(
-                          icon: Icon(Icons.image_outlined), iconSize: 150,)),
                     Positioned(
-                        top: 400,
+                        top: 530,
                         left: 600,
-                        child: Container(
-                          height: 30,
-                          width: 170,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(6),
-                              color: Color(0xFF5A5A5A)),
-                          child: TextButton(
-                            onPressed: () async{
-                              _loadingDialog('Uploading Data...');
-                              await fdb.FirebaseDB.updatePartnerRequest(_commentController.text,status,this.widget.claimId);
-                              Navigator.pop(context);
-                            },
-                            child: Text(
-                              'Save',
-                              style:
-                              TextStyle(fontSize: 18, color: Colors.white),
-                            ),
-                          ),
-                        )),
+                        child:
+                       Row(
+                         children: [
+                           Container(
+                             height: 40,
+                             width: 100,
+                             decoration: BoxDecoration(
+                                 borderRadius: BorderRadius.circular(6),
+                                 color: Color(0xFF5A5A5A)),
+                             child: TextButton(
+                               onPressed: () async{
+
+                                 _loadingDialog('Uploading Data...');
+                                 await fdb.FirebaseDB.updatePartnerRequest(_commentController.text,status,this.widget.claimId);
+                                 Navigator.pop(context);
+                               },
+                               child: Text(
+                                 'Approve',
+                                 style:
+                                 TextStyle(fontSize: 18, color: Colors.white),
+                               ),
+                             ),
+                           ),SizedBox(width: 50,) ,Container(
+                             height: 40,
+                             width: 100,
+                             decoration: BoxDecoration(
+                                 borderRadius: BorderRadius.circular(6),
+                                 color: Color(0xFF5A5A5A)),
+                             child: TextButton(
+                               onPressed: () async{
+                                 setState(() {
+                                   status = 'Rejected';
+                                 });
+                                 _loadingDialog('Uploading Data...');
+                                 await fdb.FirebaseDB.updatePartnerRequest(_commentController.text,status,this.widget.claimId);
+                                 Navigator.pop(context);
+                               },
+                               child: Text(
+                                 'Reject',
+                                 style:
+                                 TextStyle(fontSize: 18, color: Colors.white),
+                               ),
+                             ),
+                           )
+                         ],
+                       )),
                   ],
                 ),
               )

@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:facto/model/claims.dart';
 import 'package:facto/util/globals.dart';
 import 'package:facto/view/manage_claims/manage_claims.dart';
 import 'package:facto/view/manage_users/manage_users.dart';
@@ -22,7 +23,7 @@ class Claim extends StatefulWidget {
 class _ClaimState extends State<Claim> {
   bool isLoading = true;
   TextEditingController _commentController = new TextEditingController();
-  var claim = [];
+  Claims claim;
   String status;
   @override
   void initState() {
@@ -67,8 +68,7 @@ class _ClaimState extends State<Claim> {
         isLoading = false;
       });
     });
-    status = claim[5];
-    print(claim.length);
+    status = claim.status;
   }
   Widget _loadingScreen(String value) {
     return AlertDialog(
@@ -170,7 +170,7 @@ class _ClaimState extends State<Claim> {
                             width: 500,
                             height: 30,
                             child: Text(
-                              claim[0],
+                              claim.requestedBy,
                               style:
                               TextStyle(fontFamily: 'Livvic', fontSize: 20),
                             ),
@@ -193,7 +193,7 @@ class _ClaimState extends State<Claim> {
                             width: 500,
                             height: 30,
                             child: Text(
-                              claim[1],
+                              claim.news,
                               style:
                               TextStyle(fontFamily: 'Livvic', fontSize: 20),
                             ),
@@ -216,7 +216,7 @@ class _ClaimState extends State<Claim> {
                             width: 400,
                             height: 30,
                             child: Text(
-                              claim[2],
+                              claim.url1,
                               style:
                               TextStyle(fontFamily: 'Livvic', fontSize: 20),
                             ),
@@ -239,7 +239,7 @@ class _ClaimState extends State<Claim> {
                             width: 400,
                             height: 30,
                             child: Text(
-                              claim[3],
+                              claim.url2,
                               style:
                               TextStyle(fontFamily: 'Livvic', fontSize: 20),
                             ),
@@ -262,7 +262,7 @@ class _ClaimState extends State<Claim> {
                             width: 400,
                             height: 80,
                             child: AutoSizeText(
-                              claim[4],
+                              claim.description,
                               style:
                               TextStyle(fontFamily: 'Livvic', fontSize: 20),minFontSize: 15,overflow: TextOverflow.ellipsis,
                             ),

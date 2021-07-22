@@ -1,5 +1,7 @@
 library globals;
 
+import 'dart:convert';
+import 'dart:math';
 import 'package:facto/model/user.dart';
 import 'package:facto/view/analytics/analytics.dart';
 import 'package:facto/view/configurations/configurations.dart';
@@ -12,6 +14,8 @@ import 'package:facto/view/manage_rss/manage_rss.dart';
 import 'package:facto/view/manage_users/manage_users.dart';
 import 'package:facto/view/partner_requests/partner_requests.dart';
 import 'package:facto/view/prod_feeds/prod_feeds.dart';
+import 'package:facto/view/rejected_feeds/rejected_feeds.dart';
+import 'package:facto/view/review/review.dart';
 import 'package:facto/widgets/side_bar_tab.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,11 +23,18 @@ import 'package:flutter/material.dart';
 class Globals {
   static double height = 0.0;
   static double width = 0.0;
+  static String userLevel;
 
   static int selectedIndex = 0;
   static User user = new User("", "", "", "");
   static User mainUser = new User("", "", "", "");
   static bool isDeleted = false;
+
+  static String getRandString(int len) {
+    var random = Random.secure();
+    var values = List<int>.generate(len, (i) => random.nextInt(255));
+    return base64UrlEncode(values);
+  }
 
   static var tabs = [
     new SideBarTab('Home', 0),
@@ -78,11 +89,13 @@ class Globals {
       case 3:
         {
           if (selectedIndex != 3) {
-            selectedIndex = 3;
-            Navigator.of(context)
-                .pushReplacement(new MaterialPageRoute(builder: (context) {
-              return AdData();
-            }));
+            if(userLevel == 'Admin'){
+              selectedIndex = 3;
+              Navigator.of(context)
+                  .pushReplacement(new MaterialPageRoute(builder: (context) {
+                return AdData();
+              }));
+            }
           }
         }
         break;
@@ -92,7 +105,7 @@ class Globals {
             selectedIndex = 4;
             Navigator.of(context)
                 .pushReplacement(new MaterialPageRoute(builder: (context) {
-              return CreateFeed();
+              return CreateFeed(true);
             }));
           }
         }
@@ -103,19 +116,47 @@ class Globals {
             selectedIndex = 5;
             Navigator.of(context)
                 .pushReplacement(new MaterialPageRoute(builder: (context) {
-              return ProdFeeds();
+              return ProdFeeds(true,true);
             }));
+          }
+        }
+        break;
+      case 6:
+        {
+          if (selectedIndex != 6) {
+            if (userLevel == 'Admin') {
+              selectedIndex = 6;
+              Navigator.of(context)
+                  .pushReplacement(new MaterialPageRoute(builder: (context) {
+                return RejectedFeeds();
+              }));
+            }
+          }
+        }
+        break;
+      case 7:
+        {
+          if (selectedIndex != 7) {
+            if (userLevel == 'Admin') {
+              selectedIndex = 7;
+              Navigator.of(context)
+                  .pushReplacement(new MaterialPageRoute(builder: (context) {
+                return Review(true);
+              }));
+            }
           }
         }
         break;
       case 8:
         {
           if (selectedIndex != 8) {
-            selectedIndex = 8;
-            Navigator.of(context)
-                .pushReplacement(new MaterialPageRoute(builder: (context) {
-              return PartnerRequests(true);
-            }));
+            if(userLevel == 'Admin'){
+              selectedIndex = 8;
+              Navigator.of(context)
+                  .pushReplacement(new MaterialPageRoute(builder: (context) {
+                return PartnerRequests(true);
+              }));
+            }
           }
         }
         break;
@@ -133,11 +174,13 @@ class Globals {
       case 10:
         {
           if (selectedIndex != 10) {
-            selectedIndex = 10;
-            Navigator.of(context)
-                .pushReplacement(new MaterialPageRoute(builder: (context) {
-              return ManageUsers();
-            }));
+            if (userLevel == 'Admin') {
+              selectedIndex = 10;
+              Navigator.of(context)
+                  .pushReplacement(new MaterialPageRoute(builder: (context) {
+                return ManageUsers();
+              }));
+            }
           }
         }
         break;
@@ -152,8 +195,6 @@ class Globals {
           }
         }
         break;
-
-
     }
   }
 }

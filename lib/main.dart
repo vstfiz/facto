@@ -13,6 +13,8 @@ import 'package:facto/view/manage_rss/manage_rss.dart';
 import 'package:facto/view/manage_users/manage_users.dart';
 import 'package:facto/view/partner_requests/partner_requests.dart';
 import 'package:facto/view/prod_feeds/prod_feeds.dart';
+import 'package:facto/view/rejected_feeds/rejected_feeds.dart';
+import 'package:facto/view/review/review.dart';
 import 'package:facto/view/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +23,6 @@ void main() {
 }
 
 class MyApp extends StatefulWidget {
-  // This widget is the root of your application.
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -33,7 +34,6 @@ class _MyAppState extends State<MyApp> {
       return OrientationBuilder(builder: (context, orientation) {
         Globals.height = constraints.maxHeight;
         Globals.width = constraints.maxWidth;
-
         return MaterialApp(
             title: 'Facto Admin',
             theme: ThemeData(
@@ -50,10 +50,11 @@ class _MyAppState extends State<MyApp> {
                   Globals.user.uid = user.uid;
                   Globals.user.name = user.displayName;
                 }
-                return PartnerRequests(true);
+                return SplashScreen();
               },
             ));
       });
     });
+
   }
 }

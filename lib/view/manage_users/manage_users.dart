@@ -561,7 +561,8 @@ class _ManageUsersState extends State<ManageUsers> {
           Positioned(
               top: 300,
               left: 400,
-              child: Container(
+              child:
+              Container(
                 height: 400,
                 width: 900,
                 child: Card(
