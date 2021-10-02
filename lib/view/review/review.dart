@@ -327,31 +327,37 @@ class _ReviewState extends State<Review>{
                                   ],
                                 ),
                                 onTap: () {
-                                  Navigator.of(context).pushReplacement(
-                                      new MaterialPageRoute(
-                                          builder: (context) {
-                                            return ReviewFeed(feeds[index].claimId);
-                                          }));
+                                  if(feeds[index].feedType){
+                                    Navigator.of(context).pushReplacement(
+                                        new MaterialPageRoute(
+                                            builder: (context) {
+                                              return ReviewFeed(feeds[index].claimId);
+                                            }));
+                                  }
                                 },
                               )),
                               DataCell(GestureDetector(
                                 child: Text(feeds[index].time),
                                 onTap: () {
-                                  Navigator.of(context).pushReplacement(
-                                      new MaterialPageRoute(
-                                          builder: (context) {
-                                            return ReviewFeed(feeds[index].claimId);
-                                          }));
+                                  if(feeds[index].feedType){
+                                    Navigator.of(context).pushReplacement(
+                                        new MaterialPageRoute(
+                                            builder: (context) {
+                                              return ReviewFeed(feeds[index].claimId);
+                                            }));
+                                  }
                                 },
                               )),
                               DataCell(GestureDetector(
                                 child: Text(feeds[index].claim),
                                 onTap: () {
-                                  Navigator.of(context).pushReplacement(
-                                      new MaterialPageRoute(
-                                          builder: (context) {
-                                            return ReviewFeed(feeds[index].claimId);
-                                          }));
+                                  if(feeds[index].feedType){
+                                    Navigator.of(context).pushReplacement(
+                                        new MaterialPageRoute(
+                                            builder: (context) {
+                                              return ReviewFeed(feeds[index].claimId);
+                                            }));
+                                  }
                                 },
                               )),
                             ],

@@ -40,10 +40,10 @@ class _ManageClaimsState extends State<ManageClaims> {
     return OverlayEntry(builder: (context) {
       return Positioned(
         // You can change the position here
-        right: 400,
-        width: 150,
-        top: 200,
-        height: 210,
+        right: Globals.getWidth(400),
+        width: Globals.getWidth(150),
+        top: Globals.getHeight(200),
+        height: Globals.getHeight(210),
         // Any child
         child: Card(
           elevation: 12,
@@ -52,7 +52,7 @@ class _ManageClaimsState extends State<ManageClaims> {
           child: Column(
             children: [
               Container(
-                width: 150,
+                width: Globals.getWidth(150),
                 margin: EdgeInsets.symmetric(vertical: 10),
                 child: TextButton(
                   onPressed: () async {
@@ -82,7 +82,7 @@ class _ManageClaimsState extends State<ManageClaims> {
                 ),
               ),
               Container(
-                width: 150,
+                width: Globals.getWidth(150),
                 margin: EdgeInsets.symmetric(vertical: 10),
                 child: TextButton(
                   onPressed: () async {
@@ -113,7 +113,7 @@ class _ManageClaimsState extends State<ManageClaims> {
                 ),
               ),
               Container(
-                width: 150,
+                width: Globals.getWidth(150),
                 margin: EdgeInsets.symmetric(vertical: 10),
                 child: TextButton(
                   onPressed: ()async{
@@ -143,7 +143,7 @@ class _ManageClaimsState extends State<ManageClaims> {
                 ),
               ),
               Container(
-                width: 150,
+                width: Globals.getWidth(150),
                 margin: EdgeInsets.symmetric(vertical: 10),
                 child: TextButton(
                   onPressed: ()async{
@@ -188,7 +188,7 @@ class _ManageClaimsState extends State<ManageClaims> {
                 borderRadius: BorderRadius.circular(10.0)),
             backgroundColor: Colors.white,
             content: Container(
-                height: 60,
+                height: Globals.getHeight(60),
                 child: Center(
                   child: Row(
                     children: <Widget>[
@@ -197,7 +197,7 @@ class _ManageClaimsState extends State<ManageClaims> {
                             AlwaysStoppedAnimation<Color>(Colors.blueGrey),
                       ),
                       SizedBox(
-                        width: 20,
+                        width: Globals.getWidth(20),
                       ),
                       Text(
                         value,
@@ -231,7 +231,7 @@ class _ManageClaimsState extends State<ManageClaims> {
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
         backgroundColor: Colors.white,
         content: Container(
-            height: 60,
+            height: Globals.getHeight(60),
             child: Center(
               child: Row(
                 children: <Widget>[
@@ -239,7 +239,7 @@ class _ManageClaimsState extends State<ManageClaims> {
                     valueColor: AlwaysStoppedAnimation<Color>(Colors.blueGrey),
                   ),
                   SizedBox(
-                    width: 20,
+                    width: (20),
                   ),
                   Text(
                     value,
@@ -290,11 +290,11 @@ class _ManageClaimsState extends State<ManageClaims> {
                 Positioned(
                     left: 0.0, top: Globals.height * 2 / 33, child: SideBar()),
                 Positioned(
-                    top: 150,
-                    left: 300,
+                    top: Globals.getHeight(150),
+                    left: Globals.getWidth(300),
                     child: Container(
-                      height: 500,
-                      width: 1250,
+                      height: Globals.getHeight(500),
+                      width: Globals.getWidth(1250),
                       child: Card(
                         elevation: 12,
                         child: SingleChildScrollView(
@@ -445,8 +445,8 @@ class _ManageClaimsState extends State<ManageClaims> {
                       ),
                     )),
                 Positioned(
-                    top: 650,
-                    left: 300,
+                    top: Globals.getHeight(650),
+                    left: Globals.getWidth(300),
                     child: Row(
                       children: [
                         Checkbox(
@@ -472,18 +472,18 @@ class _ManageClaimsState extends State<ManageClaims> {
                       ],
                     )),
                 Positioned(
-                  top: 675,
+                  top: Globals.getHeight(675),
                   left: (Globals.width ~/ 2) -
                       ((claims.length ~/ 10) >= 10
-                          ? 415 / 2
-                          : ((2 + claims.length ~/ 10) * 30 +
+                          ? Globals.getWidth(415) / 2
+                          : ((2 + claims.length ~/ 10) * Globals.getWidth(30) +
                                   (1 + claims.length ~/ 10) * 5) /
                               2),
                   child: Row(
                     children: [
                       Container(
-                        height: 30,
-                        width: 30,
+                        height: Globals.getHeight(30),
+                        width: Globals.getWidth(30),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
                             color: Colors.grey[350]),
@@ -516,8 +516,8 @@ class _ManageClaimsState extends State<ManageClaims> {
                             return Row(
                               children: [
                                 Container(
-                                  height: 30,
-                                  width: 30,
+                                  height: Globals.getHeight(30),
+                                  width: Globals.getWidth(30),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(15),
                                     color: selectedPage == 1
@@ -548,8 +548,8 @@ class _ManageClaimsState extends State<ManageClaims> {
                         ),
                       ),
                       Container(
-                        height: 30,
-                        width: 30,
+                        height: Globals.getHeight(30),
+                        width: Globals.getWidth(30),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
                             color: Colors.grey[350]),
@@ -575,13 +575,13 @@ class _ManageClaimsState extends State<ManageClaims> {
                   ),
                 ),
                 Positioned(
-                    top: 720,
-                    left: 1200,
+                    top: Globals.getHeight(720),
+                    left: Globals.getWidth(1200),
                     child: Row(
                       children: [
                         Container(
-                          height: 40,
-                          width: 170,
+                          height: Globals.getHeight(40),
+                          width: Globals.getWidth(170),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(6),
                               color: Color(0xFF343434)),
@@ -609,11 +609,11 @@ class _ManageClaimsState extends State<ManageClaims> {
                           ),
                         ),
                         SizedBox(
-                          width: 30,
+                          width: (30),
                         ),
                         Container(
-                          height: 40,
-                          width: 170,
+                          height: Globals.getHeight(40),
+                          width: Globals.getWidth(170),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(6),
                               color: Color(0xFF5A5A5A)),

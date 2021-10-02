@@ -15,8 +15,8 @@ class _SideBarState extends State<SideBar> {
       height: Globals.height * 31 / 33,
       width: Globals.width / 6,
       color: Colors.grey[500],
-      padding: EdgeInsets.only(
-          top: Globals.height / 15, bottom: Globals.height * 2 / 15),
+      padding: EdgeInsets.symmetric(
+          vertical: Globals.userLevel=='Partner'?Globals.height * 12/ 30:Globals.height / 15,),
       child: ListView(
         children: Globals.tabs,
         ),

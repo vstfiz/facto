@@ -47,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 borderRadius: BorderRadius.circular(10.0)),
             backgroundColor: Colors.white,
             content: Container(
-                height: 60,
+                height: Globals.getHeight(60),
                 child: Center(
                   child: Row(
                     children: <Widget>[
@@ -55,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         valueColor: AlwaysStoppedAnimation<Color>(Colors.blueGrey),
                       ),
                       SizedBox(
-                        width: 20,
+                        width: Globals.getWidth(20),
                       ),
                       Text(
                         value,
@@ -135,7 +135,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   right: 0.0,
                 ),
                 Positioned(
-                  top: 10 + Globals.height * 2 / 33,
+                  top: Globals.getHeight(10) + Globals.height * 2 / 33,
                   right: Globals.width / 55,
                   child: Row(
                     children: [
@@ -166,7 +166,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Row(
                       children: [
                         Container(
-                            height: 100,
+                            height: Globals.getHeight(100),
                             width: Globals.height / 5,
                             decoration: BoxDecoration(
                                 color: Color(0xFF1E7D34),
@@ -185,7 +185,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           width: Globals.width / 20,
                         ),
                         Container(
-                          height: 100,
+                          height: Globals.getHeight(100),
                           width: Globals.height / 5,
                           decoration: BoxDecoration(
                               color: Color(0xFF128799),
@@ -205,7 +205,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           width: Globals.width / 20,
                         ),
                         Container(
-                            height: 100,
+                            height: Globals.getHeight(100),
                             width: Globals.height / 5,
                             decoration: BoxDecoration(
                                 color: Color(0xFFE6B00E),
@@ -224,7 +224,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           width: Globals.width / 20,
                         ),
                         Container(
-                          height: 100,
+                          height: Globals.getHeight(100),
                           width: Globals.height / 5,
                           decoration: BoxDecoration(
                               color: Color(0xFFBF2E3C),
@@ -245,13 +245,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 Positioned(
-                  top: 250,
-                  left: 1000,
+                  top: Globals.getHeight(250),
+                  left: Globals.getWidth(1000),
                   child: Row(
                     children: [
                       SizedBox(
-                        width: 130,
-                        height: 40,
+                        width: Globals.getWidth(130),
+                        height: Globals.getHeight(40),
                         child: Center(
                           child: Card(
                               elevation: 8,
@@ -266,7 +266,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   child: Row(
                                     children: [
                                       SizedBox(
-                                        width: 15,
+                                        width: Globals.getWidth(15),
                                       ),
                                       Icon(
                                         Icons.calendar_today_outlined,
@@ -289,10 +289,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               )),
                         ),
                       ),
-                      SizedBox(width: 10,),
+                      SizedBox(width: Globals.getWidth(10),),
                       selectedDate!=null?Container(
-                        width: 30,
-                        height: 30,
+                        width: Globals.getWidth(30),
+                        height: Globals.getHeight(30),
                         decoration: BoxDecoration(
                           color: Colors.blueGrey,
                           borderRadius: BorderRadius.circular(15)
@@ -310,11 +310,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   )
                 ),
                 Positioned(
-                    top: 300,
-                    left: 400,
+                    top: Globals.getHeight(300),
+                    left: Globals.getWidth(400),
                     child: Container(
-                      height: 400,
-                      width: 900,
+                      height: Globals.getHeight(400),
+                      width: Globals.getWidth(900),
                       child: Card(
                         elevation: 12,
                         child: SingleChildScrollView(

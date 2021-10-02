@@ -3,5 +3,5 @@ class Category{
   bool isLocked;
   String url;
 
-  Category(this.name, this.isLocked, this.url);
+  Category(this.name, this.url);
 }

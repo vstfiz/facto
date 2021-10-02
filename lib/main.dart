@@ -34,6 +34,8 @@ class _MyAppState extends State<MyApp> {
       return OrientationBuilder(builder: (context, orientation) {
         Globals.height = constraints.maxHeight;
         Globals.width = constraints.maxWidth;
+        print(Globals.width);
+        print(Globals.height);
         return MaterialApp(
             title: 'Facto Admin',
             theme: ThemeData(

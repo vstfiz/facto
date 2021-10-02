@@ -35,10 +35,10 @@ class _ManageRSSState extends State<ManageRSS> {
     return OverlayEntry(builder: (context) {
       return Positioned(
         // You can change the position here
-        right: 400,
-        width: 150,
-        top: 200,
-        height: 210,
+        right: Globals.getWidth(400),
+        width:  Globals.getWidth(150),
+        top: Globals.getHeight(200),
+        height: Globals.getHeight(210),
         // Any child
         child: Card(
           elevation: 12,
@@ -47,7 +47,7 @@ class _ManageRSSState extends State<ManageRSS> {
           child: Column(
             children: [
               Container(
-                width: 150,
+                width:  Globals.getWidth(150),
                 margin: EdgeInsets.symmetric(vertical: 10),
                 child: TextButton(
                   onPressed: () async {
@@ -69,7 +69,7 @@ class _ManageRSSState extends State<ManageRSS> {
                 ),
               ),
               Container(
-                width: 150,
+                width:  Globals.getWidth(150),
                 margin: EdgeInsets.symmetric(vertical: 10),
                 child: TextButton(
                   onPressed: () async {
@@ -92,7 +92,7 @@ class _ManageRSSState extends State<ManageRSS> {
                 ),
               ),
               Container(
-                width: 150,
+                width:  Globals.getWidth(150),
                 margin: EdgeInsets.symmetric(vertical: 10),
                 child: TextButton(
                   onPressed: () async {
@@ -115,7 +115,7 @@ class _ManageRSSState extends State<ManageRSS> {
                 ),
               ),
               Container(
-                width: 150,
+                width:  Globals.getWidth(150),
                 margin: EdgeInsets.symmetric(vertical: 10),
                 child: TextButton(
                   onPressed: () async {
@@ -153,7 +153,7 @@ class _ManageRSSState extends State<ManageRSS> {
                 borderRadius: BorderRadius.circular(10.0)),
             backgroundColor: Colors.white,
             content: Container(
-                height: 60,
+                height: Globals.getHeight(60),
                 child: Center(
                   child: Row(
                     children: <Widget>[
@@ -162,7 +162,7 @@ class _ManageRSSState extends State<ManageRSS> {
                             AlwaysStoppedAnimation<Color>(Colors.blueGrey),
                       ),
                       SizedBox(
-                        width: 20,
+                        width:  Globals.getWidth(20),
                       ),
                       Text(
                         value,
@@ -189,7 +189,7 @@ class _ManageRSSState extends State<ManageRSS> {
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
         backgroundColor: Colors.white,
         content: Container(
-            height: 60,
+            height: Globals.getHeight(60),
             child: Center(
               child: Row(
                 children: <Widget>[
@@ -197,7 +197,7 @@ class _ManageRSSState extends State<ManageRSS> {
                     valueColor: AlwaysStoppedAnimation<Color>(Colors.blueGrey),
                   ),
                   SizedBox(
-                    width: 20,
+                    width:  Globals.getWidth(20),
                   ),
                   Text(
                     value,
@@ -237,7 +237,7 @@ class _ManageRSSState extends State<ManageRSS> {
                     child: Row(
                       children: [
                         Container(
-                            height: 40,
+                            height: Globals.getHeight(40),
                             width: Globals.height / 5,
                             decoration: BoxDecoration(
                                 color: Color(0xFF1E7D34),
@@ -267,7 +267,7 @@ class _ManageRSSState extends State<ManageRSS> {
                           width: Globals.width / 20,
                         ),
                         Container(
-                            height: 40,
+                            height: Globals.getHeight(40),
                             width: Globals.height / 5,
                             decoration: BoxDecoration(
                                 color: Color(0xFF128799),
@@ -297,7 +297,7 @@ class _ManageRSSState extends State<ManageRSS> {
                           width: Globals.width / 20,
                         ),
                         Container(
-                            height: 40,
+                            height: Globals.getHeight(40),
                             width: Globals.height / 5,
                             decoration: BoxDecoration(
                                 color: Color(0xFFE6B00E),
@@ -329,11 +329,11 @@ class _ManageRSSState extends State<ManageRSS> {
                   ),
                 ),
                 Positioned(
-                    top: 250,
-                    left: 300,
+                    top: Globals.getHeight(250),
+                    left:  Globals.getWidth(300),
                     child: Container(
-                      height: 450,
-                      width: 1250,
+                      height: Globals.getHeight(450),
+                      width:  Globals.getWidth(1250),
                       child: Card(
                         elevation: 12,
                         child: SingleChildScrollView(
@@ -484,8 +484,8 @@ class _ManageRSSState extends State<ManageRSS> {
                       ),
                     )),
                 Positioned(
-                    top: 710,
-                    left: 300,
+                    top: Globals.getHeight(710),
+                    left:  Globals.getWidth(300),
                     child: Row(
                       children: [
                         Checkbox(

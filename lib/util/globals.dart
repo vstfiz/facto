@@ -36,7 +36,18 @@ class Globals {
     return base64UrlEncode(values);
   }
 
-  static var tabs = [
+  static double getHeight(double value){
+    return (value/789) * Globals.height;
+  }
+
+  static double getWidth(double value){
+    return (value/1600) * Globals.width;
+  }
+
+  static var tabs = userLevel=='Partner'?[
+  new SideBarTab('Create Partner Requests', 0),
+  new SideBarTab('Manage Requests', 1),
+  ]:[
     new SideBarTab('Home', 0),
     new SideBarTab('Manage Claims', 1),
     new SideBarTab('Manage RSS', 2),
@@ -57,10 +68,18 @@ class Globals {
         {
           if (selectedIndex != 0) {
             selectedIndex = 0;
-            Navigator.of(context)
-                .pushReplacement(new MaterialPageRoute(builder: (context) {
-              return HomeScreen(true);
-            }));
+            if(userLevel == 'Partner'){
+              Navigator.of(context)
+                  .pushReplacement(new MaterialPageRoute(builder: (context) {
+                return CreateFeed(true);
+              }));
+            }
+            else{
+              Navigator.of(context)
+                  .pushReplacement(new MaterialPageRoute(builder: (context) {
+                return HomeScreen(true);
+              }));
+            }
           }
         }
         break;
@@ -68,10 +87,18 @@ class Globals {
         {
           if (selectedIndex != 1) {
             selectedIndex = 1;
-            Navigator.of(context)
-                .pushReplacement(new MaterialPageRoute(builder: (context) {
-              return ManageClaims(true);
-            }));
+            if(userLevel == 'Partner'){
+              Navigator.of(context)
+                  .pushReplacement(new MaterialPageRoute(builder: (context) {
+                return PartnerRequests(true);
+              }));
+            }
+            else{
+              Navigator.of(context)
+                  .pushReplacement(new MaterialPageRoute(builder: (context) {
+                return ManageClaims(true);
+              }));
+            }
           }
         }
         break;
@@ -174,7 +201,8 @@ class Globals {
       case 10:
         {
           if (selectedIndex != 10) {
-            if (userLevel == 'Admin') {
+            if (userLevel == 'Admin')
+            {
               selectedIndex = 10;
               Navigator.of(context)
                   .pushReplacement(new MaterialPageRoute(builder: (context) {

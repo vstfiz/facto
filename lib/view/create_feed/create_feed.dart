@@ -30,14 +30,16 @@ class _CreateFeedState extends State<CreateFeed> {
   TextEditingController _urlController = new TextEditingController();
   TextEditingController _tagsController = new TextEditingController();
   var tags = [];
+  List<String> geo = [];
   String language;
-  var category = List.filled(0, Category('', false, ''), growable: true);
+  var category = List.filled(0, Category('', ''), growable: true);
   bool isLoading = true;
   String selectedCategory;
   html.File _image;
   String claimId;
   String uploadedImageUrl;
   String country;
+  int charRemain = 500;
 
   initState() {
     super.initState();
@@ -204,9 +206,11 @@ class _CreateFeedState extends State<CreateFeed> {
   }
 
   _getData() async {
-    category = await fdb.FirebaseDB.getCategory(context).whenComplete(() {
-      setState(() {
-        isLoading = false;
+    category = await fdb.FirebaseDB.getCategory(context).whenComplete(() async {
+      geo = await fdb.FirebaseDB.getGeo(context).whenComplete(() {
+        setState(() {
+          isLoading = false;
+        });
       });
     });
     selectedCategory = category[0].name;
@@ -263,7 +267,7 @@ class _CreateFeedState extends State<CreateFeed> {
                 Positioned(
                     left: 0.0, top: Globals.height * 2 / 33, child: SideBar()),
                 Positioned(
-                  top: 150,
+                  top: 120,
                   left: 400,
                   child: Text(
                     'Hi, ${Globals.user.name}',
@@ -275,10 +279,10 @@ class _CreateFeedState extends State<CreateFeed> {
                 ),
                 this.widget.feedType
                     ? Positioned(
-                        top: 200,
+                        top: 170,
                         left: 400,
                         child: Container(
-                          height: 550,
+                          height: 580,
                           width: 900,
                           color: Colors.white,
                           child: Stack(
@@ -301,25 +305,37 @@ class _CreateFeedState extends State<CreateFeed> {
                                     SizedBox(
                                       width: 50,
                                     ),
-                                    SizedBox(
-                                      width: 500,
-                                      height: 30,
-                                      child: TextField(
-                                        controller: _claimController,
-                                        style: TextStyle(fontFamily: 'Livvic'),
-                                        decoration: InputDecoration(
-                                          border: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color: Colors.green,
-                                                  width: 2.0)),
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                      children: [
+                                        SizedBox(
+                                          width: 500,
+                                          child: TextField(
+                                            controller: _claimController,
+                                            onChanged: (value){
+                                              setState(() {
+                                                charRemain = 500 - (value.length + _truthController.text.length);
+                                              });
+                                            },
+                                            style: TextStyle(fontFamily: 'Livvic'),
+                                            minLines: 1,
+                                            maxLines: 3,
+                                            decoration: InputDecoration(
+                                              border: OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Colors.green,
+                                                      width: 2.0)),
+                                            ),
+                                          ),
                                         ),
-                                      ),
+                                        Text(charRemain.toString() + ' characters remaining'),
+                                      ],
                                     )
                                   ],
                                 ),
                               ),
                               Positioned(
-                                top: 100,
+                                top: 180,
                                 left: 40,
                                 child: Row(
                                   children: [
@@ -328,25 +344,37 @@ class _CreateFeedState extends State<CreateFeed> {
                                     SizedBox(
                                       width: 50,
                                     ),
-                                    SizedBox(
-                                      width: 500,
-                                      height: 30,
-                                      child: TextField(
-                                        controller: _truthController,
-                                        style: TextStyle(fontFamily: 'Livvic'),
-                                        decoration: InputDecoration(
-                                          border: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color: Colors.green,
-                                                  width: 2.0)),
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                      children: [
+                                        SizedBox(
+                                          width: 500,
+                                          child: TextField(
+                                            controller: _truthController,
+                                            onChanged: (value){
+                                              setState(() {
+                                                charRemain = 500 -  (value.length + _claimController.text.length);
+                                              });
+                                            },
+                                            style: TextStyle(fontFamily: 'Livvic'),
+                                            minLines: 1,
+                                            maxLines: 3,
+                                            decoration: InputDecoration(
+                                              border: OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Colors.green,
+                                                      width: 2.0)),
+                                            ),
+                                          ),
                                         ),
-                                      ),
+                                        Text(charRemain.toString() + ' characters remaining'),
+                                      ],
                                     )
                                   ],
                                 ),
                               ),
                               Positioned(
-                                top: 150,
+                                top: 310,
                                 left: 40,
                                 child: Row(
                                   children: [
@@ -357,10 +385,12 @@ class _CreateFeedState extends State<CreateFeed> {
                                     ),
                                     SizedBox(
                                       width: 400,
-                                      height: 30,
+                                      height: 50,
                                       child: TextField(
                                         controller: _urlController,
                                         style: TextStyle(fontFamily: 'Livvic'),
+                                        minLines: 1,
+                                        maxLines: 1,
                                         decoration: InputDecoration(
                                           border: OutlineInputBorder(
                                               borderSide: BorderSide(
@@ -373,7 +403,7 @@ class _CreateFeedState extends State<CreateFeed> {
                                 ),
                               ),
                               Positioned(
-                                top: 200,
+                                top: 380,
                                 left: 40,
                                 child: Row(
                                   children: [
@@ -384,12 +414,12 @@ class _CreateFeedState extends State<CreateFeed> {
                                     ),
                                     SizedBox(
                                         width: 350,
-                                        height: 40,
+                                        height: 60,
                                         child: Column(
                                           children: [
                                             SizedBox(
                                               width: 350,
-                                              height: 30,
+                                              height: 50,
                                               child: TextField(
                                                 controller: _tagsController,
                                                 style: TextStyle(
@@ -435,7 +465,7 @@ class _CreateFeedState extends State<CreateFeed> {
                                 ),
                               ),
                               Positioned(
-                                top: 230,
+                                top: 440,
                                 left: 140,
                                 child: Container(
                                   height: 50,
@@ -479,7 +509,7 @@ class _CreateFeedState extends State<CreateFeed> {
                                 ),
                               ),
                               Positioned(
-                                top: 290,
+                                top: 490,
                                 left: 40,
                                 child: Row(
                                   children: [
@@ -492,6 +522,10 @@ class _CreateFeedState extends State<CreateFeed> {
                                       width: 400,
                                       height: 30,
                                       child: LanguagePickerDropdown(
+                                        languagesList: [
+                                          {"isoCode": "en", "name": "English"},
+                                          {"isoCode": "hi", "name": "Hindi"},
+                                        ],
                                         onValuePicked: (value) {
                                           setState(() {
                                             language = value.name;
@@ -514,7 +548,7 @@ class _CreateFeedState extends State<CreateFeed> {
                                 ),
                               ),
                               Positioned(
-                                top: 340,
+                                top: 540,
                                 left: 40,
                                 child: Row(
                                   children: [
@@ -524,32 +558,42 @@ class _CreateFeedState extends State<CreateFeed> {
                                       width: 50,
                                     ),
                                     SizedBox(
-                                      width: 475,
-                                      height: 30,
-                                      child: CountryCodePicker(
-                                        onChanged: (value) {
-                                          country = value.name;
-                                          print(value.code);
-                                        },
-                                        initialSelection: 'IN',
-                                        showCountryOnly: true,
-                                        alignLeft: true,
-                                        showOnlyCountryWhenClosed: true,
-                                      ),
-                                      //   TextField(
-                                      //   style: TextStyle(fontFamily: 'Livvic'),
-                                      //   decoration: InputDecoration(
-                                      //     border: OutlineInputBorder(
-                                      //         borderSide: BorderSide(
-                                      //             color: Colors.green, width: 2.0)),
-                                      //   ),
-                                      // ),
-                                    )
+                                        width: 450,
+                                        height: 30,
+                                        child: DropdownButton<String>(
+                                          value: country,
+                                          icon: const Icon(
+                                              Icons.arrow_drop_down_sharp),
+                                          iconSize: 24,
+                                          hint: Text('Select Geo'),
+                                          underline: SizedBox(),
+                                          elevation: 16,
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontFamily: 'Livvic',
+                                              fontSize: 20),
+                                          onChanged: (String newValue) {
+                                            setState(() {
+                                              country = newValue;
+                                            });
+                                            print(selectedCategory);
+                                          },
+                                          items: geo
+                                              .map<DropdownMenuItem<String>>(
+                                                  (String value) {
+                                            return DropdownMenuItem<String>(
+                                              value: value,
+                                              child: Text(
+                                                value,
+                                              ),
+                                            );
+                                          }).toList(),
+                                        ))
                                   ],
                                 ),
                               ),
                               Positioned(
-                                top: 390,
+                                top: 590,
                                 left: 40,
                                 child: Row(
                                   children: [
@@ -594,8 +638,8 @@ class _CreateFeedState extends State<CreateFeed> {
                                 ),
                               ),
                               Positioned(
-                                  top: 480,
-                                  left: 600,
+                                  top: 600,
+                                  left: 700,
                                   child: Container(
                                     height: 30,
                                     width: 170,
@@ -782,7 +826,7 @@ class _CreateFeedState extends State<CreateFeed> {
                                   )),
                               Positioned(
                                 top: 330,
-                                left: 650,
+                                left: 750,
                                 child: Container(
                                   width: 80,
                                   decoration: BoxDecoration(
@@ -809,7 +853,7 @@ class _CreateFeedState extends State<CreateFeed> {
                               ),
                               Positioned(
                                   top: 150,
-                                  left: 600,
+                                  left: 700,
                                   height: 120,
                                   width: 200,
                                   child: _image == null
@@ -871,17 +915,19 @@ class _CreateFeedState extends State<CreateFeed> {
                                 left: 40,
                                 child: Row(
                                   children: [
-                                    Text('Summary',
+                                    Text('Claim',
                                         style: TextStyle(fontSize: 20)),
                                     SizedBox(
                                       width: 50,
                                     ),
                                     SizedBox(
                                       width: 500,
-                                      height: 30,
+                                      height: 90,
                                       child: TextField(
                                         controller: _claimController,
                                         style: TextStyle(fontFamily: 'Livvic'),
+                                        minLines: 1,
+                                        maxLines: 3,
                                         decoration: InputDecoration(
                                           contentPadding:
                                               EdgeInsets.only(bottom: 10),
@@ -896,7 +942,38 @@ class _CreateFeedState extends State<CreateFeed> {
                                 ),
                               ),
                               Positioned(
-                                top: 100,
+                                top: 150,
+                                left: 40,
+                                child: Row(
+                                  children: [
+                                    Text('Truth',
+                                        style: TextStyle(fontSize: 20)),
+                                    SizedBox(
+                                      width: 50,
+                                    ),
+                                    SizedBox(
+                                      width: 500,
+                                      height: 90,
+                                      child: TextField(
+                                        controller: _truthController,
+                                        style: TextStyle(fontFamily: 'Livvic'),
+                                        minLines: 1,
+                                        maxLines: 3,
+                                        decoration: InputDecoration(
+                                          contentPadding:
+                                              EdgeInsets.only(bottom: 10),
+                                          border: UnderlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  color: Colors.black,
+                                                  width: 2.0)),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              Positioned(
+                                top: 250,
                                 left: 40,
                                 child: Row(
                                   children: [
@@ -925,7 +1002,7 @@ class _CreateFeedState extends State<CreateFeed> {
                                 ),
                               ),
                               Positioned(
-                                top: 150,
+                                top: 300,
                                 left: 40,
                                 child: Row(
                                   children: [
@@ -990,7 +1067,7 @@ class _CreateFeedState extends State<CreateFeed> {
                                 ),
                               ),
                               Positioned(
-                                top: 180,
+                                top: 350,
                                 left: 140,
                                 child: Container(
                                   height: 50,
@@ -1034,7 +1111,7 @@ class _CreateFeedState extends State<CreateFeed> {
                                 ),
                               ),
                               Positioned(
-                                top: 230,
+                                top: 400,
                                 left: 40,
                                 child: Row(
                                   children: [
@@ -1061,7 +1138,7 @@ class _CreateFeedState extends State<CreateFeed> {
                                 ),
                               ),
                               Positioned(
-                                top: 280,
+                                top: 450,
                                 left: 40,
                                 child: Row(
                                   children: [
@@ -1106,8 +1183,8 @@ class _CreateFeedState extends State<CreateFeed> {
                                 ),
                               ),
                               Positioned(
-                                  top: 400,
-                                  left: 600,
+                                  top: 450,
+                                  left: 700,
                                   child: Container(
                                     height: 40,
                                     width: 170,
@@ -1128,30 +1205,51 @@ class _CreateFeedState extends State<CreateFeed> {
                                                 if (selectedCategory != null &&
                                                     selectedCategory.trim() !=
                                                         '') {
-                                                  if (_image != null) {
-                                                    _loadingDialog(
-                                                        'Creating Feed....');
-                                                    await fdb.FirebaseDB
-                                                        .createVideoFeed(
-                                                            _claimController
-                                                                .text,
-                                                            _urlController.text,
-                                                            tags,
-                                                            country,
-                                                            selectedCategory,
-                                                            uploadedImageUrl,
-                                                            claimId,
-                                                            this
-                                                                .widget
-                                                                .feedType,
-                                                            context);
-                                                    Navigator.pop(context);
-                                                    _submitDialog1(
-                                                        'Feed Successfully Created');
+                                                  if (_truthController.text
+                                                          .trim() !=
+                                                      '') {
+                                                    if (_image != null) {
+                                                      _loadingDialog(
+                                                          'Creating Feed....');
+                                                      await fdb.FirebaseDB
+                                                          .createVideoFeed(
+                                                              _claimController
+                                                                  .text,_truthController.text,
+                                                              _urlController
+                                                                  .text,
+                                                              tags,
+                                                              country,
+                                                              selectedCategory,
+                                                              uploadedImageUrl,
+                                                              claimId,
+                                                              this
+                                                                  .widget
+                                                                  .feedType,
+                                                              context);
+                                                      Navigator.pop(context);
+                                                      _submitDialog1(
+                                                          'Feed Successfully Created');
+                                                    } else {
+                                                      setState(() {
+                                                        showToast(
+                                                          'No Image Selected. Select a valid image and upload it.',
+                                                          position:
+                                                              ToastPosition
+                                                                  .bottom,
+                                                          backgroundColor:
+                                                              Color(0xFF5A5A5A),
+                                                          radius: 8.0,
+                                                          textStyle: TextStyle(
+                                                              fontSize: 18.0,
+                                                              color:
+                                                                  Colors.white),
+                                                        );
+                                                      });
+                                                    }
                                                   } else {
                                                     setState(() {
                                                       showToast(
-                                                        'No Image Selected. Select a valid image and upload it.',
+                                                        'Select a valid value in Truth Field.',
                                                         position: ToastPosition
                                                             .bottom,
                                                         backgroundColor:
@@ -1247,7 +1345,7 @@ class _CreateFeedState extends State<CreateFeed> {
                                   )),
                               Positioned(
                                   top: 270,
-                                  left: 700,
+                                  left: 750,
                                   child: Container(
                                     width: 90,
                                     decoration: BoxDecoration(
@@ -1274,7 +1372,7 @@ class _CreateFeedState extends State<CreateFeed> {
                                   )),
                               Positioned(
                                   top: 120,
-                                  left: 640,
+                                  left: 700,
                                   height: 120,
                                   width: 200,
                                   child: _image == null

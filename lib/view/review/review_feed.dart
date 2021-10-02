@@ -82,6 +82,7 @@ class _ReviewFeedState extends State<ReviewFeed> {
     await claim.tags.forEach((element) {
       tags = tags + element + ", ";
     });
+    _commentController.text = claim.comment;
   }
 
   Widget _loadingScreen(String value) {
@@ -381,6 +382,7 @@ class _ReviewFeedState extends State<ReviewFeed> {
                                     child: TextButton(
                                       onPressed: () async {
                                         _loadingDialog('Uploading Data...');
+                                        status = 'True';
                                         await fdb.FirebaseDB
                                             .updatePartnerRequest(
                                                 _commentController.text,

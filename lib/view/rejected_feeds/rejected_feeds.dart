@@ -21,8 +21,7 @@ class _RejectedFeedsState extends State<RejectedFeeds> {
 
   var rejFeeds = List.filled(
       0,
-      Feeds('claim', 'truth', 'url1', 'tags', 'geo', 'language', 'category',
-          'url2', 'claimId', true, true, 'time', 'status','fgvrgv'),
+      Feeds.rejected('', '', '', '', true),
       growable: true);
 
   @override
@@ -166,34 +165,44 @@ class _RejectedFeedsState extends State<RejectedFeeds> {
                                 return DataRow(
                                   cells: <DataCell>[
                                     DataCell(GestureDetector(
-                                      child:Text(rejFeeds[index].requestedBy),
+                                      child:Text(
+                                          rejFeeds[index].publisher
+                                      ),
                                         
                                       onTap: () {
-                                        Navigator.of(context).pushReplacement(
-                                            new MaterialPageRoute(
-                                                builder: (context) {
-                                                  return Request(rejFeeds[index].claimId);
-                                                }));
+                                        if(rejFeeds[index].feedType){
+                                          Navigator.of(context).pushReplacement(
+                                              new MaterialPageRoute(
+                                                  builder: (context) {
+                                                    return Request(rejFeeds[index].claimId);
+                                                  }));
+                                        }
                                       },
                                     )),
                                     DataCell(GestureDetector(
-                                      child: Text(rejFeeds[index].time),
+                                      child: Text(
+                                          rejFeeds[index].time
+                                          ),
                                       onTap: () {
-                                        Navigator.of(context).pushReplacement(
-                                            new MaterialPageRoute(
-                                                builder: (context) {
-                                                  return Request(rejFeeds[index].claimId);
-                                                }));
+                                        if(rejFeeds[index].feedType){
+                                          Navigator.of(context).pushReplacement(
+                                              new MaterialPageRoute(
+                                                  builder: (context) {
+                                                    return Request(rejFeeds[index].claimId);
+                                                  }));
+                                        }
                                       },
                                     )),
                                     DataCell(GestureDetector(
                                       child: Text(rejFeeds[index].claim),
                                       onTap: () {
-                                        Navigator.of(context).pushReplacement(
-                                            new MaterialPageRoute(
-                                                builder: (context) {
-                                                  return Request(rejFeeds[index].claimId);
-                                                }));
+                                        if(rejFeeds[index].feedType){
+                                          Navigator.of(context).pushReplacement(
+                                              new MaterialPageRoute(
+                                                  builder: (context) {
+                                                    return Request(rejFeeds[index].claimId);
+                                                  }));
+                                        }
                                       },
                                     )),
                                     DataCell(

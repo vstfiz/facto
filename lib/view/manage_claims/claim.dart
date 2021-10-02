@@ -68,6 +68,8 @@ class _ClaimState extends State<Claim> {
         isLoading = false;
       });
     });
+    print(claim.toString());
+    _commentController.text = claim.comment;
     status = claim.status;
   }
   Widget _loadingScreen(String value) {
@@ -300,8 +302,17 @@ class _ClaimState extends State<Claim> {
                     ),
                     Positioned(top: 200,
                         left: 600,
-                        child: IconButton(
-                          icon: Icon(Icons.image_outlined), iconSize: 150,)),
+                        child: Container(
+                          width: 150,
+                          height: 150,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: NetworkImage(
+                                claim.url2
+                              )
+                            )
+                          ),
+                        )),
                     Positioned(
                         top: 400,
                         left: 600,

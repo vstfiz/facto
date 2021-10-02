@@ -35,8 +35,11 @@ class Feeds {
       this.status,
       this.requestedBy);
 
-  Feeds.forReview(this.requestedBy, this.time, this.claim,this.isSelected,this.claimId,this.feedType);
+  Feeds.forReview(this.requestedBy, this.time, this.claim, this.isSelected,
+      this.claimId, this.feedType);
 
-  Feeds.published(this.claim, this.language, this.feedType, this.time, this.status,
-      this.publisher, this.impressions, this.clicks,this.claimId);
+  Feeds.published(this.claim, this.language, this.feedType, this.time,
+      this.status, this.publisher, this.impressions, this.clicks, this.claimId);
+
+  Feeds.rejected(this.claim, this.time, this.publisher, this.claimId, this.feedType);
 }

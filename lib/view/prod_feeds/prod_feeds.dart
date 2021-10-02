@@ -7,10 +7,11 @@ import 'package:facto/widgets/top_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:facto/database/firebase_db.dart' as fdb;
+import 'package:universal_html/html.dart';
 
 class ProdFeeds extends StatefulWidget {
-  final bool feedType;
-  final bool feedLanguage;
+  bool feedType;
+  bool feedLanguage;
 
   _ProdFeedState createState() => _ProdFeedState();
 
@@ -132,7 +133,7 @@ class _ProdFeedState extends State<ProdFeeds> {
                                 (this.widget.feedType ? 'Image' : 'Video')),
                             Switch(
                                 value: this.widget.feedType,
-                                onChanged: (value) {
+                                onChanged: (value) async {
                                   Navigator.of(context).pushReplacement(
                                       new MaterialPageRoute(builder: (context) {
                                     return ProdFeeds(
@@ -149,7 +150,7 @@ class _ProdFeedState extends State<ProdFeeds> {
                                     : 'Hindi')),
                             Switch(
                                 value: this.widget.feedLanguage,
-                                onChanged: (value) {
+                                onChanged: (value) async {
                                   Navigator.of(context).pushReplacement(
                                       new MaterialPageRoute(builder: (context) {
                                     return ProdFeeds(
@@ -248,16 +249,18 @@ class _ProdFeedState extends State<ProdFeeds> {
                                     style: const TextStyle(color: Colors.black),
                                     onChanged: (String newValue) async {
                                       if (newValue == 'Edit') {
-                                        Navigator.of(context).pushReplacement(
-                                            new MaterialPageRoute(
-                                                builder: (context) {
-                                          return ReviewFeed(
-                                              prodFeeds[index].claimId);
-                                        }));
+                                        if(prodFeeds[index].feedType){
+                                          Navigator.of(context).pushReplacement(
+                                              new MaterialPageRoute(
+                                                  builder: (context) {
+                                                    return ReviewFeed(
+                                                        prodFeeds[index].claimId);
+                                                  }));
+                                        }
                                       } else if (newValue == 'Remove') {
                                         _loadingDialog('Deleting Feed....');
                                         await fdb.FirebaseDB.deleteFeed(
-                                            prodFeeds[index].claimId,context);
+                                            prodFeeds[index].claimId, context);
                                         var newa = await fdb.FirebaseDB
                                             .getPublishedFeeds(
                                                 this.widget.feedType,

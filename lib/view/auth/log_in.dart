@@ -1,6 +1,7 @@
 import 'package:facto/model/user.dart';
 import 'package:facto/service/auth/auth.dart';
 import 'package:facto/util/images.dart';
+import 'package:facto/view/create_feed/create_feed.dart';
 import 'package:facto/view/forgot_password/forgot_password.dart';
 import 'package:facto/view/home/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
@@ -187,13 +188,14 @@ class _LogInState extends State<LogIn> {
                                         bool status =
                                             await fdb.FirebaseDB.getUserDetails(
                                                 userD.uid, context);
-                                        print(status.toString() + "vrvfs     "+ Globals.isDeleted.toString());
-                                        if(Globals.isDeleted){
+                                        print(status.toString() +
+                                            "vrvfs     " +
+                                            Globals.isDeleted.toString());
+                                        if (Globals.isDeleted) {
                                           _lockDialog(
                                               'Sorry, your user account seems to have been deleted for violations. Please contact the panel admin for new account creation',
                                               context);
-                                        }
-                                        else{
+                                        } else {
                                           if (status) {
                                             await signOutWithGoogle();
                                             _lockDialog(
@@ -201,7 +203,22 @@ class _LogInState extends State<LogIn> {
                                                 context);
                                           } else {
                                             Navigator.pop(context);
-                                            Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context){return HomeScreen(true);}));
+                                            if (Globals.userLevel ==
+                                                'Partner') {
+                                              Navigator.of(context)
+                                                  .pushReplacement(
+                                                      new MaterialPageRoute(
+                                                          builder: (context) {
+                                                return CreateFeed(true);
+                                              }));
+                                            } else {
+                                              Navigator.of(context)
+                                                  .pushReplacement(
+                                                      new MaterialPageRoute(
+                                                          builder: (context) {
+                                                return HomeScreen(true);
+                                              }));
+                                            }
                                           }
                                         }
                                       } catch (e) {
