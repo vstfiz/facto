@@ -1,5 +1,6 @@
 import 'package:facto/model/ads.dart';
 import 'package:facto/util/globals.dart';
+import 'package:facto/util/images.dart';
 import 'package:facto/view/create_ads/create_ads.dart';
 import 'package:facto/widgets/secondary_top_bar.dart';
 import 'package:facto/widgets/side_bar.dart';
@@ -25,37 +26,6 @@ class _AdDataState extends State<AdData>{
     _getData();
   }
 
-  Future<void> _loadingDialog(String value) {
-    return showDialog<void>(
-        barrierDismissible: false,
-        context: context,
-        builder: (context) => AlertDialog(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0)),
-            backgroundColor: Colors.white,
-            content: Container(
-                height: 60,
-                child: Center(
-                  child: Row(
-                    children: <Widget>[
-                      CircularProgressIndicator(
-                        valueColor:
-                        AlwaysStoppedAnimation<Color>(Colors.blueGrey),
-                      ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text(
-                        value,
-                        style: TextStyle(
-                            fontFamily: "Livvic",
-                            fontSize: 23,
-                            letterSpacing: 1),
-                      )
-                    ],
-                  ),
-                ))));
-  }
 
   _getData() async {
     ads = await fdb.FirebaseDB.getAds(context);
@@ -64,29 +34,26 @@ class _AdDataState extends State<AdData>{
     });
   }
 
+
   Widget _loadingScreen(String value) {
     return AlertDialog(
-        shape:
-        RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0)),
         backgroundColor: Colors.white,
         content: Container(
-            height: 60,
+            height: Globals.getHeight(80),
             child: Center(
-              child: Row(
-                children: <Widget>[
-                  CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.blueGrey),
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Text(
-                    value,
-                    style: TextStyle(
-                        fontFamily: "Livvic", fontSize: 23, letterSpacing: 1),
-                  )
-                ],
-              ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Image.asset(Images.logo,width: Globals.getWidth(100),height: Globals.getHeight(50),),
+
+                    Container(child:  LinearProgressIndicator(
+                      valueColor:
+                      AlwaysStoppedAnimation<Color>(Colors.blueGrey),
+                    ),width: Globals.getWidth(200))
+                  ],
+                )
             )));
   }
 
@@ -118,7 +85,7 @@ class _AdDataState extends State<AdData>{
               child: Row(
                 children: [
                   Container(
-                      height: 40,
+                      height: Globals.getHeight(40),
                       width: Globals.height / 5,
                       decoration: BoxDecoration(
                           color: Color(0xFF1E7D34),
@@ -138,7 +105,7 @@ class _AdDataState extends State<AdData>{
                     width: Globals.width / 20,
                   ),
                   Container(
-                      height: 40,
+                      height: Globals.getHeight(40),
                       width: Globals.height / 5,
                       decoration: BoxDecoration(
                           color: Color(0xFF128799),
@@ -159,11 +126,11 @@ class _AdDataState extends State<AdData>{
             ),
           ),
           Positioned(
-              top: 200,
-              left: 300,
+              top: Globals.getHeight(200),
+              left: Globals.getWidth(300),
               child: Container(
-                height: 450,
-                width: 1250,
+                height: Globals.getHeight(450),
+                width: Globals.getWidth(1250),
                 child: Card(
                   elevation: 12,
                   child: SingleChildScrollView(
@@ -216,10 +183,10 @@ class _AdDataState extends State<AdData>{
                   ),
                 ),
               )),
-          Positioned(top:680,right:100,child:
+          Positioned(top:Globals.getHeight(680),right:Globals.getWidth(100),child:
           Container(
-            height: 50,
-            width: 170,
+            height: Globals.getHeight(50),
+            width: Globals.getWidth(170),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(6),
                 color: Color(0xFF5A5A5A)),

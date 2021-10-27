@@ -1,5 +1,6 @@
 import 'package:facto/model/claims.dart';
 import 'package:facto/util/globals.dart';
+import 'package:facto/util/images.dart';
 import 'package:facto/view/partner_requests/request.dart';
 import 'package:facto/widgets/secondary_top_bar.dart';
 import 'package:facto/widgets/side_bar.dart';
@@ -37,10 +38,10 @@ class _PartnerRequestsState extends State<PartnerRequests> {
     return OverlayEntry(builder: (context) {
       return Positioned(
         // You can change the position here
-        right: 300,
-        width: 150,
-        top: 200,
-        height: 210,
+        right: Globals.getWidth(300),
+        width: Globals.getWidth(150),
+        top: Globals.getHeight(200),
+        height: Globals.getHeight(210),
         // Any child
         child: Card(
           elevation: 12,
@@ -49,7 +50,7 @@ class _PartnerRequestsState extends State<PartnerRequests> {
           child: Column(
             children: [
               Container(
-                width: 150,
+                width: Globals.getWidth(150),
                 margin: EdgeInsets.symmetric(vertical: 10),
                 child: TextButton(
                   onPressed: () async {
@@ -73,7 +74,7 @@ class _PartnerRequestsState extends State<PartnerRequests> {
                 ),
               ),
               Container(
-                width: 150,
+                width: Globals.getWidth(150),
                 margin: EdgeInsets.symmetric(vertical: 10),
                 child: TextButton(
                   onPressed: () async {
@@ -97,7 +98,7 @@ class _PartnerRequestsState extends State<PartnerRequests> {
                 ),
               ),
               Container(
-                width: 150,
+                width: Globals.getWidth(150),
                 margin: EdgeInsets.symmetric(vertical: 10),
                 child: TextButton(
                   onPressed: () async {
@@ -120,8 +121,8 @@ class _PartnerRequestsState extends State<PartnerRequests> {
                 ),
               ),
               Container(
-                width: 150,
-                margin: EdgeInsets.symmetric(vertical: 10),
+                width: Globals.getWidth(150),
+                margin: EdgeInsets.symmetric(vertical: Globals.getHeight(10)),
                 child: TextButton(
                   onPressed: () async {
                     _loadingDialog('Getting Data from Server.....');
@@ -158,26 +159,19 @@ class _PartnerRequestsState extends State<PartnerRequests> {
                 borderRadius: BorderRadius.circular(10.0)),
             backgroundColor: Colors.white,
             content: Container(
-                height: 60,
+                height: Globals.getHeight(80),
                 child: Center(
-                  child: Row(
-                    children: <Widget>[
-                      CircularProgressIndicator(
-                        valueColor:
-                            AlwaysStoppedAnimation<Color>(Colors.blueGrey),
-                      ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text(
-                        value,
-                        style: TextStyle(
-                            fontFamily: "Livvic",
-                            fontSize: 23,
-                            letterSpacing: 1),
-                      )
-                    ],
-                  ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Image.asset(Images.logo,width: Globals.getWidth(100),height: Globals.getHeight(50),),
+
+                        Container(child:  LinearProgressIndicator(
+                          valueColor:
+                          AlwaysStoppedAnimation<Color>(Colors.blueGrey),
+                        ),width: Globals.getWidth(200))
+                      ],
+                    )
                 ))));
   }
 
@@ -188,29 +182,26 @@ class _PartnerRequestsState extends State<PartnerRequests> {
     });
   }
 
+
   Widget _loadingScreen(String value) {
     return AlertDialog(
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0)),
         backgroundColor: Colors.white,
         content: Container(
-            height: 60,
+            height: Globals.getHeight(80),
             child: Center(
-              child: Row(
-                children: <Widget>[
-                  CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.blueGrey),
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Text(
-                    value,
-                    style: TextStyle(
-                        fontFamily: "Livvic", fontSize: 23, letterSpacing: 1),
-                  )
-                ],
-              ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Image.asset(Images.logo,width: Globals.getWidth(100),height: Globals.getHeight(50),),
+
+                    Container(child:  LinearProgressIndicator(
+                      valueColor:
+                      AlwaysStoppedAnimation<Color>(Colors.blueGrey),
+                    ),width: Globals.getWidth(200))
+                  ],
+                )
             )));
   }
 
@@ -253,11 +244,11 @@ class _PartnerRequestsState extends State<PartnerRequests> {
                 Positioned(
                     left: 0.0, top: Globals.height * 2 / 33, child: SideBar()),
                 Positioned(
-                    top: 150,
-                    left: 300,
+                    top: Globals.getHeight(150),
+                    left: Globals.getWidth(300),
                     child: Container(
-                      height: 500,
-                      width: 1250,
+                      height: Globals.getHeight(500),
+                      width: Globals.getWidth(1250),
                       child: Card(
                         elevation: 12,
                         child: SingleChildScrollView(
@@ -373,8 +364,8 @@ class _PartnerRequestsState extends State<PartnerRequests> {
                       ),
                     )),
                 Positioned(
-                    top: 650,
-                    left: 300,
+                    top: Globals.getHeight(650),
+                    left: Globals.getWidth(300),
                     child: Row(
                       children: [
                         Checkbox(
@@ -400,13 +391,13 @@ class _PartnerRequestsState extends State<PartnerRequests> {
                       ],
                     )),
                 Positioned(
-                    top: 720,
-                    left: 1300,
+                    top: Globals.getHeight(720),
+                    left: Globals.getWidth(1300),
                     child: Row(
                       children: [
                         Container(
-                          height: 40,
-                          width: 170,
+                          height: Globals.getHeight(40),
+                          width: Globals.getWidth(170),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(6),
                               color: Color(0xFF343434)),

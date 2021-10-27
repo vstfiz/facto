@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:facto/util/globals.dart';
+import 'package:facto/util/images.dart';
 import 'package:facto/view/manage_claims/manage_claims.dart';
 import 'package:facto/view/rejected_feeds/rejected_feeds.dart';
 import 'package:facto/widgets/secondary_top_bar.dart';
@@ -40,30 +41,21 @@ class _RequestState extends State<Request> {
                 borderRadius: BorderRadius.circular(10.0)),
             backgroundColor: Colors.white,
             content: Container(
-                height: 60,
+                height: Globals.getHeight(80),
                 child: Center(
-                  child: Row(
-                    children: <Widget>[
-                      CircularProgressIndicator(
-                        valueColor:
-                            AlwaysStoppedAnimation<Color>(Colors.blueGrey),
-                      ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text(
-                        value,
-                        style: TextStyle(
-                            fontFamily: "Livvic",
-                            fontSize: 23,
-                            letterSpacing: 1),
-                      )
-                    ],
-                  ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Image.asset(Images.logo,width: Globals.getWidth(100),height: Globals.getHeight(50),),
+
+                        Container(child:  LinearProgressIndicator(
+                          valueColor:
+                          AlwaysStoppedAnimation<Color>(Colors.blueGrey),
+                        ),width: Globals.getWidth(200))
+                      ],
+                    )
                 ))));
   }
-
-
 
   _getData() async {
     claim = await fdb.FirebaseDB.getRejFeedFromId(this.widget.claimId, context);
@@ -73,32 +65,28 @@ class _RequestState extends State<Request> {
     });
   }
 
+
   Widget _loadingScreen(String value) {
     return AlertDialog(
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0)),
         backgroundColor: Colors.white,
         content: Container(
-            height: 60,
+            height: Globals.getHeight(80),
             child: Center(
-              child: Row(
-                children: <Widget>[
-                  CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.blueGrey),
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Text(
-                    value,
-                    style: TextStyle(
-                        fontFamily: "Livvic", fontSize: 23, letterSpacing: 1),
-                  )
-                ],
-              ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Image.asset(Images.logo,width: Globals.getWidth(100),height: Globals.getHeight(50),),
+
+                    Container(child:  LinearProgressIndicator(
+                      valueColor:
+                      AlwaysStoppedAnimation<Color>(Colors.blueGrey),
+                    ),width: Globals.getWidth(200))
+                  ],
+                )
             )));
   }
-
   void _launchURL() async => await canLaunch(claim[3])
       ? await launch(claim[3])
       : throw 'Could not launch ${claim[3]}';
@@ -136,22 +124,21 @@ class _RequestState extends State<Request> {
                 Positioned(
                     left: 0.0, top: Globals.height * 2 / 33, child: SideBar()),
                 Positioned(
-                    top: 200,
-                    left: 400,
+                    top: Globals.getHeight(200),
+                    left: Globals.getWidth(400),
                     child: Container(
-                      height: 450,
-                      width: 800,
+                      height: Globals.getHeight(450),
+                      width: Globals.getWidth(800),
                       color: Colors.white,
                       child: Stack(
                         children: [
                           Positioned(
-                              right: 10,
+                              right: Globals.getWidth(10),
                               child: Container(
-                                  child:
-                                  DropdownButton<String>(
+                                  child: DropdownButton<String>(
                                 value: status,
                                 icon: const Icon(Icons.settings),
-                                iconSize: 24,
+                                iconSize: Globals.getWidth(24),
                                 elevation: 16,
                                 style: const TextStyle(color: Colors.black),
                                 onChanged: (String newValue) {
@@ -172,8 +159,8 @@ class _RequestState extends State<Request> {
                                 }).toList(),
                               ))),
                           Positioned(
-                            top: 50,
-                            left: 40,
+                            top: Globals.getHeight(50),
+                            left: Globals.getWidth(40),
                             child: Row(
                               children: [
                                 Text('Claim',
@@ -181,11 +168,11 @@ class _RequestState extends State<Request> {
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold)),
                                 SizedBox(
-                                  width: 50,
+                                  width: Globals.getWidth(50),
                                 ),
                                 SizedBox(
-                                  width: 500,
-                                  height: 30,
+                                  width: Globals.getWidth(500),
+                                  height: Globals.getHeight(30),
                                   child: Text(
                                     claim[0],
                                     style: TextStyle(
@@ -196,8 +183,8 @@ class _RequestState extends State<Request> {
                             ),
                           ),
                           Positioned(
-                            top: 100,
-                            left: 40,
+                            top: Globals.getHeight(100),
+                            left: Globals.getWidth(40),
                             child: Row(
                               children: [
                                 Text('Date ',
@@ -205,11 +192,11 @@ class _RequestState extends State<Request> {
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold)),
                                 SizedBox(
-                                  width: 50,
+                                  width: Globals.getWidth(50),
                                 ),
                                 SizedBox(
-                                  width: 500,
-                                  height: 30,
+                                  width: Globals.getWidth(500),
+                                  height: Globals.getHeight(30),
                                   child: Text(
                                     claim[1],
                                     style: TextStyle(
@@ -220,8 +207,8 @@ class _RequestState extends State<Request> {
                             ),
                           ),
                           Positioned(
-                            top: 150,
-                            left: 40,
+                            top: Globals.getHeight(150),
+                            left: Globals.getWidth(40),
                             child: Row(
                               children: [
                                 Text('Rejected Comment',
@@ -229,11 +216,11 @@ class _RequestState extends State<Request> {
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold)),
                                 SizedBox(
-                                  width: 30,
+                                  width: Globals.getWidth(30),
                                 ),
                                 SizedBox(
-                                  width: 400,
-                                  height: 30,
+                                  width: Globals.getWidth(400),
+                                  height: Globals.getHeight(30),
                                   child: Text(
                                     claim[2],
                                     style: TextStyle(
@@ -244,11 +231,11 @@ class _RequestState extends State<Request> {
                             ),
                           ),
                           Positioned(
-                              top: 210,
-                              left: 40,
+                              top: Globals.getHeight(210),
+                              left: Globals.getWidth(40),
                               child: Container(
-                                height: 200,
-                                width: 400,
+                                height: Globals.getHeight(200),
+                                width: Globals.getWidth(400),
                                 child: TextButton(
                                   onPressed: _launchURL,
                                 ),
@@ -258,17 +245,17 @@ class _RequestState extends State<Request> {
                                         fit: BoxFit.cover,
                                         image: NetworkImage(claim[3]))),
                               )),
-
                         ],
                       ),
-                    )),Positioned(
-                    top: 700,
-                    left: 800,
+                    )),
+                Positioned(
+                    top: Globals.getHeight(700),
+                    left: Globals.getWidth(800),
                     child: Row(
                       children: [
                         Container(
-                          height: 60,
-                          width: 170,
+                          height: Globals.getHeight(60),
+                          width: Globals.getWidth(170),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(6),
                               color: Color(0xFF5A5A5A)),
@@ -276,23 +263,26 @@ class _RequestState extends State<Request> {
                             onPressed: () async {
                               _loadingDialog('Deleting Feed...');
                               await fdb.FirebaseDB.deleteFeed(
-                                  this.widget.claimId,context);
+                                  this.widget.claimId, context);
                               Navigator.pop(context);
-                              Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context){return Request(this.widget.claimId);}));
+                              Navigator.of(context).pushReplacement(
+                                  new MaterialPageRoute(builder: (context) {
+                                return Request(this.widget.claimId);
+                              }));
                             },
                             child: Text(
                               'Delete',
-                              style: TextStyle(
-                                  fontSize: 18, color: Colors.white),
+                              style:
+                                  TextStyle(fontSize: 18, color: Colors.white),
                             ),
                           ),
                         ),
                         SizedBox(
-                          width: 50,
+                          width: Globals.getWidth(50),
                         ),
                         Container(
-                          height: 60,
-                          width: 170,
+                          height: Globals.getHeight(60),
+                          width: Globals.getWidth(170),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(6),
                               color: Color(0xFF5A5A5A)),
@@ -300,14 +290,13 @@ class _RequestState extends State<Request> {
                             onPressed: () async {
                               _loadingDialog('Uploading Data...');
                               await fdb.FirebaseDB.updateRejFeed(
-                                  status,
-                                  this.widget.claimId,context);
+                                  status, this.widget.claimId, context);
                               Navigator.pop(context);
                             },
                             child: Text(
                               'Save',
-                              style: TextStyle(
-                                  fontSize: 18, color: Colors.white),
+                              style:
+                                  TextStyle(fontSize: 18, color: Colors.white),
                             ),
                           ),
                         )

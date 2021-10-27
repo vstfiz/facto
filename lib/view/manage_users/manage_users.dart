@@ -1,6 +1,7 @@
 import 'package:facto/model/user.dart' as u;
 import 'package:facto/service/auth/auth.dart';
 import 'package:facto/util/globals.dart';
+import 'package:facto/util/images.dart';
 import 'package:facto/widgets/secondary_top_bar.dart';
 import 'package:facto/widgets/side_bar.dart';
 import 'package:facto/widgets/top_bar.dart';
@@ -33,26 +34,19 @@ class _ManageUsersState extends State<ManageUsers> {
                 borderRadius: BorderRadius.circular(10.0)),
             backgroundColor: Colors.white,
             content: Container(
-                height: 60,
+                height: Globals.getHeight(80),
                 child: Center(
-                  child: Row(
-                    children: <Widget>[
-                      CircularProgressIndicator(
-                        valueColor:
-                            AlwaysStoppedAnimation<Color>(Colors.blueGrey),
-                      ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text(
-                        value,
-                        style: TextStyle(
-                            fontFamily: "Livvic",
-                            fontSize: 23,
-                            letterSpacing: 1),
-                      )
-                    ],
-                  ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Image.asset(Images.logo,width: Globals.getWidth(100),height: Globals.getHeight(50),),
+
+                        Container(child:  LinearProgressIndicator(
+                          valueColor:
+                          AlwaysStoppedAnimation<Color>(Colors.blueGrey),
+                        ),width: Globals.getWidth(200))
+                      ],
+                    )
                 ))));
   }
 
@@ -101,7 +95,7 @@ class _ManageUsersState extends State<ManageUsers> {
                   borderRadius: BorderRadius.circular(10.0)),
               backgroundColor: Colors.white,
               content: Container(
-                  height: 250,
+                  height: Globals.getHeight(250),
                   child: Column(
                     children: [
                       Container(
@@ -115,7 +109,7 @@ class _ManageUsersState extends State<ManageUsers> {
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        padding: EdgeInsets.symmetric(horizontal: Globals.getWidth(20)),
                         child: TextField(
                           controller: _nameController,
                           decoration: InputDecoration(
@@ -125,7 +119,7 @@ class _ManageUsersState extends State<ManageUsers> {
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        padding: EdgeInsets.symmetric(horizontal: Globals.getWidth(20)),
                         child: TextField(
                           controller: _passwordController,
                           obscureText: true,
@@ -137,7 +131,7 @@ class _ManageUsersState extends State<ManageUsers> {
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        padding: EdgeInsets.symmetric(horizontal: Globals.getWidth(20)),
                         child: TextField(
                           controller: _cnfPasswordController,
                           decoration: InputDecoration(
@@ -147,11 +141,11 @@ class _ManageUsersState extends State<ManageUsers> {
                         ),
                       ),
                       Container(
-                          width: 200,
+                          width: Globals.getWidth(200),
                           child: DropdownButton<String>(
                             value: role,
                             icon: const Icon(Icons.arrow_drop_down_sharp),
-                            iconSize: 24,
+                            iconSize: Globals.getWidth(24),
                             elevation: 16,
                             style: const TextStyle(color: Colors.black),
                             onChanged: (String newValue) {
@@ -277,29 +271,26 @@ class _ManageUsersState extends State<ManageUsers> {
             ));
   }
 
+
   Widget _loadingScreen(String value) {
     return AlertDialog(
-        shape:
-        RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0)),
         backgroundColor: Colors.white,
         content: Container(
-            height: 60,
+            height: Globals.getHeight(80),
             child: Center(
-              child: Row(
-                children: <Widget>[
-                  CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.blueGrey),
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Text(
-                    value,
-                    style: TextStyle(
-                        fontFamily: "Livvic", fontSize: 23, letterSpacing: 1),
-                  )
-                ],
-              ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Image.asset(Images.logo,width: Globals.getWidth(100),height: Globals.getHeight(50),),
+
+                    Container(child:  LinearProgressIndicator(
+                      valueColor:
+                      AlwaysStoppedAnimation<Color>(Colors.blueGrey),
+                    ),width: Globals.getWidth(200))
+                  ],
+                )
             )));
   }
 
@@ -327,10 +318,10 @@ class _ManageUsersState extends State<ManageUsers> {
     return OverlayEntry(builder: (context) {
       return Positioned(
         // You can change the position here
-        right: 400,
-        width: 150,
-        top: 400,
-        height: 120,
+        right: Globals.getWidth(400),
+        width: Globals.getWidth(150),
+        top: Globals.getHeight(400),
+        height: Globals.getHeight(120),
         // Any child
         child: Card(
           elevation: 12,
@@ -339,7 +330,7 @@ class _ManageUsersState extends State<ManageUsers> {
           child: Column(
             children: [
               Container(
-                width: 150,
+                width: Globals.getWidth(150),
                 margin: EdgeInsets.symmetric(vertical: 10),
                 child: TextButton(
                   onPressed: () async {
@@ -361,7 +352,7 @@ class _ManageUsersState extends State<ManageUsers> {
                 ),
               ),
               Container(
-                width: 150,
+                width: Globals.getWidth(150),
                 margin: EdgeInsets.symmetric(vertical: 10),
                 child: TextButton(
                   onPressed: () async {
@@ -393,10 +384,10 @@ class _ManageUsersState extends State<ManageUsers> {
     return OverlayEntry(builder: (context) {
       return Positioned(
         // You can change the position here
-        right: 850,
-        width: 150,
-        top: 330,
-        height: 210,
+        right: Globals.getWidth(850),
+        width: Globals.getWidth(150),
+        top: Globals.getHeight(330),
+        height: Globals.getHeight(210),
         // Any child
         child: Card(
           elevation: 12,
@@ -405,7 +396,7 @@ class _ManageUsersState extends State<ManageUsers> {
           child: Column(
             children: [
               Container(
-                width: 150,
+                width: Globals.getWidth(150),
                 margin: EdgeInsets.symmetric(vertical: 10),
                 child: TextButton(
                   onPressed: () async {
@@ -428,7 +419,7 @@ class _ManageUsersState extends State<ManageUsers> {
                 ),
               ),
               Container(
-                width: 150,
+                width: Globals.getWidth(150),
                 margin: EdgeInsets.symmetric(vertical: 10),
                 child: TextButton(
                   onPressed: () async {
@@ -451,7 +442,7 @@ class _ManageUsersState extends State<ManageUsers> {
                 ),
               ),
               Container(
-                width: 150,
+                width: Globals.getWidth(150),
                 margin: EdgeInsets.symmetric(vertical: 10),
                 child: TextButton(
                   onPressed: () async {
@@ -474,7 +465,7 @@ class _ManageUsersState extends State<ManageUsers> {
                 ),
               ),
               Container(
-                width: 150,
+                width: Globals.getWidth(150),
                 margin: EdgeInsets.symmetric(vertical: 10),
                 child: TextButton(
                   onPressed: () async {
@@ -521,8 +512,8 @@ class _ManageUsersState extends State<ManageUsers> {
           ),
           Positioned(left: 0.0, top: Globals.height * 2 / 33, child: SideBar()),
           Positioned(
-            top: 150,
-            left: 400,
+            top: Globals.getHeight(150),
+            left: Globals.getWidth(400),
             child: Text(
               'Hi, ${Globals.user.name}',
               style: TextStyle(
@@ -530,8 +521,8 @@ class _ManageUsersState extends State<ManageUsers> {
             ),
           ),
           Positioned(
-            top: 250,
-            left: 750,
+            top: Globals.getHeight(250),
+            left: Globals.getWidth(750),
             child: Text(
               'Manage Admins',
               style: TextStyle(
@@ -539,11 +530,11 @@ class _ManageUsersState extends State<ManageUsers> {
             ),
           ),
           Positioned(
-            top: 150,
-            left: 1200,
+            top: Globals.getHeight(150),
+            left: Globals.getWidth(1200),
             child: Container(
-              height: 40,
-              width: 150,
+              height: Globals.getHeight(40),
+              width: Globals.getWidth(150),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(6),
                   color: Color(0xFF5A5A5A)),
@@ -559,12 +550,12 @@ class _ManageUsersState extends State<ManageUsers> {
             ),
           ),
           Positioned(
-              top: 300,
-              left: 400,
+              top: Globals.getHeight(300),
+              left: Globals.getWidth(400),
               child:
               Container(
-                height: 400,
-                width: 900,
+                height: Globals.getHeight(400),
+                width: Globals.getWidth(900),
                 child: Card(
                   elevation: 12,
                   child: SingleChildScrollView(
@@ -588,7 +579,7 @@ class _ManageUsersState extends State<ManageUsers> {
                                     color: Colors.grey),
                               ),
                               SizedBox(
-                                width: 20,
+                                width: Globals.getWidth(20),
                               ),
                               IconButton(icon: Icon(Icons.filter_alt),color: Colors.grey, onPressed: (){
                                 setState(() {

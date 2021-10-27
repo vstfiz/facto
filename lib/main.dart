@@ -37,7 +37,7 @@ class _MyAppState extends State<MyApp> {
         print(Globals.width);
         print(Globals.height);
         return MaterialApp(
-            title: 'Facto Admin',
+            title: 'FactO Admin',
             theme: ThemeData(
               primarySwatch: Colors.blueGrey,
             ),

@@ -1,5 +1,6 @@
 import 'package:facto/model/feeds.dart';
 import 'package:facto/util/globals.dart';
+import 'package:facto/util/images.dart';
 import 'package:facto/view/review/review_feed.dart';
 import 'package:facto/widgets/secondary_top_bar.dart';
 import 'package:facto/widgets/side_bar.dart';
@@ -51,55 +52,43 @@ class _ProdFeedState extends State<ProdFeeds> {
                 borderRadius: BorderRadius.circular(10.0)),
             backgroundColor: Colors.white,
             content: Container(
-                height: 60,
+                height: Globals.getHeight(80),
                 child: Center(
-                  child: Row(
-                    children: <Widget>[
-                      CircularProgressIndicator(
-                        valueColor:
-                            AlwaysStoppedAnimation<Color>(Colors.blueGrey),
-                      ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text(
-                        value,
-                        style: TextStyle(
-                            fontFamily: "Livvic",
-                            fontSize: 23,
-                            letterSpacing: 1),
-                      )
-                    ],
-                  ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Image.asset(Images.logo,width: Globals.getWidth(100),height: Globals.getHeight(50),),
+
+                        Container(child:  LinearProgressIndicator(
+                          valueColor:
+                          AlwaysStoppedAnimation<Color>(Colors.blueGrey),
+                        ),width: Globals.getWidth(200))
+                      ],
+                    )
                 ))));
   }
 
   Widget _loadingScreen(String value) {
     return AlertDialog(
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0)),
         backgroundColor: Colors.white,
         content: Container(
-            height: 60,
+            height: Globals.getHeight(80),
             child: Center(
-              child: Row(
-                children: <Widget>[
-                  CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.blueGrey),
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Text(
-                    value,
-                    style: TextStyle(
-                        fontFamily: "Livvic", fontSize: 23, letterSpacing: 1),
-                  )
-                ],
-              ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Image.asset(Images.logo,width: Globals.getWidth(100),height: Globals.getHeight(50),),
+
+                    Container(child:  LinearProgressIndicator(
+                      valueColor:
+                      AlwaysStoppedAnimation<Color>(Colors.blueGrey),
+                    ),width: Globals.getWidth(200))
+                  ],
+                )
             )));
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -164,11 +153,11 @@ class _ProdFeedState extends State<ProdFeeds> {
                   ),
                 ),
                 Positioned(
-                  top: 250,
-                  left: 350,
+                  top: Globals.getHeight(250),
+                  left: Globals.getWidth(350),
                   child: Container(
-                    height: 500,
-                    width: 1100,
+                    height: Globals.getHeight(500),
+                    width: Globals.getWidth(1100),
                     child: Card(
                       elevation: 12,
                       child: SingleChildScrollView(
@@ -244,18 +233,18 @@ class _ProdFeedState extends State<ProdFeeds> {
                                       Text(prodFeeds[index].clicks.toString())),
                                   DataCell(DropdownButton<String>(
                                     icon: const Icon(Icons.settings),
-                                    iconSize: 24,
+                                    iconSize: Globals.getWidth(24),
                                     elevation: 16,
                                     style: const TextStyle(color: Colors.black),
                                     onChanged: (String newValue) async {
                                       if (newValue == 'Edit') {
-                                        if(prodFeeds[index].feedType){
+                                        if (prodFeeds[index].feedType) {
                                           Navigator.of(context).pushReplacement(
                                               new MaterialPageRoute(
                                                   builder: (context) {
-                                                    return ReviewFeed(
-                                                        prodFeeds[index].claimId);
-                                                  }));
+                                            return ReviewFeed(
+                                                prodFeeds[index].claimId);
+                                          }));
                                         }
                                       } else if (newValue == 'Remove') {
                                         _loadingDialog('Deleting Feed....');

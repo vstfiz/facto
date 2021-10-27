@@ -29,12 +29,12 @@ class _LogInState extends State<LogIn> {
                   borderRadius: BorderRadius.circular(10.0)),
               backgroundColor: Colors.white,
               content: Container(
-                  height: 60,
+                  height: Globals.getHeight(60),
                   child: Center(
                     child: Row(
                       children: <Widget>[
                         SizedBox(
-                          width: 20,
+                          width: Globals.getWidth(20),
                         ),
                         Text(
                           value,
@@ -70,32 +70,28 @@ class _LogInState extends State<LogIn> {
                 borderRadius: BorderRadius.circular(10.0)),
             backgroundColor: Colors.white,
             content: Container(
-                height: 60,
+                height: Globals.getHeight(80),
                 child: Center(
-                  child: Row(
-                    children: <Widget>[
-                      CircularProgressIndicator(
-                        valueColor:
-                            AlwaysStoppedAnimation<Color>(Colors.blueGrey),
-                      ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text(
-                        value,
-                        style: TextStyle(
-                            fontFamily: "Livvic",
-                            fontSize: 23,
-                            letterSpacing: 1),
-                      )
-                    ],
-                  ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Image.asset(Images.logo,width: Globals.getWidth(100),height: Globals.getHeight(50),),
+
+                        Container(child:  LinearProgressIndicator(
+                          valueColor:
+                          AlwaysStoppedAnimation<Color>(Colors.blueGrey),
+                        ),width: Globals.getWidth(200))
+                      ],
+                    )
                 ))));
   }
 
+
+
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
+    return
+      WillPopScope(
         child: GestureDetector(
           onTap: () {
             FocusScope.of(context).unfocus();
@@ -106,27 +102,27 @@ class _LogInState extends State<LogIn> {
                   child: Column(
                 children: [
                   SizedBox(
-                    height: 170,
+                    height: Globals.getHeight(170),
                   ),
                   Image.network(
                     Images.logo,
-                    height: 100,
-                    width: 300,
+                    height: Globals.getHeight(100),
+                    width: Globals.getWidth(300),
                   ),
                   SizedBox(
-                    height: 50,
+                    height: Globals.getHeight(50),
                   ),
                   SizedBox(
-                    height: 300,
-                    width: 300,
+                    height: Globals.getHeight(300),
+                    width: Globals.getWidth(300),
                     child: Card(
                       elevation: 10,
                       child: Stack(
                         children: [
                           Positioned(
-                              top: 20,
+                              top: Globals.getHeight(20),
                               child: Container(
-                                width: 300,
+                                width: Globals.getWidth(300),
                                 padding: EdgeInsets.symmetric(horizontal: 40),
                                 child: TextField(
                                   controller: _usernameController,
@@ -137,9 +133,9 @@ class _LogInState extends State<LogIn> {
                                 ),
                               )),
                           Positioned(
-                              top: 70,
+                              top: Globals.getHeight(70),
                               child: Container(
-                                width: 300,
+                                width: Globals.getWidth(300),
                                 padding: EdgeInsets.symmetric(horizontal: 40),
                                 child: TextField(
                                   controller: _passwordController,
@@ -151,8 +147,8 @@ class _LogInState extends State<LogIn> {
                                 ),
                               )),
                           Positioned(
-                              top: 120,
-                              left: 40,
+                              top: Globals.getHeight(120),
+                              left: Globals.getWidth(40),
                               child: TextButton(
                                 onPressed: () {
                                   Navigator.of(context).pushReplacement(
@@ -166,11 +162,11 @@ class _LogInState extends State<LogIn> {
                                 ),
                               )),
                           Positioned(
-                            top: 180,
-                            left: 60,
+                            top: Globals.getHeight(180),
+                            left: Globals.getWidth(60),
                             child: Container(
-                              height: 50,
-                              width: 170,
+                              height: Globals.getHeight(50),
+                              width: Globals.getWidth(170),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(6),
                                   color: Color(0xFF5A5A5A)),

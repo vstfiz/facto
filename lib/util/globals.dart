@@ -37,7 +37,7 @@ class Globals {
   }
 
   static double getHeight(double value){
-    return (value/789) * Globals.height;
+    return (value/781) * Globals.height;
   }
 
   static double getWidth(double value){

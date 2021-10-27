@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
+import 'package:facto/util/globals.dart';
 
 
 class ForgotPassword extends StatefulWidget {
@@ -27,28 +28,28 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   child: Column(
                     children: [
                       SizedBox(
-                        height: 170,
+                        height: Globals.getHeight(170),
                       ),
                       Image.network(
                         Images.logo,
-                        height: 100,
-                        width: 300,
+                        height: Globals.getHeight(100),
+                        width: Globals.getWidth(300),
                       ),
                       SizedBox(
-                        height: 50,
+                        height: Globals.getHeight(50),
                       ),
                       SizedBox(
-                        height: 300,
-                        width: 300,
+                        height: Globals.getHeight(300),
+                        width: Globals.getWidth(300),
                         child: Card(
                           elevation: 10,
                           child: Stack(
                             children: [
                               Positioned(
-                                  top: 20,
+                                  top: Globals.getHeight(20),
                                   child: Container(
-                                    width: 300,
-                                    padding: EdgeInsets.symmetric(horizontal: 40),
+                                    width: Globals.getWidth(300),
+                                    padding: EdgeInsets.symmetric(horizontal: Globals.getWidth(40)),
                                     child: TextField(
                                       controller: _usernameController,
                                       decoration: InputDecoration(
@@ -58,8 +59,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                     ),
                                   )),
                               Positioned(
-                                  top: 70,
-                                  left: 40,
+                                  top: Globals.getHeight(70),
+                                  left: Globals.getWidth(40),
                                   child: TextButton(
                                     onPressed: (){
                                       Navigator.of(context)
@@ -75,13 +76,13 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                     ),
                                   )),
                               Positioned(
-                                  top: 110,
-                                  left: 40,
+                                  top: Globals.getHeight(110),
+                                  left: Globals.getWidth(40),
                                   child:  Opacity(
                                     opacity: opacity,
                                     child: Container(
-                                      height: 40,
-                                      width: 220,
+                                      height: Globals.getHeight(40),
+                                      width: Globals.getWidth(220),
                                       child: Text(
                                         'Password Recovery link sent.',
                                         style: TextStyle(color: Colors.red),
@@ -90,11 +91,11 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                   ),
                                   ),
                               Positioned(
-                                top: 180,
-                                left: 60,
+                                top: Globals.getHeight(180),
+                                left: Globals.getWidth(60),
                                 child: Container(
-                                  height: 50,
-                                  width: 170,
+                                  height: Globals.getHeight(50),
+                                  width: Globals.getWidth(170),
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(6),
                                       color: Color(0xFF5A5A5A)),

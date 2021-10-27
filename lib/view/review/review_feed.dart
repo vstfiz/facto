@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:facto/model/claims.dart';
 import 'package:facto/util/globals.dart';
+import 'package:facto/util/images.dart';
 import 'package:facto/view/review/review.dart';
 import 'package:facto/widgets/secondary_top_bar.dart';
 import 'package:facto/widgets/side_bar.dart';
@@ -45,26 +46,19 @@ class _ReviewFeedState extends State<ReviewFeed> {
                 borderRadius: BorderRadius.circular(10.0)),
             backgroundColor: Colors.white,
             content: Container(
-                height: 60,
+                height: Globals.getHeight(80),
                 child: Center(
-                  child: Row(
-                    children: <Widget>[
-                      CircularProgressIndicator(
-                        valueColor:
-                            AlwaysStoppedAnimation<Color>(Colors.blueGrey),
-                      ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text(
-                        value,
-                        style: TextStyle(
-                            fontFamily: "Livvic",
-                            fontSize: 23,
-                            letterSpacing: 1),
-                      )
-                    ],
-                  ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Image.asset(Images.logo,width: Globals.getWidth(100),height: Globals.getHeight(50),),
+
+                        Container(child:  LinearProgressIndicator(
+                          valueColor:
+                          AlwaysStoppedAnimation<Color>(Colors.blueGrey),
+                        ),width: Globals.getWidth(200))
+                      ],
+                    )
                 ))));
   }
 
@@ -75,7 +69,7 @@ class _ReviewFeedState extends State<ReviewFeed> {
         isLoading = false;
       });
     });
-    print(claim==null);
+    print(claim == null);
     status = claim.status;
     print(status);
     tags = '';
@@ -85,29 +79,26 @@ class _ReviewFeedState extends State<ReviewFeed> {
     _commentController.text = claim.comment;
   }
 
+
   Widget _loadingScreen(String value) {
     return AlertDialog(
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0)),
         backgroundColor: Colors.white,
         content: Container(
-            height: 60,
+            height: Globals.getHeight(80),
             child: Center(
-              child: Row(
-                children: <Widget>[
-                  CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.blueGrey),
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Text(
-                    value,
-                    style: TextStyle(
-                        fontFamily: "Livvic", fontSize: 23, letterSpacing: 1),
-                  )
-                ],
-              ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Image.asset(Images.logo,width: Globals.getWidth(100),height: Globals.getHeight(50),),
+
+                    Container(child:  LinearProgressIndicator(
+                      valueColor:
+                      AlwaysStoppedAnimation<Color>(Colors.blueGrey),
+                    ),width: Globals.getWidth(200))
+                  ],
+                )
             )));
   }
 
@@ -144,17 +135,17 @@ class _ReviewFeedState extends State<ReviewFeed> {
                 Positioned(
                     left: 0.0, top: Globals.height * 2 / 33, child: SideBar()),
                 Positioned(
-                    top: 150,
-                    left: 400,
+                    top: Globals.getHeight(150),
+                    left: Globals.getWidth(400),
                     child: Container(
-                      height: 600,
-                      width: 900,
+                      height: Globals.getHeight(600),
+                      width: Globals.getWidth(900),
                       color: Colors.white,
                       child: Stack(
                         children: [
                           Positioned(
-                            top: 50,
-                            left: 40,
+                            top: Globals.getHeight(50),
+                            left: Globals.getWidth(40),
                             child: Row(
                               children: [
                                 Text('Claim',
@@ -162,11 +153,11 @@ class _ReviewFeedState extends State<ReviewFeed> {
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold)),
                                 SizedBox(
-                                  width: 50,
+                                  width: Globals.getWidth(50),
                                 ),
                                 SizedBox(
-                                  width: 500,
-                                  height: 30,
+                                  width: Globals.getWidth(500),
+                                  height: Globals.getHeight(30),
                                   child: Text(
                                     claim.news,
                                     style: TextStyle(
@@ -177,8 +168,8 @@ class _ReviewFeedState extends State<ReviewFeed> {
                             ),
                           ),
                           Positioned(
-                            top: 100,
-                            left: 40,
+                            top: Globals.getHeight(100),
+                            left: Globals.getWidth(40),
                             child: Row(
                               children: [
                                 Text('Truth ',
@@ -186,11 +177,11 @@ class _ReviewFeedState extends State<ReviewFeed> {
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold)),
                                 SizedBox(
-                                  width: 50,
+                                  width: Globals.getWidth(50),
                                 ),
                                 SizedBox(
-                                  width: 500,
-                                  height: 30,
+                                  width: Globals.getWidth(500),
+                                  height: Globals.getHeight(30),
                                   child: Text(
                                     claim.truth,
                                     style: TextStyle(
@@ -201,8 +192,8 @@ class _ReviewFeedState extends State<ReviewFeed> {
                             ),
                           ),
                           Positioned(
-                            top: 150,
-                            left: 40,
+                            top: Globals.getHeight(150),
+                            left: Globals.getWidth(40),
                             child: Row(
                               children: [
                                 Text('Url    ',
@@ -210,11 +201,11 @@ class _ReviewFeedState extends State<ReviewFeed> {
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold)),
                                 SizedBox(
-                                  width: 50,
+                                  width: Globals.getWidth(50),
                                 ),
                                 SizedBox(
-                                  width: 400,
-                                  height: 30,
+                                  width: Globals.getWidth(400),
+                                  height: Globals.getHeight(30),
                                   child: Text(
                                     claim.url1,
                                     style: TextStyle(
@@ -225,8 +216,8 @@ class _ReviewFeedState extends State<ReviewFeed> {
                             ),
                           ),
                           Positioned(
-                            top: 200,
-                            left: 40,
+                            top: Globals.getHeight(200),
+                            left: Globals.getWidth(40),
                             child: Row(
                               children: [
                                 Text('Date  ',
@@ -234,10 +225,10 @@ class _ReviewFeedState extends State<ReviewFeed> {
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold)),
                                 SizedBox(
-                                  width: 50,
+                                  width: Globals.getWidth(50),
                                 ),
                                 SizedBox(
-                                  width: 400,
+                                  width: Globals.getWidth(400),
                                   child: Text(
                                     claim.date,
                                     style: TextStyle(
@@ -248,8 +239,8 @@ class _ReviewFeedState extends State<ReviewFeed> {
                             ),
                           ),
                           Positioned(
-                            top: 250,
-                            left: 40,
+                            top: Globals.getHeight(250),
+                            left: Globals.getWidth(40),
                             child: Row(
                               children: [
                                 Text('Tags',
@@ -257,10 +248,10 @@ class _ReviewFeedState extends State<ReviewFeed> {
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold)),
                                 SizedBox(
-                                  width: 50,
+                                  width: Globals.getWidth(50),
                                 ),
                                 SizedBox(
-                                  width: 400,
+                                  width: Globals.getWidth(400),
                                   child: AutoSizeText(
                                     tags,
                                     style: TextStyle(
@@ -272,8 +263,8 @@ class _ReviewFeedState extends State<ReviewFeed> {
                             ),
                           ),
                           Positioned(
-                            top: 300,
-                            left: 40,
+                            top: Globals.getHeight(300),
+                            left: Globals.getWidth(40),
                             child: Row(
                               children: [
                                 Text('Language',
@@ -281,10 +272,10 @@ class _ReviewFeedState extends State<ReviewFeed> {
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold)),
                                 SizedBox(
-                                  width: 40,
+                                  width: Globals.getWidth(40),
                                 ),
                                 SizedBox(
-                                  width: 400,
+                                  width: Globals.getWidth(400),
                                   child: Text(
                                     claim.language,
                                     style: TextStyle(
@@ -296,8 +287,8 @@ class _ReviewFeedState extends State<ReviewFeed> {
                             ),
                           ),
                           Positioned(
-                            top: 350,
-                            left: 40,
+                            top: Globals.getHeight(350),
+                            left: Globals.getWidth(40),
                             child: Row(
                               children: [
                                 Text('Geo',
@@ -305,10 +296,10 @@ class _ReviewFeedState extends State<ReviewFeed> {
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold)),
                                 SizedBox(
-                                  width: 50,
+                                  width: Globals.getWidth(50),
                                 ),
                                 SizedBox(
-                                  width: 400,
+                                  width: Globals.getWidth(400),
                                   child: AutoSizeText(
                                     claim.geo,
                                     style: TextStyle(
@@ -320,8 +311,8 @@ class _ReviewFeedState extends State<ReviewFeed> {
                             ),
                           ),
                           Positioned(
-                            top: 400,
-                            left: 40,
+                            top: Globals.getHeight(400),
+                            left: Globals.getWidth(40),
                             child: Row(
                               children: [
                                 Text('Category',
@@ -329,10 +320,10 @@ class _ReviewFeedState extends State<ReviewFeed> {
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold)),
                                 SizedBox(
-                                  width: 40,
+                                  width: Globals.getWidth(40),
                                 ),
                                 SizedBox(
-                                  width: 400,
+                                  width: Globals.getWidth(400),
                                   child: Text(
                                     claim.category,
                                     style: TextStyle(
@@ -344,8 +335,8 @@ class _ReviewFeedState extends State<ReviewFeed> {
                             ),
                           ),
                           Positioned(
-                            top: 450,
-                            left: 40,
+                            top: Globals.getHeight(450),
+                            left: Globals.getWidth(40),
                             child: Row(
                               children: [
                                 Text('If Rejected then why',
@@ -353,10 +344,10 @@ class _ReviewFeedState extends State<ReviewFeed> {
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold)),
                                 SizedBox(
-                                  width: 40,
+                                  width: Globals.getWidth(40),
                                 ),
                                 SizedBox(
-                                  width: 400,
+                                  width: Globals.getWidth(400),
                                   child: TextField(
                                     controller: _commentController,
                                     decoration: InputDecoration(
@@ -369,13 +360,13 @@ class _ReviewFeedState extends State<ReviewFeed> {
                             ),
                           ),
                           Positioned(
-                              top: 530,
-                              left: 600,
+                              top: Globals.getHeight(530),
+                              left: Globals.getWidth(600),
                               child: Row(
                                 children: [
                                   Container(
-                                    height: 40,
-                                    width: 100,
+                                    height: Globals.getHeight(40),
+                                    width: Globals.getWidth(100),
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(6),
                                         color: Color(0xFF5A5A5A)),
@@ -398,11 +389,11 @@ class _ReviewFeedState extends State<ReviewFeed> {
                                     ),
                                   ),
                                   SizedBox(
-                                    width: 50,
+                                    width: Globals.getWidth(50),
                                   ),
                                   Container(
-                                    height: 40,
-                                    width: 100,
+                                    height: Globals.getHeight(40),
+                                    width: Globals.getWidth(100),
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(6),
                                         color: Color(0xFF5A5A5A)),
@@ -429,16 +420,16 @@ class _ReviewFeedState extends State<ReviewFeed> {
                                 ],
                               )),
                           Positioned(
-                              top: 210,
-                              left: 480,
+                              top: Globals.getHeight(210),
+                              left: Globals.getWidth(480),
                               child: Container(
-                                height: 200,
-                                width: 400,
+                                height: Globals.getHeight(200),
+                                width: Globals.getWidth(400),
                                 child: TextButton(
                                   onPressed: _launchURL,
                                 ),
                                 decoration: BoxDecoration(
-                                  color: Colors.black,
+                                    color: Colors.black,
                                     borderRadius: BorderRadius.circular(20),
                                     image: DecorationImage(
                                         fit: BoxFit.cover,

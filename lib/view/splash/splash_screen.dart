@@ -42,8 +42,8 @@ class _SplashScreenState extends State<SplashScreen>{
     return Scaffold(
       body: Center(
         child: Container(
-          width: 200,
-          height: 200,
+          width: Globals.getWidth(200),
+          height: Globals.getHeight(200),
           child: Image.network(Images.logo),
         ),
       ),
