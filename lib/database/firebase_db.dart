@@ -75,11 +75,11 @@ class FirebaseDB {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     var ref = firestore.collection('users');
     QuerySnapshot querySnapshot = await ref.get();
-    var value = new List.filled(0, u.User.forHome('', 0, 0), growable: true);
+    var value = new List.filled(0, u.User.forHome('', 0, 0,''), growable: true);
     List<DocumentSnapshot> ds = querySnapshot.docs;
     ds.forEach((element) {
       value.add(new u.User.forHome(
-          element['name'], element['factCheck'], element['feeds']));
+          element['name'], element['factCheck'], element['feeds'],element['email']));
     });
     return value;
   }
@@ -90,11 +90,11 @@ class FirebaseDB {
     var ref = firestore.collection('logs');
     QuerySnapshot querySnapshot =
         await ref.where('time', isEqualTo: time).get();
-    var value = new List.filled(0, u.User.forHome('', 0, 0), growable: true);
+    var value = new List.filled(0, u.User.forHome('', 0, 0,''), growable: true);
     List<DocumentSnapshot> ds = querySnapshot.docs;
     ds.forEach((element) {
       value.add(new u.User.forHome(
-          element['name'], element['factCheck'], element['feeds']));
+          element['name'], element['factCheck'], element['feeds'],element['email']));
     });
     return value;
   }
@@ -226,7 +226,7 @@ class FirebaseDB {
         di['category'],
         '',
         [''],
-        di['comment']);
+        di['comment'],di['status']);
     return value;
   }
 
@@ -373,7 +373,7 @@ class FirebaseDB {
         di['category'],
         di['truth'],
         di['tags'],
-        di['comment']);
+        di['comment'],di['status']);
     return value;
   }
 
@@ -418,6 +418,50 @@ class FirebaseDB {
       value.add(new RSSs(element['source'], element['time'], element['title'],
           element['status'], element['assigned'], false, element['rssId']));
     });
+    return value;
+  }
+
+  static Future<List<int>> getCountHome() async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    var ref = firestore.collection('rss');
+    QuerySnapshot querySnapshot =
+    await ref.where('status', isEqualTo: 'True').get();
+    var value = List.filled(4, 0);
+    value[0] = querySnapshot.docs.length;
+    ref = firestore.collection('claims');
+    querySnapshot =
+    await ref.where('status', isEqualTo: 'Pending').get();
+    value[1] = querySnapshot.docs.length;
+    ref = firestore.collection('feeds');
+    querySnapshot =
+    await ref.where('status', isEqualTo: 'Pending').get();
+    value[2] = querySnapshot.docs.length;
+    ref = firestore.collection('feeds');
+    querySnapshot =
+    await ref.where('status', isEqualTo: 'True').get();
+    value[3] = querySnapshot.docs.length;
+    return value;
+  }
+
+  static Future<List<int>> getCountReview() async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    var ref = firestore.collection('feeds');
+    QuerySnapshot querySnapshot =
+    await ref.where('status', isEqualTo: 'Pending').get();
+    var value = List.filled(4, 0);
+    value[0] = querySnapshot.docs.length;
+    ref = firestore.collection('feeds');
+    querySnapshot =
+    await ref.where('status', isEqualTo: 'True').get();
+    value[1] = querySnapshot.docs.length;
+    ref = firestore.collection('feeds');
+    querySnapshot =
+    await ref.where('status', isEqualTo: 'Pending').where('feedType', isEqualTo: false).get();
+    value[2] = querySnapshot.docs.length;
+    ref = firestore.collection('feeds');
+    querySnapshot =
+    await ref.where('status', isEqualTo: 'True').where('feedType', isEqualTo: false).get();
+    value[3] = querySnapshot.docs.length;
     return value;
   }
 
@@ -469,6 +513,7 @@ class FirebaseDB {
       'comment': comment,
     });
   }
+
 
   static Future<List<Ads>> getAds(BuildContext context) async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -700,14 +745,25 @@ class FirebaseDB {
     await updateFeedsCount();
   }
 
-  static Future<void> updateRejFeed(
+  static Future<void> updateRejFeedWithData(String comment,String date,String claim,
       String status, String claimId, BuildContext context) async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     var ref = firestore.collection('feeds');
     QuerySnapshot querySnapshot =
         await ref.where('claimId', isEqualTo: claimId).get();
     String id = querySnapshot.docs.single.id;
-    await ref.doc(id).update({'status': status});
+    await ref.doc(id).update({'status': status,'comment': comment,'news': claim,'time': date});
+    await updateFeedsCount();
+  }
+
+  static Future<void> updateRejFeed(
+      String status, String claimId, BuildContext context) async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    var ref = firestore.collection('feeds');
+    QuerySnapshot querySnapshot =
+    await ref.where('claimId', isEqualTo: claimId).get();
+    String id = querySnapshot.docs.single.id;
+    await ref.doc(id).update({'status': status,});
     await updateFeedsCount();
   }
 

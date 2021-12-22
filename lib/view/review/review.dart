@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:facto/model/feeds.dart';
 import 'package:facto/util/globals.dart';
 import 'package:facto/util/images.dart';
@@ -30,6 +31,8 @@ class _ReviewState extends State<Review> {
     _getData();
   }
 
+  var count = List.filled(4,0);
+
   Future<void> _loadingDialog(String value) {
     return showDialog<void>(
         barrierDismissible: false,
@@ -56,11 +59,15 @@ class _ReviewState extends State<Review> {
   }
 
   _getData() async {
+    print(this.widget.feedLanguage);
     feeds =
-        await fdb.FirebaseDB.getReviewFeed(this.widget.feedLanguage, context);
-    setState(() {
-      isLoading = false;
-    });
+        await fdb.FirebaseDB.getReviewFeed(this.widget.feedLanguage, context).whenComplete(()async{
+          count = await fdb.FirebaseDB.getCountReview().whenComplete(() {
+            setState(() {
+              isLoading = false;
+            });
+          });
+        });
   }
 
 
@@ -152,7 +159,8 @@ class _ReviewState extends State<Review> {
                               },
                               child: Center(
                                 child: Text(
-                                  'Total Pending  Feeds',
+                                  'Total Pending  Feeds: ${count[0]
+                                  }',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                       fontSize: 14,
@@ -183,7 +191,8 @@ class _ReviewState extends State<Review> {
                               },
                               child: Center(
                                 child: Text(
-                                  'Total Published Feeds',
+                                  'Total Published Feeds: ${count[1]
+                                  }',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                       fontSize: 14,
@@ -214,7 +223,8 @@ class _ReviewState extends State<Review> {
                             },
                             child: Center(
                               child: Text(
-                                'Total Video Feeds Pending',
+                                'Total Video Feeds Pending: ${count[2]
+                                }',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     fontSize: 14,
@@ -246,7 +256,8 @@ class _ReviewState extends State<Review> {
                             },
                             child: Center(
                               child: Text(
-                                'Total Video Feeds Published',
+                                'Total Video Feeds Published: ${count[3]
+                                }',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     fontSize: 14,
@@ -319,7 +330,7 @@ class _ReviewState extends State<Review> {
                                               return null;
                                             }),
                                           ),
-                                          Text(feeds[index].requestedBy)
+                                          Text(feeds[index].requestedBy.split(' ')[0],style: TextStyle(fontSize: 12.0),)
                                         ],
                                       ),
                                       onTap: () {
@@ -410,6 +421,7 @@ class _ReviewState extends State<Review> {
                                 if (element.isSelected) {
                                   await fdb.FirebaseDB.publishFeeds(
                                       element.claimId, element.feedType);
+                                  feeds.removeAt(0);
                                 }
                               });
                               Navigator.pop(context);

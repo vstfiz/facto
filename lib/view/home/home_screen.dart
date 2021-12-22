@@ -25,16 +25,20 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     _getData();
   }
+  var counts = [];
 
   DateTime selectedDate;
   bool isLoading = true;
-  var feed = List.filled(0, new User.forHome('', 0, 0), growable: true);
+  var feed = List.filled(0, new User.forHome('', 0, 0,''
+      ''), growable: true);
 
   _getData() async {
     feed = await fdb.FirebaseDB.getFeedForHome(this.widget.feedType, context)
-        .whenComplete(() {
-      setState(() {
-        isLoading = false;
+        .whenComplete(() async{
+      counts = await fdb.FirebaseDB.getCountHome().whenComplete(() {
+        setState(() {
+          isLoading = false;
+        });
       });
     });
   }
@@ -165,7 +169,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 borderRadius: BorderRadius.circular(10)),
                             child: Center(
                               child: Text(
-                                'Total Open RSS Feeds',
+                                'Total Open RSS Feeds: ${counts[0]}',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     fontSize: 20,
@@ -184,7 +188,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               borderRadius: BorderRadius.circular(10)),
                           child: Center(
                             child: Text(
-                              'Total Open Claims',
+                              'Total Open Claims: ${counts[1]}',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontSize: 20,
@@ -204,7 +208,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 borderRadius: BorderRadius.circular(10)),
                             child: Center(
                               child: Text(
-                                'Total Pending Feed Review',
+                                'Total Pending Feed Review: ${counts[2]}',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     fontSize: 20,
@@ -223,7 +227,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               borderRadius: BorderRadius.circular(10)),
                           child: Center(
                             child: Text(
-                              'Total production Feeds(Hindi/Eng)',
+                              'Total production Feeds(Hindi/Eng): ${counts[3]}',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontSize: 20,
@@ -340,7 +344,15 @@ class _HomeScreenState extends State<HomeScreen> {
                               rows: List.generate(feed.length, (index) {
                                 return DataRow(
                                   cells: <DataCell>[
-                                    DataCell(Text(feed[index].name)),
+                                    DataCell(Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Text(feed[index].name),
+                                        SizedBox(height: 5.0,),
+                                        Text(feed[index].email,style: TextStyle(fontSize: 10.0),)
+                                      ],
+                                    )),
                                     DataCell(Text(feed[index].feeds.toString())),
                                     DataCell(Text(feed[index].factCheck.toString())),
                                   ],

@@ -58,15 +58,15 @@ class _ClaimState extends State<Claim> {
   }
 
   _getData() async {
-    claim = await fdb.FirebaseDB.getClaimFromId(this.widget.claimId)
-        .whenComplete(() {
-      setState(() {
-        isLoading = false;
-      });
+    claim = await fdb.FirebaseDB.getClaimFromId(this.widget.claimId);
+    setState(() {
+      isLoading = false;
+      print(claim.toString());
+      _commentController.text = claim.comment;
+      status = claim.status;
+      print(claim.status);
+      print(status);
     });
-    print(claim.toString());
-    _commentController.text = claim.comment;
-    status = claim.status;
   }
 
 
@@ -135,13 +135,12 @@ class _ClaimState extends State<Claim> {
                         children: [
                           Positioned(
                               right: 10,
-                              child: Container(
-                                  child: DropdownButton<String>(
+                              child: DropdownButton<String>(
                                 value: status,
                                 icon: const Icon(Icons.arrow_drop_down_sharp),
                                 iconSize: 24,
                                 elevation: 16,
-                                style: const TextStyle(color: Colors.black),
+                                // style: const TextStyle(color: Colors.black),
                                 onChanged: (String newValue) {
                                   setState(() {
                                     status = newValue;
@@ -155,10 +154,10 @@ class _ClaimState extends State<Claim> {
                                 ].map<DropdownMenuItem<String>>((String value) {
                                   return DropdownMenuItem<String>(
                                     value: value,
-                                    child: Text(value),
+                                    child: Text(value,style: TextStyle(color: Colors.black),),
                                   );
                                 }).toList(),
-                              ))),
+                              )),
                           Positioned(
                             top: Globals.getHeight(50),
                             left: Globals.getWidth(40),
@@ -246,10 +245,12 @@ class _ClaimState extends State<Claim> {
                                 SizedBox(
                                   width: Globals.getWidth(400),
                                   height: Globals.getHeight(30),
-                                  child: Text(
+                                  child: AutoSizeText(
                                     claim.url2,
+                                    minFontSize: 12,
+                                    maxFontSize: 22,
                                     style: TextStyle(
-                                        fontFamily: 'Livvic', fontSize: 20),
+                                        fontFamily: 'Livvic',overflow: TextOverflow.ellipsis),
                                   ),
                                 )
                               ],

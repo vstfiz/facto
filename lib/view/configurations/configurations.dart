@@ -333,7 +333,7 @@ class _ConfigState extends State<Config> {
                       ],
                       rows:
                           List.generate((category.length / 3).ceil(), (index) {
-                        if (category.length % 3 == 0) {
+                        if (category.length % 3 == 0)  {
                           return DataRow(
                             cells: <DataCell>[
                               DataCell(Row(children: [Text(category[3 * index].name),SizedBox(width: 20,),IconButton(icon: Icon(Icons.clear), onPressed: ()async{
@@ -359,7 +359,8 @@ class _ConfigState extends State<Config> {
                               })],)),
                             ],
                           );
-                        } else if (category.length % 3 == 1) {
+                        }
+                        else if (category.length % 3 == 1) {
                           if (index == category.length ~/ 3) {
                             return DataRow(cells: [
                               DataCell(Row(children: [Text(category[3 * index].name),SizedBox(width: 20,),IconButton(icon: Icon(Icons.clear), onPressed: ()async{
@@ -372,7 +373,8 @@ class _ConfigState extends State<Config> {
                               DataCell(Text(' ')),
                               DataCell(Text(' ')),
                             ]);
-                          } else {
+                          }
+                          else {
                             return DataRow(cells: [
                               DataCell(Row(children: [Text(category[3 * index].name),SizedBox(width: 20,),IconButton(icon: Icon(Icons.clear), onPressed: ()async{
                                 await fdb.FirebaseDB.removeCategory(category[3 * index].name, context).whenComplete(() {
@@ -397,7 +399,8 @@ class _ConfigState extends State<Config> {
                               })],)),
                             ]);
                           }
-                        } else {
+                        }
+                        else {
                           if (index == category.length ~/ 3) {
                             return DataRow(cells: [
                               DataCell(Row(children: [Text(category[3 * index].name),SizedBox(width: 20,),IconButton(icon: Icon(Icons.clear), onPressed: ()async{
@@ -416,7 +419,8 @@ class _ConfigState extends State<Config> {
                               })],)),
                               DataCell(Text(' ')),
                             ]);
-                          } else {
+                          }
+                          else {
                             return DataRow(cells: [
                               DataCell(Row(children: [Text(category[3 * index].name),SizedBox(width: 20,),IconButton(icon: Icon(Icons.clear), onPressed: ()async{
                                 await fdb.FirebaseDB.removeCategory(category[3 * index].name, context).whenComplete(() {

@@ -25,5 +25,5 @@ class Claims {
 
   Claims.fromId(this.requestedBy,this.date, this.news, this.url1, this.url2, this.type,
       this.description, this.language, this.geo, this.category, this.truth,
-      this.tags,this.comment);
+      this.tags,this.comment,this.status);
 }

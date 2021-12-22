@@ -11,7 +11,7 @@ class User {
   User(this.name, this.email,
       this.dp, this.uid);
 
-  User.forHome(this.name, this.factCheck, this.feeds);
+  User.forHome(this.name, this.factCheck, this.feeds, this.email);
 
   User.forManage(this.name,this.uid,this.status,this.role, this.factCheck,this.feeds);
 

@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:facto/util/globals.dart';
 import 'package:facto/util/images.dart';
 import 'package:facto/view/manage_claims/manage_claims.dart';
@@ -23,6 +24,8 @@ class Request extends StatefulWidget {
 class _RequestState extends State<Request> {
   bool isLoading = true;
   TextEditingController _commentController = new TextEditingController();
+  TextEditingController _dateController = new TextEditingController();
+  TextEditingController _claimController = new TextEditingController();
   var claim = [];
   String status;
 
@@ -44,49 +47,60 @@ class _RequestState extends State<Request> {
                 height: Globals.getHeight(80),
                 child: Center(
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Image.asset(Images.logo,width: Globals.getWidth(100),height: Globals.getHeight(50),),
-
-                        Container(child:  LinearProgressIndicator(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Image.asset(
+                      Images.logo,
+                      width: Globals.getWidth(100),
+                      height: Globals.getHeight(50),
+                    ),
+                    Container(
+                        child: LinearProgressIndicator(
                           valueColor:
-                          AlwaysStoppedAnimation<Color>(Colors.blueGrey),
-                        ),width: Globals.getWidth(200))
-                      ],
-                    )
-                ))));
+                              AlwaysStoppedAnimation<Color>(Colors.blueGrey),
+                        ),
+                        width: Globals.getWidth(200))
+                  ],
+                )))));
   }
 
   _getData() async {
     claim = await fdb.FirebaseDB.getRejFeedFromId(this.widget.claimId, context);
     setState(() {
       isLoading = false;
+      _claimController.text = claim[0];
+      _dateController.text = claim[1];
+      _commentController.text = claim[2];
       status = claim[4];
     });
   }
 
-
   Widget _loadingScreen(String value) {
     return AlertDialog(
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.0)),
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
         backgroundColor: Colors.white,
         content: Container(
             height: Globals.getHeight(80),
             child: Center(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Image.asset(Images.logo,width: Globals.getWidth(100),height: Globals.getHeight(50),),
-
-                    Container(child:  LinearProgressIndicator(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Image.asset(
+                  Images.logo,
+                  width: Globals.getWidth(100),
+                  height: Globals.getHeight(50),
+                ),
+                Container(
+                    child: LinearProgressIndicator(
                       valueColor:
-                      AlwaysStoppedAnimation<Color>(Colors.blueGrey),
-                    ),width: Globals.getWidth(200))
-                  ],
-                )
-            )));
+                          AlwaysStoppedAnimation<Color>(Colors.blueGrey),
+                    ),
+                    width: Globals.getWidth(200))
+              ],
+            ))));
   }
+
   void _launchURL() async => await canLaunch(claim[3])
       ? await launch(claim[3])
       : throw 'Could not launch ${claim[3]}';
@@ -173,8 +187,8 @@ class _RequestState extends State<Request> {
                                 SizedBox(
                                   width: Globals.getWidth(500),
                                   height: Globals.getHeight(30),
-                                  child: Text(
-                                    claim[0],
+                                  child: TextField(
+                                    controller: _claimController,
                                     style: TextStyle(
                                         fontFamily: 'Livvic', fontSize: 20),
                                   ),
@@ -197,8 +211,8 @@ class _RequestState extends State<Request> {
                                 SizedBox(
                                   width: Globals.getWidth(500),
                                   height: Globals.getHeight(30),
-                                  child: Text(
-                                    claim[1],
+                                  child: TextField(
+                                    controller: _dateController,
                                     style: TextStyle(
                                         fontFamily: 'Livvic', fontSize: 20),
                                   ),
@@ -221,8 +235,8 @@ class _RequestState extends State<Request> {
                                 SizedBox(
                                   width: Globals.getWidth(400),
                                   height: Globals.getHeight(30),
-                                  child: Text(
-                                    claim[2],
+                                  child: TextField(
+                                    controller: _commentController,
                                     style: TextStyle(
                                         fontFamily: 'Livvic', fontSize: 20),
                                   ),
@@ -231,9 +245,11 @@ class _RequestState extends State<Request> {
                             ),
                           ),
                           Positioned(
-                              top: Globals.getHeight(210),
-                              left: Globals.getWidth(40),
-                              child: Container(
+                            top: Globals.getHeight(210),
+                            left: Globals.getWidth(40),
+                            child: CachedNetworkImage(
+                              imageBuilder: (context, imageProvider) =>
+                                  Container(
                                 height: Globals.getHeight(200),
                                 width: Globals.getWidth(400),
                                 child: TextButton(
@@ -244,7 +260,25 @@ class _RequestState extends State<Request> {
                                     image: DecorationImage(
                                         fit: BoxFit.cover,
                                         image: NetworkImage(claim[3]))),
-                              )),
+                              ),
+                              placeholder: (context, url) => Center(
+                                child: Container(
+                                  child: CircularProgressIndicator(),
+                                ),
+                              ),
+                              errorWidget: (context, url, error) => Row(children: [
+                                Icon(
+                                  Icons.error,
+                                  size: 30,
+                                ),
+                                SizedBox(
+                                  width: 20.0,
+                                ),
+                                Text('Error Loading Image')
+                              ],),
+                              imageUrl: claim[3],
+                            ),
+                          ),
                         ],
                       ),
                     )),
@@ -289,7 +323,7 @@ class _RequestState extends State<Request> {
                           child: TextButton(
                             onPressed: () async {
                               _loadingDialog('Uploading Data...');
-                              await fdb.FirebaseDB.updateRejFeed(
+                              await fdb.FirebaseDB.updateRejFeedWithData(_commentController.text,_dateController.text,_claimController.text,
                                   status, this.widget.claimId, context);
                               Navigator.pop(context);
                             },

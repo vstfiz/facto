@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:facto/model/category.dart';
 import 'package:facto/model/claims.dart';
 import 'package:facto/util/globals.dart';
 import 'package:facto/util/images.dart';
@@ -9,6 +10,8 @@ import 'package:facto/widgets/top_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:facto/database/firebase_db.dart' as fdb;
+import 'package:language_pickers/language_picker_dropdown.dart';
+import 'package:language_pickers/languages.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ReviewFeed extends StatefulWidget {
@@ -22,10 +25,30 @@ class ReviewFeed extends StatefulWidget {
 
 class _ReviewFeedState extends State<ReviewFeed> {
   bool isLoading = true;
+  TextEditingController _claimController = new TextEditingController();
+  TextEditingController _truthController = new TextEditingController();
+  TextEditingController _urlController = new TextEditingController();
+  TextEditingController _timeController = new TextEditingController();
   TextEditingController _commentController = new TextEditingController();
+  List<String> geo = [];
+  String language;
+  String selectedCategory;
+  var category = List.filled(0, Category('', ''), growable: true);
+  String country;
   Claims claim;
   String status;
   String tags;
+
+  Widget _buildDropdownItem(Language language) {
+    return Row(
+      children: <Widget>[
+        SizedBox(
+          width: 8.0,
+        ),
+        Text("${language.name} (${language.isoCode})"),
+      ],
+    );
+  }
 
   @override
   void initState() {
@@ -64,9 +87,13 @@ class _ReviewFeedState extends State<ReviewFeed> {
 
   _getData() async {
     claim = await fdb.FirebaseDB.getPartnerRequestFromId(this.widget.claimId)
-        .whenComplete(() {
-      setState(() {
-        isLoading = false;
+        .whenComplete(() async {
+      category = await fdb.FirebaseDB.getCategory(context).whenComplete(() async {
+        geo = await fdb.FirebaseDB.getGeo(context).whenComplete(() {
+          setState(() {
+            isLoading = false;
+          });
+        });
       });
     });
     print(claim == null);
@@ -77,6 +104,14 @@ class _ReviewFeedState extends State<ReviewFeed> {
       tags = tags + element + ", ";
     });
     _commentController.text = claim.comment;
+    _urlController.text = claim.url1;
+    _claimController.text = claim.news;
+    _truthController.text = claim.truth;
+    _timeController.text = claim.date;
+    selectedCategory = claim.category;
+    country = claim.geo;
+    selectedCategory = claim.category;
+
   }
 
 
@@ -158,8 +193,8 @@ class _ReviewFeedState extends State<ReviewFeed> {
                                 SizedBox(
                                   width: Globals.getWidth(500),
                                   height: Globals.getHeight(30),
-                                  child: Text(
-                                    claim.news,
+                                  child: TextField(
+                                    controller: _claimController,
                                     style: TextStyle(
                                         fontFamily: 'Livvic', fontSize: 20),
                                   ),
@@ -182,8 +217,8 @@ class _ReviewFeedState extends State<ReviewFeed> {
                                 SizedBox(
                                   width: Globals.getWidth(500),
                                   height: Globals.getHeight(30),
-                                  child: Text(
-                                    claim.truth,
+                                  child: TextField(
+                                    controller: _truthController,
                                     style: TextStyle(
                                         fontFamily: 'Livvic', fontSize: 20),
                                   ),
@@ -206,8 +241,8 @@ class _ReviewFeedState extends State<ReviewFeed> {
                                 SizedBox(
                                   width: Globals.getWidth(400),
                                   height: Globals.getHeight(30),
-                                  child: Text(
-                                    claim.url1,
+                                  child: TextField(
+                                    controller: _urlController,
                                     style: TextStyle(
                                         fontFamily: 'Livvic', fontSize: 20),
                                   ),
@@ -229,8 +264,11 @@ class _ReviewFeedState extends State<ReviewFeed> {
                                 ),
                                 SizedBox(
                                   width: Globals.getWidth(400),
-                                  child: Text(
-                                    claim.date,
+                                  child: TextField(
+                                    controller: _timeController,
+                                    decoration: InputDecoration(
+                                      hintText: '(DD/MM/YYYY)'
+                                    ),
                                     style: TextStyle(
                                         fontFamily: 'Livvic', fontSize: 20),
                                   ),
@@ -276,11 +314,26 @@ class _ReviewFeedState extends State<ReviewFeed> {
                                 ),
                                 SizedBox(
                                   width: Globals.getWidth(400),
-                                  child: Text(
-                                    claim.language,
-                                    style: TextStyle(
-                                        fontFamily: 'Livvic', fontSize: 20),
-                                    softWrap: true,
+                                  child: LanguagePickerDropdown(
+                                    languagesList: [
+                                      {
+                                        "isoCode": "en",
+                                        "name": "English"
+                                      },
+                                      {
+                                        "isoCode": "hi",
+                                        "name": "Hindi"
+                                      },
+                                    ],
+                                    onValuePicked: (value) {
+                                      setState(() {
+                                        language = value.name;
+                                        print(value.name);
+                                      });
+                                    },
+                                    itemBuilder:
+                                    _buildDropdownItem,
+                                    initialValue: claim.language == 'English' ? 'en':'hi',
                                   ),
                                 )
                               ],
@@ -300,11 +353,36 @@ class _ReviewFeedState extends State<ReviewFeed> {
                                 ),
                                 SizedBox(
                                   width: Globals.getWidth(400),
-                                  child: AutoSizeText(
-                                    claim.geo,
+                                  child:DropdownButton<String>(
+                                    value: country,
+                                    icon: const Icon(Icons
+                                        .arrow_drop_down_sharp),
+                                    iconSize: Globals.getWidth(24),
+                                    hint: Text('Select Geo'),
+                                    underline: SizedBox(),
+                                    elevation: 16,
                                     style: TextStyle(
-                                        fontFamily: 'Livvic', fontSize: 20),
-                                    softWrap: true,
+                                        color: Colors.black,
+                                        fontFamily: 'Livvic',
+                                        fontSize: 20),
+                                    onChanged:
+                                        (String newValue) {
+                                      setState(() {
+                                        country = newValue;
+                                      });
+                                    },
+                                    items: geo.map<
+                                        DropdownMenuItem<
+                                            String>>(
+                                            (String value) {
+                                          return DropdownMenuItem<
+                                              String>(
+                                            value: value,
+                                            child: Text(
+                                              value,
+                                            ),
+                                          );
+                                        }).toList(),
                                   ),
                                 )
                               ],
@@ -324,11 +402,39 @@ class _ReviewFeedState extends State<ReviewFeed> {
                                 ),
                                 SizedBox(
                                   width: Globals.getWidth(400),
-                                  child: Text(
-                                    claim.category,
+                                  child: DropdownButton<String>(
+                                    value: selectedCategory,
+                                    icon: const Icon(Icons
+                                        .arrow_drop_down_sharp),
+                                    iconSize: Globals.getWidth(24),
+                                    hint:
+                                    Text('Select Category'),
+                                    underline: SizedBox(),
+                                    elevation: 16,
                                     style: TextStyle(
-                                        fontFamily: 'Livvic', fontSize: 20),
-                                    softWrap: true,
+                                        color: Colors.black,
+                                        fontFamily: 'Livvic',
+                                        fontSize: 20),
+                                    onChanged:
+                                        (String newValue) {
+                                      setState(() {
+                                        selectedCategory =
+                                            newValue;
+                                      });
+                                      print(selectedCategory);
+                                    },
+                                    items: category.map<
+                                        DropdownMenuItem<
+                                            String>>(
+                                            (Category value) {
+                                          return DropdownMenuItem<
+                                              String>(
+                                            value: value.name,
+                                            child: Text(
+                                              value.name,
+                                            ),
+                                          );
+                                        }).toList(),
                                   ),
                                 )
                               ],
