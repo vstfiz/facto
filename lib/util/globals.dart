@@ -8,6 +8,7 @@ import 'package:facto/view/configurations/configurations.dart';
 import 'package:facto/view/create_ads/ad_data.dart';
 import 'package:facto/view/create_ads/create_ads.dart';
 import 'package:facto/view/create_feed/create_feed.dart';
+import 'package:facto/view/dashboard/dashboard.dart';
 import 'package:facto/view/home/home_screen.dart';
 import 'package:facto/view/manage_claims/manage_claims.dart';
 import 'package:facto/view/manage_rss/manage_rss.dart';
@@ -77,7 +78,7 @@ class Globals {
             else{
               Navigator.of(context)
                   .pushReplacement(new MaterialPageRoute(builder: (context) {
-                return HomeScreen(true);
+                return Dashboard(true);
               }));
             }
           }

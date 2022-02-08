@@ -1,4 +1,5 @@
 import 'package:facto/service/auth/auth.dart';
+import 'package:facto/temp/chat_screen.dart';
 import 'package:facto/util/globals.dart';
 import 'package:facto/util/images.dart';
 import 'package:facto/view/auth/log_in.dart';
@@ -41,20 +42,23 @@ class _MyAppState extends State<MyApp> {
             theme: ThemeData(
               primarySwatch: Colors.blueGrey,
             ),
-            home: StreamBuilder(
-              stream: auth.authStateChanges(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  user = snapshot.data;
-                  print(user.toString());
-                  Globals.user.email = user.email;
-                  Globals.user.dp = user.photoURL;
-                  Globals.user.uid = user.uid;
-                  Globals.user.name = user.displayName;
-                }
-                return SplashScreen();
-              },
-            ));
+            home: ChatScreen(),
+
+            // StreamBuilder(
+            //   stream: auth.authStateChanges(),
+            //   builder: (context, snapshot) {
+            //     if (snapshot.hasData) {
+            //       user = snapshot.data;
+            //       print(user.toString());
+            //       Globals.user.email = user.email;
+            //       Globals.user.dp = user.photoURL;
+            //       Globals.user.uid = user.uid;
+            //       Globals.user.name = user.displayName;
+            //     }
+            //     return SplashScreen();
+            //   },
+            // )
+        );
       });
     });
 

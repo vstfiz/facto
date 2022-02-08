@@ -26,7 +26,7 @@ class _SplashScreenState extends State<SplashScreen>{
     Timer time = new Timer(new Duration(milliseconds: 1500),() async {
       if (Globals.user.email != null && Globals.user.email != "") {
         await fdb.FirebaseDB.getUserDetails(user.uid, context).whenComplete(() => Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context) {
-          return HomeScreen(true);
+          return HomeScreen();
         })));
 
         print(Globals.user.email);

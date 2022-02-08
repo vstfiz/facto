@@ -212,7 +212,7 @@ class _LogInState extends State<LogIn> {
                                                   .pushReplacement(
                                                       new MaterialPageRoute(
                                                           builder: (context) {
-                                                return HomeScreen(true);
+                                                return HomeScreen();
                                               }));
                                             }
                                           }

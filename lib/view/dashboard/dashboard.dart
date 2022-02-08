@@ -3,6 +3,7 @@ import 'package:facto/model/claims.dart';
 import 'package:facto/model/user.dart';
 import 'package:facto/util/globals.dart';
 import 'package:facto/util/images.dart';
+import 'package:facto/view/home/home_screen.dart';
 import 'package:facto/widgets/secondary_top_bar.dart';
 import 'package:facto/widgets/side_bar.dart';
 import 'package:facto/widgets/top_bar.dart';
@@ -10,18 +11,116 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:facto/database/firebase_db.dart' as fdb;
 
-class HomeScreen extends StatefulWidget {
+class Dashboard extends StatefulWidget {
+  final bool feedType;
+
+  Dashboard(this.feedType);
+
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _DashboardState createState() => _DashboardState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _DashboardState extends State<Dashboard> {
+  @override
+  void initState() {
+    super.initState();
+    _getData();
+  }
+  var counts = [];
+
+  DateTime selectedDate;
+  bool isLoading = true;
+  var feed = List.filled(0, new User.forHome('', 0, 0,''
+      ''), growable: true);
+
+  _getData() async {
+    feed = await fdb.FirebaseDB.getFeedForHome(this.widget.feedType, context)
+        .whenComplete(() async{
+      counts = await fdb.FirebaseDB.getCountHome().whenComplete(() {
+        setState(() {
+          isLoading = false;
+        });
+      });
+    });
+  }
+
+  Future<void> _loadingDialog(String value) {
+    return showDialog<void>(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) => AlertDialog(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0)),
+            backgroundColor: Colors.white,
+            content: Container(
+                height: Globals.getHeight(80),
+                child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Image.asset(Images.logo,width: Globals.getWidth(100),height: Globals.getHeight(50),),
+
+                        Container(child:  LinearProgressIndicator(
+                          valueColor:
+                          AlwaysStoppedAnimation<Color>(Colors.blueGrey),
+                        ),width: Globals.getWidth(200))
+                      ],
+                    )
+                ))));
+  }
+
+
+
+
+  Widget _loadingScreen(String value) {
+    return AlertDialog(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0)),
+        backgroundColor: Colors.white,
+        content: Container(
+            height: Globals.getHeight(80),
+            child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Image.asset(Images.logo,width: Globals.getWidth(100),height: Globals.getHeight(50),),
+
+                    Container(child:  LinearProgressIndicator(
+                      valueColor:
+                      AlwaysStoppedAnimation<Color>(Colors.blueGrey),
+                    ),width: Globals.getWidth(200))
+                  ],
+                )
+            )));
+  }
+
+  _selectDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(), // Refer step 1
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2025),
+    );
+    if (picked != null && picked != selectedDate)
+    {
+      selectedDate = picked;
+      String time = picked.toString().substring(0,10).replaceAll('-', '');
+      _loadingDialog('Getting Data from Servers.....');
+      var timeFeed = await (fdb.FirebaseDB.getFeedForHomeWithDate(time, context));
+      setState(() {
+        feed = timeFeed;
+      });
+      Navigator.pop(context);
+    }
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body:Stack
-        (
+      body: isLoading
+          ? _loadingScreen('Getting Data from Servers.....')
+          : Stack(
         children: [
           Positioned(
             child: TopBar(),
@@ -266,6 +365,5 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
     );
-
   }
 }
